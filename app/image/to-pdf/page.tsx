@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Dropzone from "react-dropzone";
 import Spinner from "@/components/ui/Spinner";
 import { PDFDocument, StandardFonts } from "pdf-lib";
@@ -28,6 +28,51 @@ export default function ImagesToPdfPage() {
   const [marginPoints, setMarginPoints] = useState<number>(24); // 24pt = 1/3 inch
   const [labelFilenames, setLabelFilenames] = useState<boolean>(true);
   const [outputName, setOutputName] = useState<string>("images.pdf");
+  const [autoOrientation, setAutoOrientation] = useState<boolean>(true);
+
+  // Drag-and-drop reorder state
+  const dragIndexRef = useRef<number | null>(null);
+
+  // Preview thumbnails (first few images)
+  const [previews, setPreviews] = useState<{ url: string; name: string }[]>([]);
+
+  // Load saved options on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("imagesToPdf.options");
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (saved.pagePreset) setPagePreset(saved.pagePreset);
+        if (saved.fitMode) setFitMode(saved.fitMode);
+        if (typeof saved.marginPoints === "number") setMarginPoints(saved.marginPoints);
+        if (typeof saved.labelFilenames === "boolean") setLabelFilenames(saved.labelFilenames);
+        if (typeof saved.autoOrientation === "boolean") setAutoOrientation(saved.autoOrientation);
+        if (typeof saved.outputName === "string") setOutputName(saved.outputName);
+      }
+    } catch {}
+  }, []);
+
+  // Persist options when they change
+  useEffect(() => {
+    const data = { pagePreset, fitMode, marginPoints, labelFilenames, outputName, autoOrientation };
+    try { localStorage.setItem("imagesToPdf.options", JSON.stringify(data)); } catch {}
+  }, [pagePreset, fitMode, marginPoints, labelFilenames, outputName, autoOrientation]);
+
+  // Build previews for the first 8 images
+  useEffect(() => {
+    // Revoke previous URLs
+    setPreviews((prev) => {
+      prev.forEach((p) => URL.revokeObjectURL(p.url));
+      return [];
+    });
+    if (!files.length) return;
+    const slice = files.slice(0, 8);
+    const urls = slice.map((f) => ({ url: URL.createObjectURL(f), name: f.name }));
+    setPreviews(urls);
+    return () => {
+      urls.forEach((p) => URL.revokeObjectURL(p.url));
+    };
+  }, [files]);
 
   const onDrop = useCallback((accepted: File[]) => {
     const imgs = accepted.filter((f) => f.type.startsWith("image/") || /\.(png|jpe?g|webp)$/i.test(f.name));
@@ -45,6 +90,32 @@ export default function ImagesToPdfPage() {
       clone.splice(to, 0, item);
       return clone;
     });
+  };
+
+  const onKeyReorder = (e: React.KeyboardEvent<HTMLLIElement>, index: number) => {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (index > 0) move(index, index - 1);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (index < files.length - 1) move(index, index + 1);
+    }
+  };
+
+  const onDragStart = (index: number) => (e: React.DragEvent) => {
+    dragIndexRef.current = index;
+    e.dataTransfer.effectAllowed = "move";
+  };
+  const onDragOver = (index: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+  const onDropReorder = (index: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    const from = dragIndexRef.current;
+    dragIndexRef.current = null;
+    if (from == null || from === index) return;
+    move(from, index);
   };
 
   const canExport = useMemo(() => files.length > 0 && !isProcessing, [files.length, isProcessing]);
@@ -71,8 +142,15 @@ export default function ImagesToPdfPage() {
           pageW = Math.max(1, imgDims.width + marginPoints * 2);
           pageH = Math.max(1, imgDims.height + marginPoints * 2);
         } else {
-          pageW = PAGE_SIZES[pagePreset].w;
-          pageH = PAGE_SIZES[pagePreset].h;
+          const base = PAGE_SIZES[pagePreset];
+          if (autoOrientation) {
+            const landscape = imgDims.width >= imgDims.height;
+            pageW = landscape ? Math.max(base.w, base.h) : Math.min(base.w, base.h);
+            pageH = landscape ? Math.min(base.w, base.h) : Math.max(base.w, base.h);
+          } else {
+            pageW = base.w;
+            pageH = base.h;
+          }
         }
 
         const page = doc.addPage([pageW, pageH]);
@@ -173,7 +251,18 @@ export default function ImagesToPdfPage() {
             {files.length > 0 && (
               <ul className="mt-6 divide-y rounded-2xl border bg-white/70 dark:bg-black/30 max-h-80 overflow-auto">
                 {files.map((file, index) => (
-                  <li key={`${file.name}-${index}`} className="p-4 flex items-center justify-between gap-4">
+                  <li
+                    key={`${file.name}-${index}`}
+                    className="p-4 flex items-center justify-between gap-4"
+                    tabIndex={0}
+                    role="option"
+                    aria-label={`File ${file.name} at position ${index + 1}`}
+                    draggable
+                    onDragStart={onDragStart(index)}
+                    onDragOver={onDragOver(index)}
+                    onDrop={onDropReorder(index)}
+                    onKeyDown={(e) => onKeyReorder(e, index)}
+                  >
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium text-gray-900 dark:text-white">{file.name}</p>
                       <p className="text-xs text-gray-600 dark:text-gray-400">{(file.size / 1024).toFixed(1)} KB</p>
@@ -236,6 +325,12 @@ export default function ImagesToPdfPage() {
                       <input type="checkbox" checked={labelFilenames} onChange={(e) => setLabelFilenames(e.target.checked)} />
                       <span className="text-sm">Label each page with filename</span>
                     </label>
+                    {pagePreset !== "auto" && (
+                      <label className="inline-flex items-center gap-2">
+                        <input type="checkbox" checked={autoOrientation} onChange={(e) => setAutoOrientation(e.target.checked)} />
+                        <span className="text-sm">Auto orientation (match image)</span>
+                      </label>
+                    )}
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Output filename</label>
                       <input value={outputName} onChange={(e) => setOutputName(e.target.value)} className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white" />
@@ -287,6 +382,22 @@ export default function ImagesToPdfPage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Preview thumbnails */}
+        {previews.length > 0 && (
+          <div className="mt-8">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Preview (first {previews.length} images)</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {previews.map((p, i) => (
+                <div key={i} className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={p.url} alt={p.name} className="w-full h-28 object-cover" />
+                  <div className="px-2 py-1 text-[11px] truncate text-gray-600 dark:text-gray-300">{p.name}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}
