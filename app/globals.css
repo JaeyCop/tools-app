@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #E0FFFF;
-  --foreground: #333333;
-  --primary: #2258A5;
-  --secondary: #FF8B00;
-  --accent: #349C55;
+  --background: #FAFBFC;
+  --foreground: #1A1D23;
+  --primary: #2563EB;
+  --secondary: #7C3AED;
+  --accent: #059669;
+  --surface: #FFFFFF;
+  --border: #E5E7EB;
+  --muted: #6B7280;
+  --success: #10B981;
+  --warning: #F59E0B;
+  --error: #EF4444;
 }
 
 @theme inline {
@@ -14,24 +20,68 @@
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
-  --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial,
     "Apple Color Emoji", "Segoe UI Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary: #5893D4;
-    --secondary: #FFAC4D;
-    --accent: #66B983;
+    --background: #0F1419;
+    --foreground: #F8FAFC;
+    --primary: #3B82F6;
+    --secondary: #8B5CF6;
+    --accent: #06B6D4;
+    --surface: #1E293B;
+    --border: #334155;
+    --muted: #94A3B8;
+    --success: #22C55E;
+    --warning: #F97316;
+    --error: #F87171;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Premium glass morphism effects */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Premium gradient backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+}
+
+/* Premium shadows */
+.shadow-premium {
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.shadow-premium-lg {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }

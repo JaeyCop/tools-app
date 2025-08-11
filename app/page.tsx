@@ -5,10 +5,10 @@ function ToolCard(props: { title: string; description: string; href: string }) {
   return (
     <Link
       href={href}
-      className="block rounded-md border border-accent p-4 hover:bg-accent/10 transition-colors"
+      className="block rounded-xl border border-border bg-surface p-6 hover:bg-primary/5 hover:border-primary/30 transition-all duration-200 shadow-premium hover:shadow-premium-lg group"
     >
-      <div className="font-medium text-primary">{title}</div>
-      <div className="text-sm text-foreground/70">{description}</div>
+      <div className="font-semibold text-foreground group-hover:text-primary transition-colors">{title}</div>
+      <div className="text-sm text-muted mt-1">{description}</div>
     </Link>
   );
 }
@@ -18,27 +18,37 @@ export default function Home() {
     <div className="max-w-full min-h-[100dvh]">
       <div className="mx-auto max-w-5xl px-4 py-12 space-y-12">
         <section className="text-center space-y-5">
-          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary">
+          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
             All‑in‑one PDF & Image tools
           </h1>
-          <p className="text-base text-foreground/70">
+          <p className="text-lg text-muted max-w-2xl mx-auto">
             Fast, private, and free. Everything runs in your browser.
           </p>
-          <div className="flex justify-center gap-3">
+          <div className="flex justify-center gap-4">
             <Link
               href="/pdf/merge"
-              className="rounded-2xl bg-primary px-5 py-3 text-white font-semibold shadow hover:shadow-lg transition-shadow"
+              className="gradient-primary rounded-2xl px-8 py-4 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105"
             >
               PDF Merge
             </Link>
-            <Link href="/image/resize" className="rounded-2xl border border-secondary px-5 py-3 text-secondary hover:bg-secondary/10">
+            <Link 
+              href="/image/resize" 
+              className="rounded-2xl border-2 border-secondary px-8 py-4 text-secondary font-semibold hover:bg-secondary hover:text-white transition-all duration-200 hover:scale-105 shadow-premium"
+            >
               Image Resize
             </Link>
           </div>
         </section>
 
-        <section className="space-y-4">
-        <h2 className="text-xl font-semibold">PDF Tools</h2>
+        <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
+          <div className="p-2 rounded-lg gradient-primary">
+            <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+            </svg>
+          </div>
+          PDF Tools
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <ToolCard
             title="Merge PDFs"
@@ -63,8 +73,15 @@ export default function Home() {
         </div>
         </section>
 
-        <section className="space-y-4 pb-4">
-        <h2 className="text-xl font-semibold">Image Tools</h2>
+        <section className="space-y-6 pb-4">
+        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
+          <div className="p-2 rounded-lg gradient-accent">
+            <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+            </svg>
+          </div>
+          Image Tools
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <ToolCard
             title="Resize Image"

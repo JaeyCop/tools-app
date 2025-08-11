@@ -56,25 +56,25 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
   }, [pathname, onClose]);
 
   return (
-    <div className="h-full flex flex-col bg-primary border-r border-white/10">
+    <div className="h-full flex flex-col bg-surface dark:bg-surface border-r border-border shadow-premium">
       {/* Header */}
-      <div className="p-6 border-b border-white/10">
+      <div className="p-6 border-b border-border bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="flex items-center justify-between">
           <Link
             href="/"
             className="flex items-center gap-3 group"
             onClick={() => window.innerWidth < 1024 && onClose()}
           >
-            <div className="p-2 rounded-xl bg-gradient-to-br from-secondary to-accent shadow-lg shadow-secondary/25 group-hover:shadow-secondary/40 transition-all duration-300 group-hover:scale-105">
+            <div className="p-2 rounded-xl gradient-primary shadow-premium group-hover:shadow-premium-lg transition-all duration-300 group-hover:scale-105">
               <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
               </svg>
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight group-hover:text-secondary transition-colors">
+              <h1 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
                 Simple Tools
               </h1>
-              <p className="text-xs text-gray-400 mt-0.5">
+              <p className="text-xs text-muted mt-0.5">
                 Fast & Private Utilities
               </p>
             </div>
@@ -83,9 +83,9 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
           {/* Mobile close button */}
           <button
             onClick={onClose}
-            className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="lg:hidden p-2 rounded-lg hover:bg-border/50 transition-colors"
           >
-            <X className="h-5 w-5 text-gray-400" />
+            <X className="h-5 w-5 text-muted" />
           </button>
         </div>
       </div>
@@ -95,11 +95,11 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
         <div className="space-y-6">
           {/* PDF Tools Section */}
           <div>
-            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-secondary/20 to-secondary/30 border border-secondary/30 shadow-lg shadow-secondary/10">
-              <div className="p-1.5 rounded-md bg-secondary/30 backdrop-blur-sm">
-                <FileText className="h-4 w-4 text-secondary" />
+            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-primary/10 to-primary/20 border border-primary/20 shadow-premium">
+              <div className="p-1.5 rounded-md bg-primary/20 backdrop-blur-sm">
+                <FileText className="h-4 w-4 text-primary" />
               </div>
-              <span className="text-sm font-semibold text-secondary uppercase tracking-wider">
+              <span className="text-sm font-semibold text-primary uppercase tracking-wider">
                 PDF Tools
               </span>
             </div>
@@ -112,11 +112,11 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
-                        ? "bg-gradient-to-r from-secondary to-accent text-white shadow-lg shadow-secondary/25 scale-[1.02]"
-                        : "text-gray-300 hover:text-white hover:bg-white/10 hover:shadow-md"
+                        ? "gradient-primary text-white shadow-premium scale-[1.02]"
+                        : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
                   >
-                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-gray-400 group-hover:text-secondary"
+                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-primary"
                       }`} />
                     <span className="flex-1">{item.label}</span>
                     {active && (
@@ -129,15 +129,15 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
           </div>
 
           {/* Separator */}
-          <div className="h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
           {/* Image Tools Section */}
           <div>
-            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-accent/20 to-accent/30 border border-accent/30 shadow-lg shadow-accent/10">
-              <div className="p-1.5 rounded-md bg-accent/30 backdrop-blur-sm">
-                <Image className="h-4 w-4 text-accent" />
+            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/20 border border-secondary/20 shadow-premium">
+              <div className="p-1.5 rounded-md bg-secondary/20 backdrop-blur-sm">
+                <Image className="h-4 w-4 text-secondary" />
               </div>
-              <span className="text-sm font-semibold text-accent uppercase tracking-wider">
+              <span className="text-sm font-semibold text-secondary uppercase tracking-wider">
                 Image Tools
               </span>
             </div>
@@ -150,11 +150,11 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
-                        ? "bg-gradient-to-r from-accent to-secondary text-white shadow-lg shadow-accent/25 scale-[1.02]"
-                        : "text-gray-300 hover:text-white hover:bg-white/10 hover:shadow-md"
+                        ? "gradient-accent text-white shadow-premium scale-[1.02]"
+                        : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
                   >
-                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-gray-400 group-hover:text-accent"
+                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-secondary"
                       }`} />
                     <span className="flex-1">{item.label}</span>
                     {active && (
@@ -169,11 +169,11 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-white/10 bg-black/20">
-        <div className="flex items-center justify-between text-xs text-gray-400">
+      <div className="p-4 border-t border-border bg-gradient-to-r from-primary/5 to-secondary/5">
+        <div className="flex items-center justify-between text-xs text-muted">
           <span>© {new Date().getFullYear()} Simple Tools</span>
           <div className="flex items-center gap-1">
-            <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse shadow-md shadow-green-500/50"></div>
+            <div className="h-2 w-2 rounded-full bg-success animate-pulse shadow-md shadow-success/50"></div>
             <span>Online</span>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function ResponsiveSidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 rounded-xl bg-primary border border-white/10 shadow-lg shadow-black/25 backdrop-blur-xl hover:bg-primary/80 transition-all duration-200"
+        className="lg:hidden fixed top-4 left-4 z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
       >
         <Menu className="h-5 w-5 text-white" />
       </button>
