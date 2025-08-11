@@ -5,7 +5,7 @@ function ToolCard(props: { title: string; description: string; href: string }) {
   return (
     <Link
       href={href}
-      className="block rounded-xl border border-border bg-surface p-6 hover:bg-primary/5 hover:border-primary/30 hover-lift shadow-premium group focus-premium"
+      className="block card-premium p-6 hover:bg-primary/5 hover:border-primary/30 hover-lift shadow-premium group focus-premium"
     >
       <div className="flex items-center gap-3 mb-2">
         <div className="w-2 h-2 rounded-full bg-primary opacity-60 group-hover:opacity-100 transition-opacity"></div>
@@ -25,15 +25,15 @@ function ToolCard(props: { title: string; description: string; href: string }) {
 export default function Home() {
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="mx-auto max-w-5xl px-4 py-12 space-y-12">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 sm:py-12 space-y-12">
         <section className="text-center space-y-5">
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+          <h1 className="h-display font-extrabold tracking-tight bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
             All‑in‑one PDF & Image tools
           </h1>
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Fast, private, and free. Everything runs in your browser.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <Link
               href="/pdf/merge"
               className="btn-premium gradient-primary rounded-2xl px-8 py-4 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105 focus-premium animate-pulse-glow"

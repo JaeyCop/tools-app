@@ -262,7 +262,7 @@ export default function ResponsiveSidebar() {
       </button>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex w-72">
+      <aside className="hidden lg:flex w-72 pt-16">
         <SidebarContent isOpen={true} onClose={() => {}} />
       </aside>
 
@@ -286,6 +286,9 @@ export default function ResponsiveSidebar() {
           </aside>
         </>
       )}
+
+      {/* Spacer to avoid overlapping with bottom tabs */}
+      <div className="h-16 lg:h-0" />
     </>
   );
 }
