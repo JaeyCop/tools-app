@@ -119,7 +119,7 @@ export default function PdfToImagesPage() {
         if (!ctx) throw new Error("Canvas unsupported");
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        await page.render({ canvasContext: ctx, viewport, canvasFactory: undefined }).promise;
+        await page.render({ canvasContext: ctx, viewport, canvas }).promise;
 
         const mime: OutputFormat = outputFormat;
         const quality = mime === "image/jpeg" ? jpegQuality : 0.92;
