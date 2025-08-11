@@ -26,8 +26,9 @@ export default function PdfToImagesPage() {
 
   // Cleanup object URLs on unmount
   useEffect(() => {
+    const urlsToRevoke = urlsToRevokeRef.current;
     return () => {
-      urlsToRevokeRef.current.forEach((u) => URL.revokeObjectURL(u));
+      urlsToRevoke.forEach((u) => URL.revokeObjectURL(u));
     };
   }, []);
 

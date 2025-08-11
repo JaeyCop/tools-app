@@ -1,0 +1,45 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  min-height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+}
+
+.button:hover:not(:disabled) {
+  /* A bit darker on hover */
+  filter: brightness(95%);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid hsl(var(--primary-foreground) / 0.3);
+  border-radius: 50%;
+  border-top-color: hsl(var(--primary-foreground));
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

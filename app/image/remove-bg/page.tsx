@@ -308,7 +308,7 @@ export default function RemoveBgPage() {
                 <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                      <Image className="w-5 h-5 text-purple-600" />
+                      <Image className="w-5 h-5 text-purple-600" aria-hidden="true" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-gray-900 dark:text-white truncate">{file.name}</p>
@@ -356,7 +356,7 @@ export default function RemoveBgPage() {
                     <img
                       ref={imgRef}
                       src={imageUrl}
-                      alt="Source"
+                      alt="Original image for background removal"
                       className="max-w-full h-auto rounded-xl shadow-sm mx-auto block"
                       onLoad={onImageLoad}
                       style={{ maxHeight: '500px' }}
@@ -428,9 +428,8 @@ export default function RemoveBgPage() {
                         />
                       )}
                       <img
-                        alt="Original image preview"
+                        alt="Processed image with background removed"
                         src={(outputUrl || previewUrl) || ""}
-                        // alt="Result"
                         className="max-w-full h-auto shadow-sm mx-auto block relative z-10"
                         style={{ maxHeight: '500px' }}
                       />

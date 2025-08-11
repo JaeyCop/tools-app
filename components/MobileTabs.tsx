@@ -15,21 +15,27 @@ export default function MobileTabs() {
   ];
 
   return (
-    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40">
-      <div className="mx-auto max-w-3xl">
-        <div className="m-3 rounded-2xl bg-surface/90 dark:bg-surface/80 backdrop-blur-xl border border-border shadow-premium">
-          <ul className="grid grid-cols-3">
+    <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 pb-safe">
+      <div className="mx-auto max-w-md">
+        <div className="m-4 rounded-2xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl border border-gray-200 dark:border-gray-800 shadow-lg">
+          <ul className="grid grid-cols-3 p-2">
             {items.map(({ href, label, icon: Icon }) => (
               <li key={href}>
                 <Link
                   href={href}
-                  className={`flex flex-col items-center justify-center py-2.5 gap-1 rounded-2xl text-xs font-medium transition-all ${
+                  className={`flex flex-col items-center justify-center py-3 px-2 gap-1.5 rounded-xl text-xs font-medium transition-all duration-200 active:scale-95 ${
                     isActive(href)
-                      ? "text-primary bg-primary/5"
-                      : "text-muted hover:text-foreground"
+                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50"
                   }`}
                 >
-                  <Icon className="h-5 w-5" />
+                  <div className={`p-1.5 rounded-lg ${
+                    isActive(href)
+                      ? "bg-blue-100 dark:bg-blue-800/30"
+                      : "bg-gray-100 dark:bg-gray-800"
+                  }`}>
+                    <Icon className="h-4 w-4" />
+                  </div>
                   {label}
                 </Link>
               </li>

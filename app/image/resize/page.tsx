@@ -231,7 +231,7 @@ export default function ImageResizePage() {
                 <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                      <Image className="w-5 h-5 text-green-600" />
+                      <Image className="w-5 h-5 text-green-600" aria-hidden="true" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-gray-900 dark:text-white truncate">{file.name}</p>
