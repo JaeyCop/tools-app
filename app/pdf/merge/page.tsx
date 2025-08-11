@@ -113,7 +113,7 @@ export default function PdfMergePage() {
               </div>
               <h1 className="text-4xl font-bold bg-gradient-to-r from-fuchsia-600 to-pink-600 bg-clip-text text-transparent">Merge PDFs</h1>
             </div>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-muted max-w-2xl mx-auto">
               Combine multiple PDF files in the order you want, or interleave pages across documents.
             </p>
           </div>
@@ -124,7 +124,7 @@ export default function PdfMergePage() {
                 setMergedBlobUrl(null);
                 setErrorMessage(null);
               }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-sm hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-error/10 text-error rounded-full text-sm hover:bg-error/20 transition-colors"
             >
               <X className="w-4 h-4" />
               Clear All
@@ -138,24 +138,24 @@ export default function PdfMergePage() {
               {({ getRootProps, getInputProps, isDragActive }) => (
                 <div
                   {...getRootProps()}
-                  className={`relative border-3 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${isDragActive ? 'border-fuchsia-400 bg-pink-50 dark:bg-fuchsia-900/20 scale-[1.02]' : 'border-gray-300 dark:border-gray-600 hover:border-fuchsia-400 hover:bg-pink-50/50 dark:hover:bg-fuchsia-900/10'}`}
+                  className={`relative border-3 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${isDragActive ? 'border-primary bg-primary/10 scale-[1.02]' : 'border-border hover:border-primary hover:bg-primary/5'}`}
                 >
                   <input {...getInputProps()} />
                   <div className={`transition-all duration-300 ${isDragActive ? 'scale-110' : ''}`}>
                     <div className="mb-6">
                       {isDragActive ? (
-                        <div className="w-16 h-16 bg-fuchsia-100 dark:bg-fuchsia-900/30 rounded-full flex items-center justify-center mx-auto animate-bounce">
-                          <Upload className="w-8 h-8 text-fuchsia-500" />
+                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto animate-bounce">
+                          <Upload className="w-8 h-8 text-primary" />
                         </div>
                       ) : (
-                        <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto group-hover:bg-fuchsia-100 dark:group-hover:bg-fuchsia-900/30 transition-colors">
-                          <FileText className="w-8 h-8 text-gray-400 group-hover:text-fuchsia-500 transition-colors" />
+                        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto group-hover:bg-primary/20 transition-colors">
+                          <FileText className="w-8 h-8 text-muted group-hover:text-primary transition-colors" />
                         </div>
                       )}
                     </div>
                     <div className="space-y-2">
-                      <p className="text-xl font-semibold text-gray-700 dark:text-gray-200">{isDragActive ? "Drop your PDFs here!" : "Upload your PDFs"}</p>
-                      <p className="text-gray-500 dark:text-gray-400">Multiple files supported • Max total 200MB</p>
+                      <p className="text-xl font-semibold text-foreground">{isDragActive ? "Drop your PDFs here!" : "Upload your PDFs"}</p>
+                      <p className="text-muted">Multiple files supported • Max total 200MB</p>
                     </div>
                   </div>
                   <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-pink-100 to-fuchsia-100 dark:from-pink-900/20 dark:to-fuchsia-900/20 rounded-full opacity-50" />
@@ -165,12 +165,12 @@ export default function PdfMergePage() {
             </Dropzone>
 
             {files.length > 0 && (
-                             <ul className="mt-6 divide-y rounded-2xl border bg-white/70 dark:bg-black/30 max-h-80 overflow-auto">
+                             <ul className="mt-6 divide-y rounded-2xl border bg-surface/70 max-h-80 overflow-auto">
                 {files.map((file, index) => (
                   <li key={`${file.name}-${index}`} className="p-4 flex items-center justify-between gap-4">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-gray-900 dark:text-white">{file.name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{(file.size / 1024).toFixed(1)} KB</p>
+                      <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
+                      <p className="text-xs text-muted">{(file.size / 1024).toFixed(1)} KB</p>
                     </div>
                     <div className="flex items-center gap-2">
                       <button type="button" className="px-2 py-1 text-xs rounded border" onClick={() => moveFile(index, Math.max(0, index - 1))} disabled={index === 0}><ChevronUp className="w-4 h-4" /></button>
@@ -189,28 +189,28 @@ export default function PdfMergePage() {
             <div className="lg:col-span-2 space-y-6">
               <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg"><Settings className="w-5 h-5 text-purple-600" /></div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Merge Settings</h3>
+                  <div className="p-2 bg-primary/20 rounded-lg"><Settings className="w-5 h-5 text-primary" /></div>
+                  <h3 className="text-xl font-semibold text-foreground">Merge Settings</h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mode</label>
-                    <select value={mode} onChange={(e) => setMode(e.target.value as MergeMode)} className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white">
+                    <label className="block text-sm font-medium text-foreground mb-2">Mode</label>
+                    <select value={mode} onChange={(e) => setMode(e.target.value as MergeMode)} className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground">
                       <option value="append">Append (keep file order)</option>
                       <option value="interleave">Interleave pages</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Output filename</label>
-                    <input value={outputName} onChange={(e) => setOutputName(e.target.value)} className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white" />
+                    <label className="block text-sm font-medium text-foreground mb-2">Output filename</label>
+                    <input value={outputName} onChange={(e) => setOutputName(e.target.value)} className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground" />
                   </div>
                   <div className="flex items-center gap-3">
                     <input id="opt" type="checkbox" className="w-5 h-5" checked={optimize} onChange={(e) => setOptimize(e.target.checked)} />
-                    <label htmlFor="opt" className="text-sm text-gray-700 dark:text-gray-300">Optimize output (smaller file)</label>
+                    <label htmlFor="opt" className="text-sm text-foreground">Optimize output (smaller file)</label>
                   </div>
                   <div className="flex items-center gap-3">
                     <input id="labels" type="checkbox" className="w-5 h-5" checked={pageLabels} onChange={(e) => setPageLabels(e.target.checked)} />
-                    <label htmlFor="labels" className="text-sm text-gray-700 dark:text-gray-300">Add page labels (file names)</label>
+                    <label htmlFor="labels" className="text-sm text-foreground">Add page labels (file names)</label>
                   </div>
                 </div>
                 <div className="mt-6 bg-fuchsia-50 dark:bg-fuchsia-900/20 rounded-xl p-4 border border-fuchsia-200 dark:border-fuchsia-800">
@@ -222,10 +222,10 @@ export default function PdfMergePage() {
               </div>
               <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg"><Zap className="w-5 h-5 text-green-600" /></div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Merge</h3>
+                  <div className="p-2 bg-success/20 rounded-lg"><Zap className="w-5 h-5 text-success" /></div>
+                  <h3 className="text-xl font-semibold text-foreground">Merge</h3>
                 </div>
-                <button type="button" onClick={handleMerge} disabled={!canMerge} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canMerge ? 'bg-gradient-to-r from-fuchsia-500 to-pink-600 hover:from-fuchsia-600 hover:to-pink-700 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed'}`}>
+                <button type="button" onClick={handleMerge} disabled={!canMerge} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canMerge ? 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-muted text-muted cursor-not-allowed'}`}>
                   {isMerging ? (<span className="inline-flex items-center gap-2"><Spinner /> Merging…</span>) : (<span className="inline-flex items-center gap-2">Start merge <ArrowRight className="w-5 h-5" /></span>)}
                   {!isMerging && canMerge && (<div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />)}
                 </button>
@@ -257,7 +257,7 @@ export default function PdfMergePage() {
                 </div>
                               ) : (
                   <div className="card-premium p-6 sm:p-8">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">No output yet. Configure settings and click Merge.</div>
+                    <div className="text-sm text-muted">No output yet. Configure settings and click Merge.</div>
                   </div>
                 )}
               {errorMessage && (
@@ -270,7 +270,7 @@ export default function PdfMergePage() {
             </div>
           </div>
         )}
-        <div className="mt-16 text-center text-gray-500 dark:text-gray-400">
+        <div className="mt-16 text-center text-muted">
           <p className="text-sm">🔒 Merging happens locally in your browser. Nothing is uploaded.</p>
         </div>
 
