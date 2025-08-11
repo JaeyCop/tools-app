@@ -85,14 +85,14 @@ out/
 ├── _redirects          # SPA routing
 ├── sitemap.xml         # SEO sitemap
 ├── robots.txt          # SEO robots
-└── favicon.ico         # Site icon
+├── favicon.ico         # Site icon
 ```
 
 ## 🌐 **CUSTOM DOMAIN (Optional)**
 
 1. In Cloudflare Pages, go to **"Custom domains"**
 2. Click **"Set up a custom domain"**
-3. Enter your domain (e.g., `simple-tools.com`)
+3. Enter your domain (e.g., `jaeyguides.com`)
 4. Follow DNS setup instructions
 5. SSL certificate will be auto-generated
 
