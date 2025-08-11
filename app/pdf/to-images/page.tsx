@@ -45,9 +45,14 @@ export default function PdfToImagesPage() {
       (async () => {
         try {
           const pdfjs = await import("pdfjs-dist");
-          const getDocument = (pdfjs as any).getDocument as any;
+          
+          // Configure worker for page counting
+          if (typeof window !== 'undefined') {
+            pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+          }
+          
           const data = await first.arrayBuffer();
-          const pdf = await getDocument({ data }).promise;
+          const pdf = await pdfjs.getDocument({ data }).promise;
           setPageCount(pdf.numPages);
         } catch {}
       })();
@@ -80,10 +85,17 @@ export default function PdfToImagesPage() {
     setProgress({ current: 0, total: 0 });
 
     try {
-      const [{ getDocument }, { default: JSZip }] = await Promise.all([
-        import("pdfjs-dist").then((m) => ({ getDocument: (m as any).getDocument })),
+      const [pdfjs, { default: JSZip }] = await Promise.all([
+        import("pdfjs-dist"),
         import("jszip"),
       ]);
+      
+      // Configure pdfjs worker
+      if (typeof window !== 'undefined') {
+        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+      }
+      
+      const { getDocument } = pdfjs;
 
       const data = await file.arrayBuffer();
       const pdf = await getDocument({ data }).promise;
@@ -107,7 +119,7 @@ export default function PdfToImagesPage() {
         if (!ctx) throw new Error("Canvas unsupported");
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        await page.render({ canvasContext: ctx as any, viewport }).promise;
+        await page.render({ canvasContext: ctx, viewport, canvasFactory: undefined }).promise;
 
         const mime: OutputFormat = outputFormat;
         const quality = mime === "image/jpeg" ? jpegQuality : 0.92;
