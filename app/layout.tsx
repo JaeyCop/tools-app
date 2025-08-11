@@ -4,6 +4,7 @@ import "./globals.css";
 import Analytics from "@/components/Analytics";
 import Footer from "@/components/Footer";
 import { metadata } from "./metadata";
+import AppThemeProvider from "@/components/AppThemeProvider";
 
 export { metadata };
 
@@ -13,12 +14,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body className="antialiased font-sans h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+        <AppThemeProvider>
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
           {/* Responsive Sidebar */}
           <ResponsiveSidebar />
@@ -37,6 +39,7 @@ export default function RootLayout({
         </div>
 
         <Analytics />
+        </AppThemeProvider>
       </body>
     </html>
   );
