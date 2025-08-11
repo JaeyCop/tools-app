@@ -5,38 +5,39 @@ function ToolCard(props: { title: string; description: string; href: string }) {
   return (
     <Link
       href={href}
-      className="block rounded-md border p-4 hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+      className="block rounded-md border border-accent p-4 hover:bg-accent/10 transition-colors"
     >
-      <div className="font-medium">{title}</div>
-      <div className="text-sm text-black/70 dark:text-white/60">{description}</div>
+      <div className="font-medium text-primary">{title}</div>
+      <div className="text-sm text-foreground/70">{description}</div>
     </Link>
   );
 }
 
 export default function Home() {
   return (
-    <div className="space-y-10">
-      <section className="text-center space-y-4">
-        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
-          All‑in‑one PDF & Image tools
-        </h1>
-        <p className="text-sm text-black/70 dark:text-white/60">
-          Process files in your browser. Nothing is uploaded.
-        </p>
-        <div className="flex justify-center gap-3">
-          <Link
-            href="/pdf/merge"
-            className="rounded bg-black text-white dark:bg-white dark:text-black px-4 py-2"
-          >
-            PDF Merge
-          </Link>
-          <Link href="/image/resize" className="rounded border px-4 py-2">
-            Image Resize
-          </Link>
-        </div>
-      </section>
+    <div className="max-w-full min-h-[100dvh]">
+      <div className="mx-auto max-w-5xl px-4 py-12 space-y-12">
+        <section className="text-center space-y-5">
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-primary">
+            All‑in‑one PDF & Image tools
+          </h1>
+          <p className="text-base text-foreground/70">
+            Fast, private, and free. Everything runs in your browser.
+          </p>
+          <div className="flex justify-center gap-3">
+            <Link
+              href="/pdf/merge"
+              className="rounded-2xl bg-primary px-5 py-3 text-white font-semibold shadow hover:shadow-lg transition-shadow"
+            >
+              PDF Merge
+            </Link>
+            <Link href="/image/resize" className="rounded-2xl border border-secondary px-5 py-3 text-secondary hover:bg-secondary/10">
+              Image Resize
+            </Link>
+          </div>
+        </section>
 
-      <section className="space-y-4">
+        <section className="space-y-4">
         <h2 className="text-xl font-semibold">PDF Tools</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <ToolCard
@@ -60,9 +61,9 @@ export default function Home() {
             href="/pdf/compress"
           />
         </div>
-      </section>
+        </section>
 
-      <section className="space-y-4">
+        <section className="space-y-4 pb-4">
         <h2 className="text-xl font-semibold">Image Tools</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <ToolCard
@@ -91,7 +92,8 @@ export default function Home() {
             href="/image/remove-bg"
           />
         </div>
-      </section>
+        </section>
+      </div>
     </div>
   );
 }

@@ -1,13 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #E0FFFF;
+  --foreground: #333333;
+  --primary: #2258A5;
+  --secondary: #FF8B00;
+  --accent: #349C55;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
   --font-sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     "Apple Color Emoji", "Segoe UI Emoji";
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -18,6 +24,9 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --primary: #5893D4;
+    --secondary: #FFAC4D;
+    --accent: #66B983;
   }
 }
 

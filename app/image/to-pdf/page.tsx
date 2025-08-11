@@ -60,7 +60,7 @@ export default function ImagesToPdfPage() {
       const url = URL.createObjectURL(blob);
       setPdfUrl(url);
     } catch (e) {
-      console.error(e);
+      setErrorMessage(e instanceof Error ? e.message : "PDF creation failed");
       setErrorMessage("Failed to build PDF.");
     } finally {
       setIsProcessing(false);
