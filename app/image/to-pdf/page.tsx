@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Dropzone from "react-dropzone";
-import Spinner from "@/components/ui/Spinner";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ErrorMessage from "@/components/ui/ErrorMessage";
+import FileValidation from "@/components/ui/FileValidation";
+import FilePreview from "@/components/ui/FilePreview";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import { PDFDocument, StandardFonts } from "pdf-lib";
 import ToolSeoContent from "@/components/ToolSeoContent";
 import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
@@ -119,6 +123,13 @@ export default function ImagesToPdfPage() {
   };
 
   const canExport = useMemo(() => files.length > 0 && !isProcessing, [files.length, isProcessing]);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    'Ctrl+Enter': () => canExport && buildPdf(),
+    'Escape': () => setErrorMessage(null),
+    'Delete': () => files.length > 0 && setFiles(prev => prev.slice(0, -1)),
+  });
 
   const buildPdf = async () => {
     setIsProcessing(true);
@@ -341,11 +352,11 @@ export default function ImagesToPdfPage() {
 
               <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg"><CheckCircle className="w-5 h-5 text-green-600" /></div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Export</h3>
+                  <div className="p-2 bg-success/20 rounded-lg"><CheckCircle className="w-5 h-5 text-success" /></div>
+                  <h3 className="text-xl font-semibold text-foreground">Export</h3>
                 </div>
-                <button type="button" onClick={buildPdf} disabled={!canExport} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canExport ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-gray-300 dark:bg-gray-600 text-gray-500 cursor-not-allowed'}`}>
-                  {isProcessing ? (<span className="inline-flex items-center gap-2"><Spinner /> Building…</span>) : (<span className="inline-flex items-center gap-2">Build PDF <Download className="w-5 h-5" /></span>)}
+                <button type="button" onClick={buildPdf} disabled={!canExport} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canExport ? 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-muted text-muted cursor-not-allowed'}`}>
+                  {isProcessing ? (<span className="inline-flex items-center gap-2"><LoadingSpinner size="sm" /> Building…</span>) : (<span className="inline-flex items-center gap-2">Build PDF <Download className="w-5 h-5" /></span>)}
                   {!isProcessing && canExport && (<div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />)}
                 </button>
               </div>
@@ -372,15 +383,19 @@ export default function ImagesToPdfPage() {
                 </div>
               ) : (
                 <div className="card-premium p-6 sm:p-8">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">No output yet. Add images and click Build PDF.</div>
+                  <div className="text-sm text-muted">No output yet. Add images and click Build PDF.</div>
                 </div>
               )}
               {errorMessage && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-red-800 dark:text-red-200">{errorMessage}</span>
-                  </div>
-                </div>
+                <ErrorMessage 
+                  error={errorMessage}
+                  onRetry={() => setErrorMessage(null)}
+                  suggestions={[
+                    "Check that all files are valid images",
+                    "Try with fewer images if memory is limited",
+                    "Ensure images aren't corrupted"
+                  ]}
+                />
               )}
             </div>
           </div>
@@ -402,7 +417,7 @@ export default function ImagesToPdfPage() {
           </div>
         )}
 
-        <div className="mt-16 text-center text-gray-500 dark:text-gray-400">
+        <div className="mt-16 text-center text-muted">
           <p className="text-sm">🔒 Conversion happens locally in your browser. Nothing is uploaded.</p>
         </div>
 

@@ -18,8 +18,11 @@ import {
   Move,
   RefreshCw,
   Zap,
+  Keyboard,
 } from "lucide-react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
+import KeyboardShortcutsHelp from "@/components/ui/KeyboardShortcutsHelp";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 
 export default function TopBar() {
   const router = useRouter();
@@ -27,6 +30,7 @@ export default function TopBar() {
   const [query, setQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isShortcutsOpen, setIsShortcutsOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const isActive = useCallback(
@@ -84,6 +88,17 @@ export default function TopBar() {
     }
   }, [isSearchOpen]);
 
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    'Ctrl+/': () => setIsShortcutsOpen(true),
+    'Ctrl+K': () => setIsSearchOpen(true),
+    'Escape': () => {
+      setIsSearchOpen(false);
+      setIsShortcutsOpen(false);
+      setIsMenuOpen(false);
+    },
+  });
+
   return (
     <div className="xl:hidden sticky top-0 z-40">
       <div className="backdrop-blur-xl bg-surface/80 border-b border-border">
@@ -139,7 +154,16 @@ export default function TopBar() {
                 <Search className="h-5 w-5 text-muted" />
               </button>
 
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsShortcutsOpen(true)}
+                  className="p-2 rounded-full hover:bg-border/50"
+                  aria-label="Keyboard shortcuts"
+                  title="Keyboard shortcuts (Ctrl+/)"
+                >
+                  <Keyboard className="h-5 w-5 text-muted" />
+                </button>
                 <ThemeSwitcher />
               </div>
             </div>
@@ -265,6 +289,20 @@ export default function TopBar() {
           </div>
         </div>
       )}
+
+      {/* Keyboard Shortcuts Help */}
+      <KeyboardShortcutsHelp
+        isOpen={isShortcutsOpen}
+        onClose={() => setIsShortcutsOpen(false)}
+        shortcuts={[
+          { key: "Ctrl+Enter", description: "Start processing", category: "Actions" },
+          { key: "Escape", description: "Close dialogs / Clear errors", category: "Navigation" },
+          { key: "Delete", description: "Remove last file", category: "File Management" },
+          { key: "Ctrl+/", description: "Show keyboard shortcuts", category: "Help" },
+          { key: "Ctrl+K", description: "Focus search", category: "Navigation" },
+          { key: "Arrow Keys", description: "Reorder files (when focused)", category: "File Management" },
+        ]}
+      />
     </div>
   );
 }

@@ -3,7 +3,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PDFDocument, StandardFonts } from "pdf-lib";
 import Dropzone, { FileRejection } from "react-dropzone";
-import Spinner from "@/components/ui/Spinner";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ErrorMessage from "@/components/ui/ErrorMessage";
+import SuccessMessage from "@/components/ui/ErrorMessage";
+import FileValidation from "@/components/ui/FileValidation";
+import FilePreview from "@/components/ui/FilePreview";
+import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import Skeleton from "@/components/ui/Skeleton";
 import { Upload, FileText, Download, Layers, ChevronUp, ChevronDown, X, Settings, Zap, Info, CheckCircle, ArrowRight } from "lucide-react";
 import ToolSeoContent from "@/components/ToolSeoContent";
@@ -46,6 +51,13 @@ export default function PdfMergePage() {
   };
 
   const canMerge = useMemo(() => files.length >= 2 && !isMerging, [files.length, isMerging]);
+
+  // Keyboard shortcuts
+  useKeyboardShortcuts({
+    'Ctrl+Enter': () => canMerge && handleMerge(),
+    'Escape': () => setErrorMessage(null),
+    'Delete': () => files.length > 0 && removeAtIndex(files.length - 1),
+  });
 
   const handleMerge = async () => {
     try {
@@ -168,9 +180,12 @@ export default function PdfMergePage() {
                              <ul className="mt-6 divide-y rounded-2xl border bg-surface/70 max-h-80 overflow-auto">
                 {files.map((file, index) => (
                   <li key={`${file.name}-${index}`} className="p-4 flex items-center justify-between gap-4">
-                    <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
-                      <p className="text-xs text-muted">{(file.size / 1024).toFixed(1)} KB</p>
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <FilePreview file={file} size="sm" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
+                        <FileValidation file={file} maxSize={200} allowedTypes={['pdf']} className="mt-1" />
+                      </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <button type="button" className="px-2 py-1 text-xs rounded border" onClick={() => moveFile(index, Math.max(0, index - 1))} disabled={index === 0}><ChevronUp className="w-4 h-4" /></button>
@@ -226,7 +241,7 @@ export default function PdfMergePage() {
                   <h3 className="text-xl font-semibold text-foreground">Merge</h3>
                 </div>
                 <button type="button" onClick={handleMerge} disabled={!canMerge} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canMerge ? 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-muted text-muted cursor-not-allowed'}`}>
-                  {isMerging ? (<span className="inline-flex items-center gap-2"><Spinner /> Merging…</span>) : (<span className="inline-flex items-center gap-2">Start merge <ArrowRight className="w-5 h-5" /></span>)}
+                  {isMerging ? (<span className="inline-flex items-center gap-2"><LoadingSpinner size="sm" /> Merging…</span>) : (<span className="inline-flex items-center gap-2">Start merge <ArrowRight className="w-5 h-5" /></span>)}
                   {!isMerging && canMerge && (<div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />)}
                 </button>
               </div>
@@ -261,11 +276,15 @@ export default function PdfMergePage() {
                   </div>
                 )}
               {errorMessage && (
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-red-800 dark:text-red-200">{errorMessage}</span>
-                  </div>
-                </div>
+                <ErrorMessage 
+                  error={errorMessage}
+                  onRetry={() => setErrorMessage(null)}
+                  suggestions={[
+                    "Check that all files are valid PDFs",
+                    "Try with fewer files if memory is limited",
+                    "Ensure files aren't password protected"
+                  ]}
+                />
               )}
             </div>
           </div>
