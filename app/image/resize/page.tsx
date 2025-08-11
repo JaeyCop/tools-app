@@ -101,9 +101,18 @@ export default function ImageResizePage() {
     const outputFormat = format === "original" ? file.type : format;
     const mime = outputFormat || "image/png";
 
-    const blob: Blob = await new Promise((resolve) =>
-      canvas.toBlob((b) => resolve(b as Blob), mime, quality)
+    // Guard against unsupported MIME or null blob
+    const safeMime = ["image/jpeg", "image/png", "image/webp"].includes(mime) ? mime : "image/png";
+    const blob: Blob | null = await new Promise((resolve) =>
+      canvas.toBlob((b) => resolve(b ?? null), safeMime, quality)
     );
+    if (!blob) {
+      setIsProcessing(false);
+      return;
+    }
+
+    // Revoke previous object URL to avoid leaks
+    if (outputUrl) URL.revokeObjectURL(outputUrl);
 
     const url = URL.createObjectURL(blob);
     setOutputUrl(url);
