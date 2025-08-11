@@ -47,7 +47,7 @@ export default function PdfSplitPage() {
       let a = Math.max(1, Math.min(max, parseInt(m[1], 10)));
       let b = m[2] ? Math.max(1, Math.min(max, parseInt(m[2], 10))) : a;
       if (a > b) [a, b] = [b, a];
-      for (let p = a; p <= b; p++) next.add(p);
+      for (let p = a; p <= b; p++) next.add(p - 1);
     }
     setSelectedPages(next);
   }, []);

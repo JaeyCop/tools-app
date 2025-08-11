@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   FileText,
   Image,
@@ -50,10 +50,8 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
   const pdfItems = NAV_ITEMS.filter(item => item.category === 'pdf');
   const imageItems = NAV_ITEMS.filter(item => item.category === 'image');
 
-  // Close sidebar on route change (mobile)
-  useEffect(() => {
-    onClose();
-  }, [pathname, onClose]);
+  // Mobile sidebar will close via explicit interactions (link click, backdrop, ESC) to avoid premature auto-close.
+
 
   return (
     <div className="h-full flex flex-col bg-surface dark:bg-surface border-r border-border shadow-premium">
@@ -107,14 +105,15 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
               {pdfItems.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
-                        ? "gradient-primary text-white shadow-premium scale-[1.02]"
-                        : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
-                      }`}
+                                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => window.innerWidth < 1024 && onClose()}
+                      className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
+                          ? "gradient-primary text-white shadow-premium scale-[1.02]"
+                          : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
+                        }`}
                   >
                     <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-primary"
                       }`} />
@@ -145,14 +144,15 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
               {imageItems.map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.href);
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
-                        ? "gradient-accent text-white shadow-premium scale-[1.02]"
-                        : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
-                      }`}
+                                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => window.innerWidth < 1024 && onClose()}
+                      className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
+                          ? "gradient-accent text-white shadow-premium scale-[1.02]"
+                          : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
+                        }`}
                   >
                     <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-secondary"
                       }`} />
@@ -184,6 +184,16 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
 
 export default function ResponsiveSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const lastOpenedAtRef = useRef<number>(0);
+  const openMobile = () => {
+    lastOpenedAtRef.current = typeof performance !== 'undefined' ? performance.now() : Date.now();
+    setIsMobileOpen(true);
+  };
+  const safeCloseMobile = () => {
+    const now = typeof performance !== 'undefined' ? performance.now() : Date.now();
+    if (now - lastOpenedAtRef.current < 250) return;
+    setIsMobileOpen(false);
+  };
 
   // Close on ESC key
   useEffect(() => {
@@ -212,8 +222,10 @@ export default function ResponsiveSidebar() {
     <>
       {/* Mobile Menu Button */}
       <button
-        onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
+        onClick={(e) => { e.stopPropagation(); openMobile(); }}
+        className="lg:hidden fixed top-[max(theme(spacing.4),env(safe-area-inset-top))] left-[max(theme(spacing.4),env(safe-area-inset-left))] z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
+        style={{ paddingLeft: 'max(0.75rem, env(safe-area-inset-left))', paddingRight: '0.75rem' }}
+        aria-label="Open menu"
       >
         <Menu className="h-5 w-5 text-white" />
       </button>
@@ -227,14 +239,16 @@ export default function ResponsiveSidebar() {
       {isMobileOpen && (
         <>
           {/* Backdrop */}
-          <div
+          <button
+            type="button"
             className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMobileOpen(false)}
+            onClick={() => safeCloseMobile()}
+            aria-label="Close menu backdrop"
           />
 
           {/* Mobile Sidebar Panel */}
-          <aside className="lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out">
-            <SidebarContent isOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} />
+                          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <SidebarContent isOpen={isMobileOpen} onClose={safeCloseMobile} />
           </aside>
         </>
       )}
