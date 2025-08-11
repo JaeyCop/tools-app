@@ -36,9 +36,7 @@
     "out/types/**/*.ts"
   ],
   "typeAcquisition": {
-    "include": [
-      "pdfjs-dist"
-    ]
+    "include": ["pdfjs-dist"]
   },
   "exclude": [
     "node_modules"

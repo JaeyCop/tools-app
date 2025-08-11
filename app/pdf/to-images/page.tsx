@@ -26,8 +26,9 @@ export default function PdfToImagesPage() {
 
   // Cleanup object URLs on unmount
   useEffect(() => {
+    const urlsToRevoke = urlsToRevokeRef.current;
     return () => {
-      urlsToRevokeRef.current.forEach((u) => URL.revokeObjectURL(u));
+      urlsToRevoke.forEach((u) => URL.revokeObjectURL(u));
     };
   }, []);
 
@@ -45,11 +46,17 @@ export default function PdfToImagesPage() {
       (async () => {
         try {
           const pdfjs = await import("pdfjs-dist");
-          const getDocument = (pdfjs as any).getDocument as any;
+          // Set up the worker
+          if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
+            pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+          }
+          const getDocument = pdfjs.getDocument;
           const data = await first.arrayBuffer();
           const pdf = await getDocument({ data }).promise;
           setPageCount(pdf.numPages);
-        } catch {}
+        } catch (error) {
+          console.error('Error loading PDF:', error);
+        }
       })();
     }
   }, []);
@@ -80,13 +87,18 @@ export default function PdfToImagesPage() {
     setProgress({ current: 0, total: 0 });
 
     try {
-      const [{ getDocument }, { default: JSZip }] = await Promise.all([
-        import("pdfjs-dist").then((m) => ({ getDocument: (m as any).getDocument })),
+      const [pdfjs, { default: JSZip }] = await Promise.all([
+        import("pdfjs-dist"),
         import("jszip"),
       ]);
 
+      // Set up the worker
+      if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
+        pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+      }
+
       const data = await file.arrayBuffer();
-      const pdf = await getDocument({ data }).promise;
+      const pdf = await pdfjs.getDocument({ data }).promise;
 
       const pagesToProcess = (() => {
         if (!includeRange.trim()) return Array.from({ length: pdf.numPages }, (_, i) => i + 1);
@@ -107,7 +119,7 @@ export default function PdfToImagesPage() {
         if (!ctx) throw new Error("Canvas unsupported");
         canvas.width = viewport.width;
         canvas.height = viewport.height;
-        await page.render({ canvasContext: ctx as any, viewport }).promise;
+        await page.render({ canvas, canvasContext: ctx, viewport }).promise;
 
         const mime: OutputFormat = outputFormat;
         const quality = mime === "image/jpeg" ? jpegQuality : 0.92;
@@ -126,13 +138,15 @@ export default function PdfToImagesPage() {
 
       const zipBlob = await zip.generateAsync({ type: "blob" });
       const zipObjectUrl = URL.createObjectURL(zipBlob);
+      urlsToRevokeRef.current.push(zipObjectUrl);
       setImageUrls(urls);
       setZipUrl(zipObjectUrl);
     } catch (e) {
+      console.error('PDF to Images conversion error:', e);
       setErrorMessage(e instanceof Error ? e.message : "PDF processing failed");
-      setErrorMessage("Failed to convert PDF to images.");
     } finally {
       setIsProcessing(false);
+      setProgress(null);
     }
   };
 
@@ -149,7 +163,7 @@ export default function PdfToImagesPage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         {/* Hero */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-3 mb-4">
@@ -166,7 +180,7 @@ export default function PdfToImagesPage() {
         </div>
 
         {/* Uploader */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-8">
+        <div className="card-premium shadow-premium overflow-hidden mb-8">
           <div className="p-8">
             <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }} multiple={false}>
               {({ getRootProps, getInputProps, isDragActive }) => (
@@ -238,15 +252,15 @@ export default function PdfToImagesPage() {
 
         {/* Settings & Convert */}
         {file && (
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="grid gap-6 lg:gap-8 lg:grid-cols-3 items-start">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <Settings className="w-5 h-5 text-blue-600" />
+                              <div className="card-premium p-6 sm:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                      <Settings className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Conversion Settings</h3>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Conversion Settings</h3>
-                </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {/* Resolution */}
@@ -345,7 +359,7 @@ export default function PdfToImagesPage() {
               </div>
 
               {/* Convert button & progress */}
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                     <Zap className="w-5 h-5 text-green-600" />
@@ -393,7 +407,7 @@ export default function PdfToImagesPage() {
             {/* Output preview */}
             <div className="space-y-6">
               {isProcessing && (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                         <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                             <Skeleton className="w-5 h-5" />
@@ -411,7 +425,7 @@ export default function PdfToImagesPage() {
                 </div>
               )}
               {imageUrls.length > 0 && !isProcessing && (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                       <Layers className="w-5 h-5 text-purple-600" />
@@ -443,7 +457,7 @@ export default function PdfToImagesPage() {
               )}
 
               {/* Tips */}
-              <div className="bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 rounded-3xl shadow-xl border border-indigo-200 dark:border-indigo-800 p-8">
+              <div className="card-premium bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-900/20 dark:to-blue-900/20 border-indigo-200 dark:border-indigo-800 p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl">
                     <Sparkles className="w-5 h-5 text-indigo-600" />

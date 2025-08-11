@@ -111,7 +111,7 @@ export default function PdfSplitPage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         {/* Hero */}
         <div className="flex items-center justify-between mb-12">
           <div className="text-center">
@@ -138,7 +138,7 @@ export default function PdfSplitPage() {
         </div>
 
         {/* Uploader */}
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-8">
+        <div className="card-premium shadow-premium overflow-hidden mb-8">
           <div className="p-8">
             <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }} multiple={false}>
               {({ getRootProps, getInputProps, isDragActive }) => (
@@ -187,10 +187,10 @@ export default function PdfSplitPage() {
 
         {/* Main */}
         {typeof numPages === 'number' && numPages > 0 && (
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="grid gap-6 lg:gap-8 lg:grid-cols-3 items-start">
             {/* Selection */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-cyan-100 dark:bg-cyan-900/30 rounded-lg"><Filter className="w-5 h-5 text-cyan-600" /></div>
@@ -244,7 +244,7 @@ export default function PdfSplitPage() {
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg"><Zap className="w-5 h-5 text-green-600" /></div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Export</h3>
@@ -271,7 +271,7 @@ export default function PdfSplitPage() {
             {/* Output */}
             <div className="space-y-6">
               {isProcessing && (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                       <Skeleton className="w-5 h-5" />
@@ -294,7 +294,7 @@ export default function PdfSplitPage() {
                   </a>
                 </div>
               ) : (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="text-sm text-gray-600 dark:text-gray-400">No export yet. Select pages and click Export.</div>
                 </div>
               )}

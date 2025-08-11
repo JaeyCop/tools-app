@@ -137,8 +137,8 @@ export default function EnhancedImageCompressor() {
   /* --------------------------------------------------------------------------- */
   /* Constants and validation                                                   */
   /* --------------------------------------------------------------------------- */
-  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
-  const SUPPORTED_FORMATS = ['image/jpeg', 'image/png', 'image/webp'];
+  const MAX_FILE_SIZE = useMemo(() => 50 * 1024 * 1024, []); // 50MB
+  const SUPPORTED_FORMATS = useMemo(() => ['image/jpeg', 'image/png', 'image/webp'], []);
 
   const validateFile = useCallback((file: File): string | null => {
     if (!SUPPORTED_FORMATS.includes(file.type)) {
@@ -148,7 +148,7 @@ export default function EnhancedImageCompressor() {
       return 'File too large. Maximum size is 50MB.';
     }
     return null;
-  }, []);
+  }, [MAX_FILE_SIZE, SUPPORTED_FORMATS]);
 
   /* --------------------------------------------------------------------------- */
   /* Derived values                                                             */

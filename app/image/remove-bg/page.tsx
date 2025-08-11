@@ -228,7 +228,7 @@ export default function RemoveBgPage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
           <div className="text-center">
@@ -257,7 +257,7 @@ export default function RemoveBgPage() {
 
         <div className="space-y-8">
           {/* Upload Area */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="card-premium shadow-premium overflow-hidden">
             <div className="p-8">
               <Dropzone onDrop={onDrop} accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"] }} multiple={false}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
@@ -308,7 +308,7 @@ export default function RemoveBgPage() {
                 <div className="mt-6 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200 dark:border-gray-600">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                      <Image className="w-5 h-5 text-purple-600" />
+                      <Image className="w-5 h-5 text-purple-600" aria-hidden="true" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-gray-900 dark:text-white truncate">{file.name}</p>
@@ -325,11 +325,11 @@ export default function RemoveBgPage() {
 
           {/* Main Content */}
           {imageUrl && (
-            <div className="grid gap-8 lg:grid-cols-3">
+            <div className="grid gap-6 lg:gap-8 lg:grid-cols-3">
               {/* Original Image */}
               <div className="lg:col-span-2 space-y-6">
                 {/* Source Image */}
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
@@ -356,7 +356,7 @@ export default function RemoveBgPage() {
                     <img
                       ref={imgRef}
                       src={imageUrl}
-                      alt="Source"
+                      alt="Original image for background removal"
                       className="max-w-full h-auto rounded-xl shadow-sm mx-auto block"
                       onLoad={onImageLoad}
                       style={{ maxHeight: '500px' }}
@@ -391,7 +391,7 @@ export default function RemoveBgPage() {
 
                 {/* Preview */}
                 {(previewUrl || outputUrl) && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3">
                         <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
@@ -428,9 +428,8 @@ export default function RemoveBgPage() {
                         />
                       )}
                       <img
-                        alt="Original image preview"
+                        alt="Processed image with background removed"
                         src={(outputUrl || previewUrl) || ""}
-                        // alt="Result"
                         className="max-w-full h-auto shadow-sm mx-auto block relative z-10"
                         style={{ maxHeight: '500px' }}
                       />
@@ -443,7 +442,7 @@ export default function RemoveBgPage() {
               <div className="space-y-6">
                 {/* Brush Settings */}
                 {file && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
                         <Brush className="w-5 h-5 text-blue-600" />
@@ -493,7 +492,7 @@ export default function RemoveBgPage() {
 
                 {/* Color Selection */}
                 {picked && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
                         <Palette className="w-5 h-5 text-indigo-600" />
@@ -530,7 +529,7 @@ export default function RemoveBgPage() {
 
                 {/* Tolerance Control */}
                 {picked && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
                         <Sliders className="w-5 h-5 text-orange-600" />
@@ -577,7 +576,7 @@ export default function RemoveBgPage() {
 
                 {/* Process Button */}
                 {canProcess && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                         <Zap className="w-5 h-5 text-green-600" />
@@ -610,7 +609,7 @@ export default function RemoveBgPage() {
 
                 {/* Download Result */}
                 {isProcessing && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                  <div className="card-premium p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                         <Skeleton className="w-5 h-5" />

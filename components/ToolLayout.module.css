@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  flex-direction: column; /* Mobile-first: stack vertically */
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.sidebar {
+  /* On mobile, it's just part of the flow */
+  border-radius: 12px;
+  padding: 1.5rem;
+  background-color: var(--sidebar-bg, #f9fafb); /* Use CSS variables for theming */
+}
+
+[data-theme='dark'] .sidebar {
+    --sidebar-bg: #1f2937;
+}
+
+.mainContent {
+  flex-grow: 1;
+}
+
+/* Apply two-column layout for tablets and larger */
+@media (min-width: 768px) {
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .sidebar {
+    flex: 0 0 320px; /* Fixed width sidebar */
+    position: sticky;
+    top: 2rem; /* Sticks to the top when scrolling */
+  }
+}

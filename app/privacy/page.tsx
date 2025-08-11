@@ -1,7 +1,7 @@
 export default function PrivacyPage() {
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-3xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-3xl">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Privacy Policy</h1>
           <p className="mt-3 text-gray-600 dark:text-gray-300">Your files stay on your device. We value privacy.</p>
