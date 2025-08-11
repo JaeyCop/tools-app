@@ -33,7 +33,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/image/to-pdf", label: "Images to PDF", icon: FileText, category: 'image' },
   { href: "/image/convert", label: "Convert Format", icon: RefreshCw, category: 'image' },
   { href: "/image/compress", label: "Compress Image", icon: Archive, category: 'image' },
-  { href: "/image/remove-bg", label: "Remove Background", icon: Eraser, category: 'image' },
 ];
 
 interface SidebarProps {
