@@ -42,6 +42,14 @@ export default function RootLayout({
               crossOrigin="anonymous"
             />
           )}
+
+          {/* Ahrefs Analytics */}
+          <Script
+            id="ahrefs-analytics"
+            src="https://analytics.ahrefs.com/analytics.js"
+            data-key="GOToh+/dvpq5cKtZ4424aw"
+            strategy="afterInteractive"
+          />
           <div className="flex h-screen bg-background">
             {/* Organization & WebSite JSON-LD */}
             <SeoOrganizationJsonLd />
