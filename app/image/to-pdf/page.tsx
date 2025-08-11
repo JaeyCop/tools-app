@@ -9,11 +9,25 @@ import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
 import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 import { Upload, FileText, Download, ChevronUp, ChevronDown, X, Settings, CheckCircle } from "lucide-react";
 
+type PagePreset = "auto" | "a4" | "letter";
+type FitMode = "contain" | "cover";
+
+const PAGE_SIZES: Record<Exclude<PagePreset, "auto">, { w: number; h: number }> = {
+  a4: { w: 595, h: 842 }, // 210 × 297 mm @ 72 dpi
+  letter: { w: 612, h: 792 }, // 8.5 × 11 in @ 72 dpi
+};
+
 export default function ImagesToPdfPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const [pagePreset, setPagePreset] = useState<PagePreset>("auto");
+  const [fitMode, setFitMode] = useState<FitMode>("contain");
+  const [marginPoints, setMarginPoints] = useState<number>(24); // 24pt = 1/3 inch
+  const [labelFilenames, setLabelFilenames] = useState<boolean>(true);
+  const [outputName, setOutputName] = useState<string>("images.pdf");
 
   const onDrop = useCallback((accepted: File[]) => {
     const imgs = accepted.filter((f) => f.type.startsWith("image/") || /\.(png|jpe?g|webp)$/i.test(f.name));
@@ -46,14 +60,44 @@ export default function ImagesToPdfPage() {
       for (const file of files) {
         const bytes = await file.arrayBuffer();
         const ext = (file.type || '').toLowerCase();
-        let image;
-        if (ext.includes("png")) image = await doc.embedPng(bytes);
-        else image = await doc.embedJpg(bytes);
+        const image = ext.includes("png") ? await doc.embedPng(bytes) : await doc.embedJpg(bytes);
+        const imgDims = image.scale(1);
 
-        const { width, height } = image.scale(1);
-        const page = doc.addPage([width, height]);
-        page.drawImage(image, { x: 0, y: 0, width, height });
-        page.drawText(file.name, { x: 8, y: 8, size: 10, font, color: undefined });
+        // Determine page size
+        let pageW: number;
+        let pageH: number;
+        if (pagePreset === "auto") {
+          // If auto, size the page to the image plus margins
+          pageW = Math.max(1, imgDims.width + marginPoints * 2);
+          pageH = Math.max(1, imgDims.height + marginPoints * 2);
+        } else {
+          pageW = PAGE_SIZES[pagePreset].w;
+          pageH = PAGE_SIZES[pagePreset].h;
+        }
+
+        const page = doc.addPage([pageW, pageH]);
+
+        // Compute draw rect with fit
+        const contentW = Math.max(1, pageW - marginPoints * 2);
+        const contentH = Math.max(1, pageH - marginPoints * 2);
+        const scaleContain = Math.min(contentW / imgDims.width, contentH / imgDims.height);
+        const scaleCover = Math.max(contentW / imgDims.width, contentH / imgDims.height);
+        const scale = fitMode === "cover" ? scaleCover : scaleContain;
+        const drawW = imgDims.width * scale;
+        const drawH = imgDims.height * scale;
+        const x = (pageW - drawW) / 2;
+        const y = (pageH - drawH) / 2;
+
+        page.drawImage(image, { x, y, width: drawW, height: drawH });
+
+        if (labelFilenames) {
+          const text = file.name;
+          const size = 10;
+          // Place label near bottom-left inside margin
+          const tx = Math.max(8, marginPoints);
+          const ty = Math.max(8, marginPoints - 2);
+          page.drawText(text, { x: tx, y: ty, size, font });
+        }
       }
 
       const out = await doc.save();
@@ -157,7 +201,47 @@ export default function ImagesToPdfPage() {
                   <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg"><Settings className="w-5 h-5 text-blue-600" /></div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Options</h3>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Pages will match image dimensions. Reorder images to set page order.</p>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Page size</label>
+                    <select value={pagePreset} onChange={(e) => setPagePreset(e.target.value as PagePreset)} className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white">
+                      <option value="auto">Auto (match image)</option>
+                      <option value="a4">A4 (595 × 842)</option>
+                      <option value="letter">Letter (612 × 792)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fit mode</label>
+                    <div className="flex items-center gap-3">
+                      <label className="inline-flex items-center gap-2">
+                        <input type="radio" name="fit" value="contain" checked={fitMode === "contain"} onChange={() => setFitMode("contain")} />
+                        <span className="text-sm">Contain</span>
+                      </label>
+                      <label className="inline-flex items-center gap-2">
+                        <input type="radio" name="fit" value="cover" checked={fitMode === "cover"} onChange={() => setFitMode("cover")} />
+                        <span className="text-sm">Cover</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Margins</label>
+                    <div className="flex items-center gap-3">
+                      <input type="range" min={0} max={72} step={2} value={marginPoints} onChange={(e) => setMarginPoints(parseInt(e.target.value, 10))} className="flex-1" />
+                      <input type="number" min={0} max={144} step={2} value={marginPoints} onChange={(e) => setMarginPoints(Number.isNaN(parseInt(e.target.value, 10)) ? 0 : parseInt(e.target.value, 10))} className="w-20 rounded border px-2 py-1 bg-white dark:bg-gray-700" />
+                      <span className="text-xs text-gray-500">pt</span>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="inline-flex items-center gap-2">
+                      <input type="checkbox" checked={labelFilenames} onChange={(e) => setLabelFilenames(e.target.checked)} />
+                      <span className="text-sm">Label each page with filename</span>
+                    </label>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Output filename</label>
+                      <input value={outputName} onChange={(e) => setOutputName(e.target.value)} className="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-4 py-3 text-gray-900 dark:text-white" />
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="card-premium p-6 sm:p-8">
@@ -187,8 +271,8 @@ export default function ImagesToPdfPage() {
                     <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl"><CheckCircle className="w-6 h-6 text-green-600" /></div>
                     <h3 className="text-2xl font-bold text-green-800 dark:text-green-200">PDF Ready</h3>
                   </div>
-                  <a className="w-full inline-flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" href={pdfUrl} download="images.pdf">
-                    <Download className="w-5 h-5" /> Download images.pdf
+                  <a className="w-full inline-flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" href={pdfUrl} download={outputName || "images.pdf"}>
+                    <Download className="w-5 h-5" /> Download {outputName || 'images.pdf'}
                   </a>
                 </div>
               ) : (
