@@ -9,7 +9,7 @@
   border-radius: 8px;
   border: none;
   cursor: pointer;
-  background-color: hsl(var(--primary));
+ background-color: hsl(var(--primary));
   color: hsl(var(--primary-foreground));
   transition: background-color 0.2s ease-in-out, transform 0.1s ease;
 }
