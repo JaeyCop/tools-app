@@ -5,10 +5,19 @@ function ToolCard(props: { title: string; description: string; href: string }) {
   return (
     <Link
       href={href}
-      className="block rounded-xl border border-border bg-surface p-6 hover:bg-primary/5 hover:border-primary/30 transition-all duration-200 shadow-premium hover:shadow-premium-lg group"
+      className="block rounded-xl border border-border bg-surface p-6 hover:bg-primary/5 hover:border-primary/30 hover-lift shadow-premium group focus-premium"
     >
-      <div className="font-semibold text-foreground group-hover:text-primary transition-colors">{title}</div>
-      <div className="text-sm text-muted mt-1">{description}</div>
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-2 h-2 rounded-full bg-primary opacity-60 group-hover:opacity-100 transition-opacity"></div>
+        <div className="font-semibold text-foreground group-hover:text-primary transition-colors">{title}</div>
+      </div>
+      <div className="text-sm text-muted group-hover:text-foreground/80 transition-colors">{description}</div>
+      <div className="mt-3 flex items-center text-xs text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+        <span>Try it now</span>
+        <svg className="w-3 h-3 ml-1 transform group-hover:translate-x-1 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+          <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+        </svg>
+      </div>
     </Link>
   );
 }
@@ -27,29 +36,29 @@ export default function Home() {
           <div className="flex justify-center gap-4">
             <Link
               href="/pdf/merge"
-              className="gradient-primary rounded-2xl px-8 py-4 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105"
+              className="btn-premium gradient-primary rounded-2xl px-8 py-4 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105 focus-premium animate-pulse-glow"
             >
-              PDF Merge
+              <span className="relative z-10">PDF Merge</span>
             </Link>
             <Link 
               href="/image/resize" 
-              className="rounded-2xl border-2 border-secondary px-8 py-4 text-secondary font-semibold hover:bg-secondary hover:text-white transition-all duration-200 hover:scale-105 shadow-premium"
+              className="btn-premium rounded-2xl border-2 border-secondary px-8 py-4 text-secondary font-semibold hover:bg-secondary hover:text-white transition-all duration-200 hover:scale-105 shadow-premium focus-premium"
             >
-              Image Resize
+              <span className="relative z-10">Image Resize</span>
             </Link>
           </div>
         </section>
 
         <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
-          <div className="p-2 rounded-lg gradient-primary">
+        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3 scroll-reveal">
+          <div className="p-2 rounded-lg gradient-primary animate-float shadow-premium">
             <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
             </svg>
           </div>
           PDF Tools
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
           <ToolCard
             title="Merge PDFs"
             description="Combine multiple PDFs into one."
@@ -74,15 +83,15 @@ export default function Home() {
         </section>
 
         <section className="space-y-6 pb-4">
-        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3">
-          <div className="p-2 rounded-lg gradient-accent">
+        <h2 className="text-2xl font-bold text-foreground flex items-center gap-3 scroll-reveal">
+          <div className="p-2 rounded-lg gradient-accent animate-float shadow-premium" style={{animationDelay: '1s'}}>
             <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
             </svg>
           </div>
           Image Tools
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
           <ToolCard
             title="Resize Image"
             description="Resize while keeping aspect ratio."

@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Simple Tools - Premium File Processing App
 
-## Getting Started
+A beautiful, fast, and private file processing toolkit built with Next.js 15. All processing happens in your browser - no files are uploaded to servers.
 
-First, run the development server:
+## 🚀 Features
+
+### PDF Tools
+- **Merge PDFs** - Combine multiple PDFs into one
+- **Split PDF** - Extract selected pages into separate PDFs  
+- **PDF to Images** - Convert PDF pages to PNG/JPG
+- **Compress PDF** - Reduce PDF file size
+
+### Image Tools
+- **Resize Image** - Resize while keeping aspect ratio
+- **Convert Format** - JPG ↔ PNG ↔ WebP conversion
+- **Compress Image** - Reduce file size with quality control
+- **Remove Background** - Make backgrounds transparent
+- **Images to PDF** - Combine multiple images into PDF
+
+## 🎨 Premium Design
+
+- **Modern UI** with glass morphism effects
+- **Premium color palette** (Blue, Purple, Green)
+- **Smooth animations** and micro-interactions
+- **Responsive design** for all devices
+- **Dark/Light mode** support
+
+## 🔒 Privacy First
+
+- **100% client-side processing** - files never leave your device
+- **No data collection** - your files stay private
+- **No server uploads** - everything runs in your browser
+
+## 🛠️ Tech Stack
+
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **PDF-lib** for PDF manipulation
+- **Canvas API** for image processing
+
+## 🚀 Cloudflare Pages Deployment
+
+### Quick Deploy
+1. Push your code to GitHub
+2. Connect repository to Cloudflare Pages
+3. Set build settings:
+   - **Build command:** `npm run build`
+   - **Output directory:** `out`
+   - **Node.js version:** 18+
+4. Deploy!
+
+### Build Commands
 
 ```bash
+# Development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Production build
+npm run build
+
+# Lint code
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📱 Browser Support
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎯 Performance
 
-## Learn More
+- **Static generation** for optimal performance
+- **Code splitting** for faster loading
+- **Optimized bundles** with tree shaking
+- **Premium caching** strategies
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for the developer community
