@@ -101,7 +101,7 @@ export default function PdfMergePage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         <div className="flex items-center justify-between mb-12">
           <div className="text-center">
             <div className="inline-flex items-center gap-3 mb-4">
@@ -129,7 +129,7 @@ export default function PdfMergePage() {
           )}
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-8">
+        <div className="card-premium shadow-premium overflow-hidden mb-8">
           <div className="p-8">
             <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }}>
               {({ getRootProps, getInputProps, isDragActive }) => (
@@ -162,7 +162,7 @@ export default function PdfMergePage() {
             </Dropzone>
 
             {files.length > 0 && (
-              <ul className="mt-6 divide-y rounded-2xl border bg-white/70 dark:bg-black/30">
+                             <ul className="mt-6 divide-y rounded-2xl border bg-white/70 dark:bg-black/30 max-h-80 overflow-auto">
                 {files.map((file, index) => (
                   <li key={`${file.name}-${index}`} className="p-4 flex items-center justify-between gap-4">
                     <div className="min-w-0">
@@ -182,9 +182,9 @@ export default function PdfMergePage() {
         </div>
 
         {files.length > 0 && (
-          <div className="grid gap-8 lg:grid-cols-3">
+          <div className="grid gap-6 lg:gap-8 lg:grid-cols-3 items-start">
             <div className="lg:col-span-2 space-y-6">
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg"><Settings className="w-5 h-5 text-purple-600" /></div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Merge Settings</h3>
@@ -217,7 +217,7 @@ export default function PdfMergePage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+              <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg"><Zap className="w-5 h-5 text-green-600" /></div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Merge</h3>
@@ -230,7 +230,7 @@ export default function PdfMergePage() {
             </div>
             <div className="space-y-6">
               {isMerging && (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                       <Skeleton className="w-5 h-5" />
@@ -252,11 +252,11 @@ export default function PdfMergePage() {
                     <Download className="w-5 h-5" /> Download {outputName || 'merged.pdf'}
                   </a>
                 </div>
-              ) : (
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-                  <div className="text-sm text-gray-600 dark:text-gray-400">No output yet. Configure settings and click Merge.</div>
-                </div>
-              )}
+                              ) : (
+                  <div className="card-premium p-6 sm:p-8">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">No output yet. Configure settings and click Merge.</div>
+                  </div>
+                )}
               {errorMessage && (
                 <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6">
                   <div className="flex items-center gap-3">
