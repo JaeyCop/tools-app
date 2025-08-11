@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   FileText,
   Image,
@@ -50,8 +50,13 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
   const pdfItems = NAV_ITEMS.filter(item => item.category === 'pdf');
   const imageItems = NAV_ITEMS.filter(item => item.category === 'image');
 
-  // Close sidebar on route change (mobile)
+  // Close sidebar on route change (mobile), but ignore initial mount
+  const didMountRef = useRef(false);
   useEffect(() => {
+    if (!didMountRef.current) {
+      didMountRef.current = true;
+      return;
+    }
     onClose();
   }, [pathname, onClose]);
 
@@ -212,7 +217,7 @@ export default function ResponsiveSidebar() {
     <>
       {/* Mobile Menu Button */}
       <button
-        onClick={() => setIsMobileOpen(true)}
+        onClick={(e) => { e.stopPropagation(); setIsMobileOpen(true); }}
         className="lg:hidden fixed top-[max(theme(spacing.4),env(safe-area-inset-top))] left-[max(theme(spacing.4),env(safe-area-inset-left))] z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
         style={{ paddingLeft: 'max(0.75rem, env(safe-area-inset-left))', paddingRight: '0.75rem' }}
         aria-label="Open menu"
@@ -229,13 +234,15 @@ export default function ResponsiveSidebar() {
       {isMobileOpen && (
         <>
           {/* Backdrop */}
-          <div
+          <button
+            type="button"
             className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
             onClick={() => setIsMobileOpen(false)}
+            aria-label="Close menu backdrop"
           />
 
           {/* Mobile Sidebar Panel */}
-          <aside className="lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out">
+          <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             <SidebarContent isOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} />
           </aside>
         </>
