@@ -147,7 +147,7 @@ export default function ImageResizePage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
           <div className="text-center">
@@ -180,7 +180,7 @@ export default function ImageResizePage() {
 
         <div className="space-y-8">
           {/* Upload Area */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="card-premium shadow-premium overflow-hidden">
             <div className="p-8">
               <Dropzone onDrop={onDrop} accept={{ "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp"] }} multiple={false}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
@@ -251,15 +251,15 @@ export default function ImageResizePage() {
 
           {/* Main Content */}
           {imageUrl && (
-            <div className="grid gap-8 lg:grid-cols-2">
+            <div className="grid gap-6 lg:gap-8 lg:grid-cols-2 items-start">
               {/* Image Preview */}
-              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                    <Eye className="w-5 h-5 text-blue-600" />
+                              <div className="card-premium p-6 sm:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                      <Eye className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Preview</h3>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Preview</h3>
-                </div>
 
                 <div className="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4 border border-gray-200 dark:border-gray-600">
                   <img
@@ -293,7 +293,7 @@ export default function ImageResizePage() {
               {/* Controls */}
               <div className="space-y-6">
                 {/* Resize Controls */}
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                       <Settings className="w-5 h-5 text-purple-600" />
@@ -381,7 +381,7 @@ export default function ImageResizePage() {
                 </div>
 
                 {/* Advanced Settings */}
-                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+                <div className="card-premium p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
                       <Zap className="w-5 h-5 text-orange-600" />
@@ -458,11 +458,11 @@ export default function ImageResizePage() {
 
                 {/* Download Result */}
                 {isProcessing && (
-                  <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                        <Skeleton className="w-5 h-5" />
-                      </div>
+                                  <div className="card-premium p-6 sm:p-8">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                      <Skeleton className="w-5 h-5" />
+                    </div>
                       <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                         <Skeleton className="w-48 h-6" />
                       </h3>
@@ -471,7 +471,7 @@ export default function ImageResizePage() {
                   </div>
                 )}
                 {outputUrl && !isProcessing && (
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-3xl shadow-xl border border-green-200 dark:border-green-800 p-8">
+                  <div className="card-premium bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 border-green-200 dark:border-green-800 p-6 sm:p-8">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
                         <CheckCircle className="w-6 h-6 text-green-600" />

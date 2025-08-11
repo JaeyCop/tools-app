@@ -83,7 +83,7 @@ export default function PdfCompressorPage() {
 
   return (
     <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-4xl">
         {/* Header */}
         <div className="flex items-center justify-between mb-12">
           <div className="text-center">
@@ -116,7 +116,7 @@ export default function PdfCompressorPage() {
 
         <div className="space-y-8">
           {/* Upload Area */}
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+          <div className="card-premium shadow-premium overflow-hidden">
             <div className="p-8">
               <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }} multiple={false}>
                 {({ getRootProps, getInputProps, isDragActive }) => (
@@ -184,7 +184,7 @@ export default function PdfCompressorPage() {
 
           {/* Compression Settings */}
           {file && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+            <div className="card-premium p-6 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
                   <Zap className="w-5 h-5 text-purple-600" />
@@ -263,7 +263,7 @@ export default function PdfCompressorPage() {
 
           {/* Results */}
           {isProcessing && (
-            <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
+            <div className="card-premium p-6 sm:p-8">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
                         <Skeleton className="w-6 h-6" />
