@@ -53,11 +53,15 @@ export default function PdfCompressorPage() {
 
       for (const p of pages) dst.addPage(p);
 
-      const bytes = await dst.save({
+      // Apply compression settings based on quality
+      const compressionOptions = {
         useObjectStreams: true,
         addDefaultPage: false,
-        objectsPerTick: 50
-      });
+        objectsPerTick: Math.max(10, Math.floor(quality * 100)),
+        updateFieldAppearances: false,
+      };
+
+      const bytes = await dst.save(compressionOptions);
 
       const buf = new ArrayBuffer(bytes.length);
       new Uint8Array(buf).set(bytes);
@@ -70,8 +74,9 @@ export default function PdfCompressorPage() {
         compressedSize: bytes.length
       });
     } catch (e) {
-      setErrorMessage(e instanceof Error ? e.message : "Compression failed");
-      setErrorMessage("Failed to compress PDF. Please try a different file.");
+      const errorMsg = e instanceof Error ? e.message : "Compression failed";
+      setErrorMessage("Failed to compress PDF. Please try a different file or adjust quality settings.");
+      console.error("PDF compression error:", errorMsg);
     } finally {
       setIsProcessing(false);
     }

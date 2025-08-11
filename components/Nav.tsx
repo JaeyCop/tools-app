@@ -33,7 +33,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/image/to-pdf", label: "Images to PDF", icon: FileText, category: 'image' },
   { href: "/image/convert", label: "Convert Format", icon: RefreshCw, category: 'image' },
   { href: "/image/compress", label: "Compress Image", icon: Archive, category: 'image' },
-  { href: "/image/remove-bg", label: "Remove Background", icon: Eraser, category: 'image' },
 ];
 
 interface SidebarProps {
@@ -76,23 +75,23 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
   return (
     <div className="h-full flex flex-col bg-surface dark:bg-surface border-r border-border shadow-premium">
       {/* Header */}
-      <div className="p-6 border-b border-border bg-gradient-to-r from-primary/5 to-secondary/5">
+      <div className="p-4 md:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-secondary/5">
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-2 md:gap-3 group touch-target"
             onClick={handleLinkClick}
           >
-            <div className="p-2 rounded-xl gradient-primary shadow-premium group-hover:shadow-premium-lg transition-all duration-300 group-hover:scale-105">
-              <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="p-1.5 md:p-2 rounded-xl gradient-primary shadow-premium group-hover:shadow-premium-lg transition-all duration-300 group-hover:scale-105">
+              <svg className="h-5 w-5 md:h-6 md:w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
               </svg>
             </div>
-            <div>
-              <h1 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+            <div className="min-w-0">
+              <h1 className="text-lg md:text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">
                 Simple Tools
               </h1>
-              <p className="text-xs text-muted mt-0.5">
+              <p className="text-xs text-muted mt-0.5 hidden md:block">
                 Fast & Private Utilities
               </p>
             </div>
@@ -110,15 +109,15 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="space-y-6">
+      <div className="flex-1 overflow-y-auto p-3 md:p-4 custom-scrollbar">
+        <div className="space-y-4 md:space-y-6">
           {/* PDF Tools Section */}
           <div>
-            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-primary/10 to-primary/20 border border-primary/20 shadow-premium">
-              <div className="p-1.5 rounded-md bg-primary/20 backdrop-blur-sm">
-                <FileText className="h-4 w-4 text-primary" />
+            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 px-2 md:px-3 py-2 rounded-lg bg-gradient-to-r from-primary/10 to-primary/20 border border-primary/20 shadow-premium">
+              <div className="p-1 md:p-1.5 rounded-md bg-primary/20 backdrop-blur-sm">
+                <FileText className="h-3 w-3 md:h-4 md:w-4 text-primary" />
               </div>
-              <span className="text-sm font-semibold text-primary uppercase tracking-wider">
+              <span className="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">
                 PDF Tools
               </span>
             </div>
@@ -130,17 +129,17 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
+                    className={`group flex items-center gap-2 md:gap-3 px-2 md:px-3 py-3 md:py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative touch-target ${active
                         ? "gradient-primary text-white shadow-premium scale-[1.02]"
                         : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
                     onClick={handleLinkClick}
                   >
-                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-primary"
+                    <Icon className={`h-4 w-4 md:h-4 md:w-4 transition-all duration-200 flex-shrink-0 ${active ? "text-white" : "text-muted group-hover:text-primary"
                       }`} />
-                    <span className="flex-1">{item.label}</span>
+                    <span className="flex-1 mobile-text-lg md:text-sm">{item.label}</span>
                     {active && (
-                      <ChevronRight className="h-3 w-3 text-white/70" />
+                      <ChevronRight className="h-3 w-3 text-white/70 flex-shrink-0" />
                     )}
                   </Link>
                 );
@@ -153,11 +152,11 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
 
           {/* Image Tools Section */}
           <div>
-            <div className="flex items-center gap-3 mb-4 px-3 py-2 rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/20 border border-secondary/20 shadow-premium">
-              <div className="p-1.5 rounded-md bg-secondary/20 backdrop-blur-sm">
-                <Image className="h-4 w-4 text-secondary" />
+            <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4 px-2 md:px-3 py-2 rounded-lg bg-gradient-to-r from-secondary/10 to-secondary/20 border border-secondary/20 shadow-premium">
+              <div className="p-1 md:p-1.5 rounded-md bg-secondary/20 backdrop-blur-sm">
+                <Image className="h-3 w-3 md:h-4 md:w-4 text-secondary" />
               </div>
-              <span className="text-sm font-semibold text-secondary uppercase tracking-wider">
+              <span className="text-xs md:text-sm font-semibold text-secondary uppercase tracking-wider">
                 Image Tools
               </span>
             </div>
@@ -169,17 +168,17 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative ${active
+                    className={`group flex items-center gap-2 md:gap-3 px-2 md:px-3 py-3 md:py-2.5 rounded-lg text-sm font-medium transition-all duration-200 relative touch-target ${active
                         ? "gradient-accent text-white shadow-premium scale-[1.02]"
                         : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
                     onClick={handleLinkClick}
                   >
-                    <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-secondary"
+                    <Icon className={`h-4 w-4 md:h-4 md:w-4 transition-all duration-200 flex-shrink-0 ${active ? "text-white" : "text-muted group-hover:text-secondary"
                       }`} />
-                    <span className="flex-1">{item.label}</span>
+                    <span className="flex-1 mobile-text-lg md:text-sm">{item.label}</span>
                     {active && (
-                      <ChevronRight className="h-3 w-3 text-white/70" />
+                      <ChevronRight className="h-3 w-3 text-white/70 flex-shrink-0" />
                     )}
                   </Link>
                 );

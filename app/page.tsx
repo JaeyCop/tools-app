@@ -112,11 +112,6 @@ export default function Home() {
             description="Reduce file size with quality and max dimensions."
             href="/image/compress"
           />
-          <ToolCard
-            title="Remove Background"
-            description="Make background transparent by color pick."
-            href="/image/remove-bg"
-          />
         </div>
         </section>
       </div>
