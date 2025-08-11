@@ -33,16 +33,16 @@ export default function Home() {
           <p className="text-lg text-muted max-w-2xl mx-auto">
             Fast, private, and free. Everything runs in your browser.
           </p>
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
             <Link
               href="/pdf/merge"
-              className="btn-premium gradient-primary rounded-2xl px-8 py-4 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105 focus-premium animate-pulse-glow"
+              className="btn-premium gradient-primary rounded-2xl px-6 py-4 sm:px-8 text-white font-semibold shadow-premium hover:shadow-premium-lg transition-all duration-200 hover:scale-105 focus-premium animate-pulse-glow text-center"
             >
               <span className="relative z-10">PDF Merge</span>
             </Link>
             <Link 
               href="/image/resize" 
-              className="btn-premium rounded-2xl border-2 border-secondary px-8 py-4 text-secondary font-semibold hover:bg-secondary hover:text-white transition-all duration-200 hover:scale-105 shadow-premium focus-premium"
+              className="btn-premium rounded-2xl border-2 border-secondary px-6 py-4 sm:px-8 text-secondary font-semibold hover:bg-secondary hover:text-white transition-all duration-200 hover:scale-105 shadow-premium focus-premium text-center"
             >
               <span className="relative z-10">Image Resize</span>
             </Link>

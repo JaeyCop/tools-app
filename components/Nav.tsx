@@ -213,7 +213,9 @@ export default function ResponsiveSidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
+        className="lg:hidden fixed top-[max(theme(spacing.4),env(safe-area-inset-top))] left-[max(theme(spacing.4),env(safe-area-inset-left))] z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
+        style={{ paddingLeft: 'max(0.75rem, env(safe-area-inset-left))', paddingRight: '0.75rem' }}
+        aria-label="Open menu"
       >
         <Menu className="h-5 w-5 text-white" />
       </button>
