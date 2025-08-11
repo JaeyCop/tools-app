@@ -47,7 +47,7 @@ export default function PdfToImagesPage() {
           const pdfjs = await import("pdfjs-dist");
           // Set up the worker
           if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
-            pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+            pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
           }
           const getDocument = pdfjs.getDocument;
           const data = await first.arrayBuffer();
@@ -93,7 +93,7 @@ export default function PdfToImagesPage() {
 
       // Set up the worker
       if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
-        pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+        pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
       }
 
       const data = await file.arrayBuffer();
