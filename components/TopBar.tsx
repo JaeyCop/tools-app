@@ -233,7 +233,7 @@ export default function TopBar() {
                   isActive("/") ? "bg-primary/20" : "bg-muted"
                 }`}>
                   <Home className={`h-4 w-4 ${
-                    isActive("/") ? "text-primary" : "text-muted"
+                    isActive("/") ? "text-primary" : "text-foreground/60"
                   }`} />
                 </div>
                 <span>Home</span>
@@ -243,7 +243,7 @@ export default function TopBar() {
                 <div key={category.name} className="mt-4">
                   <div className="flex items-center gap-2 px-3 mb-2">
                     <div className="p-1.5 rounded-lg bg-muted">
-                      <category.icon className="h-4 w-4 text-muted" />
+                      <category.icon className="h-4 w-4 text-foreground/60" />
                     </div>
                     <h3 className="text-sm font-semibold text-foreground">
                       {category.name}
@@ -265,7 +265,7 @@ export default function TopBar() {
                           isActive(tool.href) ? "bg-primary/20" : "bg-muted"
                         }`}>
                           <tool.icon className={`h-4 w-4 ${
-                            isActive(tool.href) ? "text-primary" : "text-muted"
+                            isActive(tool.href) ? "text-primary" : "text-foreground/60"
                           }`} />
                         </div>
                         <span className="flex-1 truncate">{tool.label}</span>

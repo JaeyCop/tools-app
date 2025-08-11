@@ -130,7 +130,7 @@ export default function ResponsiveSidebar() {
                   <Home className={`h-4 w-4 ${
                     pathname === "/"
                       ? "text-primary"
-                      : "text-muted group-hover:text-primary"
+                      : "text-foreground/60 group-hover:text-primary"
                   }`} />
                 </div>
                 <span>Dashboard</span>
@@ -142,7 +142,7 @@ export default function ResponsiveSidebar() {
               <div key={category.name} className="space-y-3">
                 <div className="flex items-center gap-2 px-4">
                   <div className="p-1.5 rounded-lg bg-muted">
-                    <category.icon className="h-4 w-4 text-muted" />
+                    <category.icon className="h-4 w-4 text-foreground/60" />
                   </div>
                   <h3 className="text-sm font-semibold text-foreground">
                     {category.name}
@@ -167,7 +167,7 @@ export default function ResponsiveSidebar() {
                         <tool.icon className={`h-4 w-4 ${
                           isActive(tool.href)
                             ? "text-primary"
-                            : "text-muted group-hover:text-primary"
+                            : "text-foreground/60 group-hover:text-primary"
                         }`} />
                       </div>
                       <div className="flex-1 min-w-0">
