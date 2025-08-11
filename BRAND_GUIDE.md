@@ -1,4 +1,4 @@
-# Simple Tools - Brand Style Guide
+# JaeyGuides - Brand Style Guide
 
 ## 🎨 Color Palette
 
@@ -169,4 +169,4 @@
 - **Tablet:** Balanced grid systems
 - **Desktop:** Full feature layouts with hover states
 
-This brand system creates a premium, trustworthy, and modern experience that positions Simple Tools as a professional-grade application.
+This brand system creates a premium, trustworthy, and modern experience that positions JaeyGuides as a professional-grade application.

@@ -108,7 +108,7 @@ export default function TopBar() {
               <Link href="/" className="flex items-center gap-3 group">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
                 <span className="hidden sm:inline-block font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  Simple Tools
+                  JaeyGuides
                 </span>
               </Link>
 
@@ -184,7 +184,7 @@ export default function TopBar() {
             <div className="h-16 px-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
               <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 group">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
-                <span className="font-bold text-lg text-gray-900 dark:text-white">Simple Tools</span>
+                <span className="font-bold text-lg text-gray-900 dark:text-white">JaeyGuides</span>
               </Link>
               <button
                 type="button"
@@ -255,7 +255,7 @@ export default function TopBar() {
 
             <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3">
               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>© {new Date().getFullYear()} Simple Tools</span>
+                <span>© {new Date().getFullYear()} JaeyGuides</span>
                 <div className="flex items-center gap-4">
                   <Link href="/privacy" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Privacy</Link>
                   <Link href="/terms" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Terms</Link>

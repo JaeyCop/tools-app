@@ -101,10 +101,10 @@ export default function ResponsiveSidebar() {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                  Simple Tools
+                  JaeyGuides
                 </span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">
-                  File Processing Suite
+                  JaeyGuides Suite
                 </span>
               </div>
             </Link>
@@ -184,7 +184,7 @@ export default function ResponsiveSidebar() {
           <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>© 2024 Simple Tools</span>
+                <span>© 2024 JaeyGuides</span>
                 <span className="text-green-500 flex items-center gap-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                   Online

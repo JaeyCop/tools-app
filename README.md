@@ -1,4 +1,4 @@
-# Simple Tools - Premium File Processing App
+# JaeyGuides - Premium File Processing App
 
 A beautiful, fast, and private file processing toolkit built with Next.js 15. All processing happens in your browser - no files are uploaded to servers.
 

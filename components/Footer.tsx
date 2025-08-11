@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="px-4 sm:px-6 lg:px-8 py-6 border-t border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur">
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
         <div className="text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} Simple Tools
+          © {new Date().getFullYear()} JaeyGuides
         </div>
         <nav className="flex items-center gap-4">
           <Link href="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
