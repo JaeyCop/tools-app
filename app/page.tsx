@@ -29,7 +29,6 @@ const toolCategories = [
       { href: "/image/resize", label: "Resize Image", icon: Move, description: "Change the dimensions of your image." },
       { href: "/image/convert", label: "Convert Format", icon: RefreshCw, description: "Convert images to JPG, PNG, etc." },
       { href: "/image/compress", label: "Compress Image", icon: Archive, description: "Reduce image file size." },
-      { href: "/image/remove-bg", label: "Remove Background", icon: Eraser, description: "Automatically remove the background." },
       { href: "/image/to-pdf", label: "Images to PDF", icon: FileText, description: "Convert multiple images into a single PDF." },
     ],
   },

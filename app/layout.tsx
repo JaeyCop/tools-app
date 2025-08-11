@@ -1,6 +1,5 @@
 import ResponsiveSidebar from "@/components/Nav";
 import TopBar from "@/components/TopBar";
-import MobileTabs from "@/components/MobileTabs";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
 import { metadata } from "./metadata";
@@ -33,7 +32,6 @@ export default function RootLayout({
             </div>
           </main>
         </div>
-        <MobileTabs />
 
         <Analytics />
       </body>

@@ -11,7 +11,6 @@ import {
   Move,
   FileText,
   RefreshCw,
-  Eraser,
   Home,
   Zap,
 } from "lucide-react";
@@ -77,12 +76,6 @@ export default function ResponsiveSidebar() {
             description: "Reduce image file size",
           },
           {
-            href: "/image/remove-bg",
-            label: "Remove Background",
-            icon: Eraser,
-            description: "Remove image background",
-          },
-          {
             href: "/image/to-pdf",
             label: "Images to PDF",
             icon: FileText,
@@ -100,7 +93,7 @@ export default function ResponsiveSidebar() {
       <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:inset-y-0 lg:z-50">
         <div className="flex flex-col flex-1 min-h-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
           {/* Logo */}
-          <div className="flex items-center h-16 px-6 border-b border-gray-200 dark:border-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-900">
+          <div className="flex items-center h-16 px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
