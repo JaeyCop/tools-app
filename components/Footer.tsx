@@ -19,8 +19,6 @@ export default function Footer() {
           <Link href="/terms" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             Terms of Service
           </Link>
-          <span className="hidden sm:inline text-gray-300 dark:text-gray-700">|</span>
-          <a href="mailto:jaeyguides@gmail.com" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400">jaeyguides@gmail.com</a>
         </nav>
       </div>
     </footer>

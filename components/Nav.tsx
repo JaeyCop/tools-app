@@ -182,22 +182,12 @@ export default function ResponsiveSidebar() {
 
           {/* Footer */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <span>© 2024 JaeyGuides</span>
-                <span className="text-green-500 flex items-center gap-1">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  Online
-                </span>
-              </div>
-              <div className="flex gap-4 text-xs">
-                <Link href="/privacy" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Privacy Policy
-                </Link>
-                <Link href="/terms" className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                  Terms of Service
-                </Link>
-              </div>
+            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+              <span>© 2024 JaeyGuides</span>
+              <span className="text-green-500 flex items-center gap-1">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                Online
+              </span>
             </div>
           </div>
         </div>
