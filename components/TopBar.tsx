@@ -232,7 +232,9 @@ export default function TopBar() {
                 <div className={`p-2 rounded-lg ${
                   isActive("/") ? "bg-primary/20" : "bg-muted"
                 }`}>
-                  <Home className="h-4 w-4" />
+                  <Home className={`h-4 w-4 ${
+                    isActive("/") ? "text-primary" : "text-muted"
+                  }`} />
                 </div>
                 <span>Home</span>
               </Link>
@@ -262,7 +264,9 @@ export default function TopBar() {
                         <div className={`p-2 rounded-lg ${
                           isActive(tool.href) ? "bg-primary/20" : "bg-muted"
                         }`}>
-                          <tool.icon className="h-4 w-4" />
+                          <tool.icon className={`h-4 w-4 ${
+                            isActive(tool.href) ? "text-primary" : "text-muted"
+                          }`} />
                         </div>
                         <span className="flex-1 truncate">{tool.label}</span>
                         {isActive(tool.href) && (

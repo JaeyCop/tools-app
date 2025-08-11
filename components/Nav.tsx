@@ -127,7 +127,11 @@ export default function ResponsiveSidebar() {
                     ? "bg-primary/20"
                     : "bg-muted group-hover:bg-primary/10"
                 }`}>
-                  <Home className="h-4 w-4" />
+                  <Home className={`h-4 w-4 ${
+                    pathname === "/"
+                      ? "text-primary"
+                      : "text-muted group-hover:text-primary"
+                  }`} />
                 </div>
                 <span>Dashboard</span>
               </Link>
@@ -160,7 +164,11 @@ export default function ResponsiveSidebar() {
                           ? "bg-primary/20"
                           : "bg-muted group-hover:bg-primary/10"
                       }`}>
-                        <tool.icon className="h-4 w-4" />
+                        <tool.icon className={`h-4 w-4 ${
+                          isActive(tool.href)
+                            ? "text-primary"
+                            : "text-muted group-hover:text-primary"
+                        }`} />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{tool.label}</div>
