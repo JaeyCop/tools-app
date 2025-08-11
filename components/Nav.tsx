@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   FileText,
   Image,
@@ -43,6 +43,7 @@ interface SidebarProps {
 
 function SidebarContent({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const previousPathname = useRef(pathname);
 
   const isActive = (href: string) =>
     pathname === href || pathname?.startsWith(href + "/");
@@ -50,9 +51,26 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
   const pdfItems = NAV_ITEMS.filter(item => item.category === 'pdf');
   const imageItems = NAV_ITEMS.filter(item => item.category === 'image');
 
-  // Close sidebar on route change (mobile)
+  // Handle link clicks on mobile - close sidebar after navigation
+  const handleLinkClick = useCallback(() => {
+    // Only close on mobile
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      // Add small delay to ensure navigation completes
+      setTimeout(() => {
+        onClose();
+      }, 100);
+    }
+  }, [onClose]);
+
+  // Close sidebar when route actually changes (not on mount)
   useEffect(() => {
-    onClose();
+    if (previousPathname.current !== pathname && previousPathname.current !== null) {
+      // Only close on mobile and when pathname actually changed
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        onClose();
+      }
+    }
+    previousPathname.current = pathname;
   }, [pathname, onClose]);
 
   return (
@@ -63,7 +81,7 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
           <Link
             href="/"
             className="flex items-center gap-3 group"
-            onClick={() => window.innerWidth < 1024 && onClose()}
+            onClick={handleLinkClick}
           >
             <div className="p-2 rounded-xl gradient-primary shadow-premium group-hover:shadow-premium-lg transition-all duration-300 group-hover:scale-105">
               <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,6 +102,7 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
           <button
             onClick={onClose}
             className="lg:hidden p-2 rounded-lg hover:bg-border/50 transition-colors"
+            aria-label="Close sidebar"
           >
             <X className="h-5 w-5 text-muted" />
           </button>
@@ -115,6 +134,7 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                         ? "gradient-primary text-white shadow-premium scale-[1.02]"
                         : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
+                    onClick={handleLinkClick}
                   >
                     <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-primary"
                       }`} />
@@ -153,6 +173,7 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
                         ? "gradient-accent text-white shadow-premium scale-[1.02]"
                         : "text-muted hover:text-foreground hover:bg-border/30 hover:shadow-md"
                       }`}
+                    onClick={handleLinkClick}
                   >
                     <Icon className={`h-4 w-4 transition-all duration-200 ${active ? "text-white" : "text-muted group-hover:text-secondary"
                       }`} />
@@ -185,42 +206,64 @@ function SidebarContent({ isOpen, onClose }: SidebarProps) {
 export default function ResponsiveSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
+  // Memoize the close function to prevent unnecessary re-renders
+  const closeMobile = useCallback(() => {
+    setIsMobileOpen(false);
+  }, []);
+
+  const openMobile = useCallback(() => {
+    setIsMobileOpen(true);
+  }, []);
+
   // Close on ESC key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsMobileOpen(false);
+      if (e.key === "Escape" && isMobileOpen) {
+        closeMobile();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+    
+    if (isMobileOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [isMobileOpen, closeMobile]);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (isMobileOpen) {
+      // Store original overflow value
+      const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
+      
+      return () => {
+        document.body.style.overflow = originalOverflow || "unset";
+      };
     }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
   }, [isMobileOpen]);
+
+  // Handle backdrop click with proper event handling
+  const handleBackdropClick = useCallback((e: React.MouseEvent) => {
+    // Only close if clicking the backdrop itself, not its children
+    if (e.target === e.currentTarget) {
+      closeMobile();
+    }
+  }, [closeMobile]);
 
   return (
     <>
       {/* Mobile Menu Button */}
       <button
-        onClick={() => setIsMobileOpen(true)}
+        onClick={openMobile}
         className="lg:hidden fixed top-4 left-4 z-50 p-3 rounded-xl gradient-primary border border-border shadow-premium backdrop-blur-xl hover:shadow-premium-lg transition-all duration-200"
+        aria-label="Open sidebar"
       >
         <Menu className="h-5 w-5 text-white" />
       </button>
 
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex w-72">
-        <SidebarContent isOpen={true} onClose={() => { }} />
+        <SidebarContent isOpen={true} onClose={() => {}} />
       </aside>
 
       {/* Mobile Sidebar */}
@@ -229,12 +272,17 @@ export default function ResponsiveSidebar() {
           {/* Backdrop */}
           <div
             className="lg:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMobileOpen(false)}
+            onClick={handleBackdropClick}
+            aria-label="Close sidebar"
           />
 
           {/* Mobile Sidebar Panel */}
-          <aside className="lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out">
-            <SidebarContent isOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} />
+          <aside 
+            className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-out ${
+              isMobileOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+          >
+            <SidebarContent isOpen={isMobileOpen} onClose={closeMobile} />
           </aside>
         </>
       )}
