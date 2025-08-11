@@ -85,21 +85,21 @@ export default function TopBar() {
   }, [isSearchOpen]);
 
   return (
-    <div className="lg:hidden sticky top-0 z-40">
+    <div className="xl:hidden sticky top-0 z-40">
       <div className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
         <div className="px-4">
           <div className="h-16 flex items-center justify-between gap-4 relative">
-            {/* Default View (Mobile) */}
+            {/* Default View (Mobile & Tablet) */}
             <div
               className={`flex items-center gap-4 flex-1 transition-opacity ${
-                isSearchOpen ? "opacity-0 pointer-events-none md:opacity-100 md:pointer-events-auto" : "opacity-100"
+                isSearchOpen ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto" : "opacity-100"
               }`}
             >
               {/* Hamburger */}
               <button
                 type="button"
                 onClick={() => setIsMenuOpen(true)}
-                className="md:hidden p-2 -ml-2 rounded-full hover:bg-border/50"
+                className="lg:hidden p-2 -ml-2 rounded-full hover:bg-border/50"
                 aria-label="Open menu"
               >
                 <Menu className="h-5 w-5 text-muted" />
@@ -115,7 +115,7 @@ export default function TopBar() {
               <div className="flex-1" />
 
               {/* Desktop Search */}
-              <form onSubmit={go} className="hidden md:flex flex-1 items-center max-w-xl">
+              <form onSubmit={go} className="hidden lg:flex flex-1 items-center max-w-xl">
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-muted" />
@@ -129,11 +129,11 @@ export default function TopBar() {
                 </div>
               </form>
 
-              {/* Mobile Search Trigger */}
+              {/* Mobile & Tablet Search Trigger */}
               <button
                 type="button"
                 onClick={openSearch}
-                className="md:hidden p-2 -mr-2 rounded-full hover:bg-border/50"
+                className="lg:hidden p-2 -mr-2 rounded-full hover:bg-border/50"
                 aria-label="Open search"
               >
                 <Search className="h-5 w-5 text-muted" />
@@ -144,9 +144,9 @@ export default function TopBar() {
               </div>
             </div>
 
-            {/* Mobile Search Overlay */}
+            {/* Mobile & Tablet Search Overlay */}
             <div
-              className={`md:hidden absolute inset-0 h-16 bg-surface transition-opacity duration-200 flex items-center px-2 gap-2 ${
+              className={`lg:hidden absolute inset-0 h-16 bg-surface transition-opacity duration-200 flex items-center px-2 gap-2 ${
                 isSearchOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
@@ -172,9 +172,9 @@ export default function TopBar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           <button
             aria-label="Close menu"
             onClick={() => setIsMenuOpen(false)}
