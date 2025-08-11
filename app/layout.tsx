@@ -30,7 +30,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
         <link rel="dns-prefetch" href="https://tpc.googlesyndication.com" />
       </head>
-      <body className="antialiased font-sans h-full bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+      <body className="antialiased font-sans h-full bg-background text-foreground">
         <AppThemeProvider>
           {/* AdSense Auto Ads */}
           {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
@@ -42,7 +42,7 @@ export default function RootLayout({
               crossOrigin="anonymous"
             />
           )}
-          <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
+          <div className="flex h-screen bg-background">
             {/* Organization & WebSite JSON-LD */}
             <SeoOrganizationJsonLd />
             {/* Responsive Sidebar */}
@@ -51,7 +51,7 @@ export default function RootLayout({
             {/* Main Content */}
             <main className="flex-1 flex flex-col overflow-hidden lg:ml-80">
               <TopBar />
-              <div className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-900 pb-20 lg:pb-0">
+              <div className="flex-1 overflow-y-auto bg-background pb-20 lg:pb-0">
                 <div className="min-h-full p-4 sm:p-6 lg:p-8">
                   {children}
                 </div>

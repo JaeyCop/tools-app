@@ -86,7 +86,7 @@ export default function TopBar() {
 
   return (
     <div className="xl:hidden sticky top-0 z-40">
-      <div className="backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
+      <div className="backdrop-blur-xl bg-surface/80 border-b border-border">
         <div className="px-4">
           <div className="h-16 flex items-center justify-between gap-4 relative">
             {/* Default View (Mobile & Tablet) */}
@@ -107,7 +107,7 @@ export default function TopBar() {
 
               <Link href="/" className="flex items-center gap-3 group">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
-                <span className="hidden sm:inline-block font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <span className="hidden sm:inline-block font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                   JaeyGuides
                 </span>
               </Link>
@@ -180,11 +180,11 @@ export default function TopBar() {
             onClick={() => setIsMenuOpen(false)}
             className="absolute inset-0 bg-black/40"
           />
-          <div className="absolute inset-y-0 left-0 w-80 max-w-[85%] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl flex flex-col">
-            <div className="h-16 px-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-800">
+          <div className="absolute inset-y-0 left-0 w-80 max-w-[85%] bg-surface border-r border-border shadow-xl flex flex-col">
+            <div className="h-16 px-4 flex items-center justify-between border-b border-border">
               <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 group">
                 <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
-                <span className="font-bold text-lg text-gray-900 dark:text-white">JaeyGuides</span>
+                <span className="font-bold text-lg text-foreground">JaeyGuides</span>
               </Link>
               <button
                 type="button"
@@ -201,12 +201,12 @@ export default function TopBar() {
                 onClick={() => setIsMenuOpen(false)}
                 className={`flex items-center gap-3 px-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   isActive("/")
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300"
-                    : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                    ? "bg-primary/10 text-primary"
+                    : "text-muted hover:text-primary hover:bg-muted/50"
                 }`}
               >
                 <div className={`p-2 rounded-lg ${
-                  isActive("/") ? "bg-blue-100 dark:bg-blue-800/30" : "bg-gray-100 dark:bg-gray-800"
+                  isActive("/") ? "bg-primary/20" : "bg-muted"
                 }`}>
                   <Home className="h-4 w-4" />
                 </div>
@@ -216,10 +216,10 @@ export default function TopBar() {
               {toolCategories.map((category) => (
                 <div key={category.name} className="mt-4">
                   <div className="flex items-center gap-2 px-3 mb-2">
-                    <div className="p-1.5 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
-                      <category.icon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                    <div className="p-1.5 rounded-lg bg-muted">
+                      <category.icon className="h-4 w-4 text-muted" />
                     </div>
-                    <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                    <h3 className="text-sm font-semibold text-foreground">
                       {category.name}
                     </h3>
                   </div>
@@ -231,19 +231,19 @@ export default function TopBar() {
                         onClick={() => setIsMenuOpen(false)}
                         className={`group flex items-center gap-3 px-3 py-3 rounded-xl text-sm transition-all duration-200 ${
                           isActive(tool.href)
-                            ? "bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-700 dark:text-blue-300 border border-blue-100 dark:border-blue-800/30"
-                            : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                            ? "bg-primary/10 text-primary border border-primary/20"
+                            : "text-muted hover:text-foreground hover:bg-muted/50"
                         }`}
                       >
                         <div className={`p-2 rounded-lg ${
-                          isActive(tool.href) ? "bg-blue-100 dark:bg-blue-800/30" : "bg-gray-100 dark:bg-gray-800"
+                          isActive(tool.href) ? "bg-primary/20" : "bg-muted"
                         }`}>
                           <tool.icon className="h-4 w-4" />
                         </div>
                         <span className="flex-1 truncate">{tool.label}</span>
                         {isActive(tool.href) && (
-                          <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-800/30">
-                            <Zap className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                          <div className="p-1 rounded-full bg-primary/20">
+                            <Zap className="h-3 w-3 text-primary" />
                           </div>
                         )}
                       </Link>
@@ -253,12 +253,12 @@ export default function TopBar() {
               ))}
             </nav>
 
-            <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3">
-              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+            <div className="mt-auto border-t border-border p-3">
+              <div className="flex items-center justify-between text-xs text-muted">
                 <span>© {new Date().getFullYear()} JaeyGuides</span>
                 <div className="flex items-center gap-4">
-                  <Link href="/privacy" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Privacy</Link>
-                  <Link href="/terms" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Terms</Link>
+                  <Link href="/privacy" onClick={() => setIsMenuOpen(false)} className="hover:text-primary">Privacy</Link>
+                  <Link href="/terms" onClick={() => setIsMenuOpen(false)} className="hover:text-primary">Terms</Link>
                 </div>
               </div>
             </div>

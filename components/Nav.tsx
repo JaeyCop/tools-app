@@ -91,19 +91,19 @@ export default function ResponsiveSidebar() {
     <>
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:inset-y-0 lg:z-50">
-        <div className="flex flex-col flex-1 min-h-0 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800">
+        <div className="flex flex-col flex-1 min-h-0 bg-surface border-r border-border">
           {/* Logo */}
-          <div className="flex items-center h-16 px-6 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
+          <div className="flex items-center h-16 px-6 border-b border-border bg-surface">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 shadow-lg" />
                 <div className="absolute inset-0 h-10 w-10 rounded-xl bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <span className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                   JaeyGuides
                 </span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">
+                <span className="text-xs text-muted">
                   JaeyGuides Suite
                 </span>
               </div>
@@ -118,14 +118,14 @@ export default function ResponsiveSidebar() {
                 href="/"
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 group ${
                   pathname === "/"
-                    ? "bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 shadow-sm"
-                    : "text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                    ? "bg-primary/10 text-primary shadow-sm"
+                    : "text-muted hover:text-primary hover:bg-muted/50"
                 }`}
               >
                 <div className={`p-2 rounded-lg ${
                   pathname === "/"
-                    ? "bg-blue-100 dark:bg-blue-800/30"
-                    : "bg-gray-100 dark:bg-gray-800 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20"
+                    ? "bg-primary/20"
+                    : "bg-muted group-hover:bg-primary/10"
                 }`}>
                   <Home className="h-4 w-4" />
                 </div>
@@ -137,10 +137,10 @@ export default function ResponsiveSidebar() {
             {toolCategories.map((category) => (
               <div key={category.name} className="space-y-3">
                 <div className="flex items-center gap-2 px-4">
-                  <div className="p-1.5 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-700">
-                    <category.icon className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+                  <div className="p-1.5 rounded-lg bg-muted">
+                    <category.icon className="h-4 w-4 text-muted" />
                   </div>
-                  <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-sm font-semibold text-foreground">
                     {category.name}
                   </h3>
                 </div>
@@ -151,26 +151,26 @@ export default function ResponsiveSidebar() {
                       href={tool.href}
                       className={`group flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all duration-200 ${
                         isActive(tool.href)
-                          ? "bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-700 dark:text-blue-300 shadow-sm border border-blue-100 dark:border-blue-800/30"
-                          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800/50"
+                          ? "bg-primary/10 text-primary shadow-sm border border-primary/20"
+                          : "text-muted hover:text-foreground hover:bg-muted/50"
                       }`}
                     >
                       <div className={`p-2 rounded-lg transition-colors ${
                         isActive(tool.href)
-                          ? "bg-blue-100 dark:bg-blue-800/30"
-                          : "bg-gray-100 dark:bg-gray-800 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20"
+                          ? "bg-primary/20"
+                          : "bg-muted group-hover:bg-primary/10"
                       }`}>
                         <tool.icon className="h-4 w-4" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{tool.label}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-500 truncate">
+                        <div className="text-xs text-muted truncate">
                           {tool.description}
                         </div>
                       </div>
                       {isActive(tool.href) && (
-                        <div className="p-1 rounded-full bg-blue-100 dark:bg-blue-800/30">
-                          <Zap className="h-3 w-3 text-blue-600 dark:text-blue-400" />
+                        <div className="p-1 rounded-full bg-primary/20">
+                          <Zap className="h-3 w-3 text-primary" />
                         </div>
                       )}
                     </Link>
@@ -181,11 +181,11 @@ export default function ResponsiveSidebar() {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50">
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+          <div className="p-4 border-t border-border bg-muted/50">
+            <div className="flex items-center justify-between text-xs text-muted">
               <span>© 2024 JaeyGuides</span>
-              <span className="text-green-500 flex items-center gap-1">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-success flex items-center gap-1">
+                <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
                 Online
               </span>
             </div>
