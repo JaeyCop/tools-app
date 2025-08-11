@@ -252,6 +252,16 @@ export default function TopBar() {
                 </div>
               ))}
             </nav>
+
+            <div className="mt-auto border-t border-gray-200 dark:border-gray-800 p-3">
+              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                <span>© {new Date().getFullYear()} Simple Tools</span>
+                <div className="flex items-center gap-4">
+                  <Link href="/privacy" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Privacy</Link>
+                  <Link href="/terms" onClick={() => setIsMenuOpen(false)} className="hover:text-blue-600 dark:hover:text-blue-400">Terms</Link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

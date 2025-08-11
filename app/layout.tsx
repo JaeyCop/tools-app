@@ -2,6 +2,7 @@ import ResponsiveSidebar from "@/components/Nav";
 import TopBar from "@/components/TopBar";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
+import Footer from "@/components/Footer";
 import { metadata } from "./metadata";
 
 export { metadata };
@@ -29,6 +30,8 @@ export default function RootLayout({
               <div className="min-h-full p-4 sm:p-6 lg:p-8">
                 {children}
               </div>
+
+              <Footer />
             </div>
           </main>
         </div>

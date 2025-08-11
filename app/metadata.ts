@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "Fast, private, in-browser PDF and image tools. Merge PDFs, resize images, convert formats, and more - all processed locally in your browser.",
   keywords: ["PDF tools", "image tools", "file converter", "PDF merge", "image resize", "online tools"],
   authors: [{ name: "Simple Tools" }],
-  metadataBase: new URL("https://simple-tools.vercel.app"),
+  metadataBase: new URL("https://jaeyguides.com"),
   openGraph: {
     title: "Simple Tools — PDF & Image Utilities",
     description: "Fast, private, in-browser PDF and image tools.",
