@@ -21,6 +21,10 @@ import {
   RefreshCw,
 } from 'lucide-react';
 
+import ToolSeoContent from '@/components/ToolSeoContent';
+import SeoHowToJsonLd from '@/components/SeoHowToJsonLd';
+import SeoFaqJsonLd from '@/components/SeoFaqJsonLd';
+
 /**
  * Type definitions
  */

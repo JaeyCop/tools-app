@@ -18,6 +18,9 @@ import {
   X
 } from "lucide-react";
 import Skeleton from "@/components/ui/Skeleton";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 const Spinner = () => <Loader2 className="w-4 h-4 animate-spin" />;
 
@@ -488,6 +491,20 @@ export default function ImageConverterPage() {
           </p>
         </div>
       </div>
+
+      <ToolSeoContent
+        title="Convert Image Format"
+        overview="Convert images between JPG, PNG, and WebP with control over quality and size."
+        steps={["Upload an image", "Choose target format", "Adjust quality (if available)", "Download the converted image"]}
+        tips={["WebP often gives best balance of quality and size"]}
+        privacyNote="Conversion runs in your browser. Files are not uploaded."
+      />
+      <SeoHowToJsonLd
+        name="How to convert images"
+        description="Convert images to JPG, PNG, or WebP online."
+        steps={[{ name: "Upload an image" }, { name: "Choose output format" }, { name: "Click Convert and download" }]}
+      />
+      <SeoFaqJsonLd id="convert-image" items={[{ question: "Are my files uploaded?", answer: "No, conversion is performed locally in your browser." }]} />
 
       <style jsx>{`
         input[type="range"]::-webkit-slider-thumb {

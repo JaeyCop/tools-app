@@ -4,6 +4,9 @@ import { useCallback, useMemo, useState } from "react";
 import Dropzone from "react-dropzone";
 import Spinner from "@/components/ui/Spinner";
 import { PDFDocument, StandardFonts } from "pdf-lib";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 export default function ImagesToPdfPage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -68,7 +71,7 @@ export default function ImagesToPdfPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-full min-h-[100dvh]">
       <h1 className="text-2xl font-semibold tracking-tight">Images to PDF</h1>
       <p className="text-sm text-black/70 dark:text-white/60">Combine images into a single PDF; reorder as needed.</p>
 
@@ -124,6 +127,19 @@ export default function ImagesToPdfPage() {
           {errorMessage}
         </div>
       )}
+      <ToolSeoContent
+        title="Images to PDF"
+        overview="Combine multiple images into a single, printable PDF in seconds."
+        steps={["Upload images", "Reorder as needed", "Choose page size/margins", "Export to PDF"]}
+        tips={["Keep all images same orientation for clean layout"]}
+        privacyNote="Processing happens locally in your browser; files are never uploaded."
+      />
+      <SeoHowToJsonLd
+        name="How to combine images into a PDF"
+        description="Turn images into a printable PDF online."
+        steps={[{ name: "Upload images" }, { name: "Reorder as needed" }, { name: "Click Export and download" }]}
+      />
+      <SeoFaqJsonLd id="images-to-pdf" items={[{ question: "Are my files uploaded?", answer: "No, processing stays in your browser." }]} />
     </div>
   );
 }

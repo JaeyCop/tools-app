@@ -5,6 +5,9 @@ import Dropzone from "react-dropzone";
 import Spinner from "@/components/ui/Spinner";
 import Skeleton from "@/components/ui/Skeleton";
 import { FileText, Image as ImageIcon, Download, Upload, Settings, Zap, Info, CheckCircle, Sliders, Layers, X, Wand2, Sparkles } from "lucide-react";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 type OutputFormat = "image/png" | "image/jpeg";
 
@@ -481,6 +484,19 @@ export default function PdfToImagesPage() {
           </p>
         </div>
       </div>
+      <ToolSeoContent
+        title="PDF to Images"
+        overview="Convert PDF pages to PNG or JPG for easy sharing and publishing."
+        steps={["Upload your PDF", "Choose format (PNG/JPG)", "Set DPI/quality", "Export images or ZIP"]}
+        tips={["PNG for diagrams/text; JPG for photos", "Higher DPI increases clarity and file size"]}
+        privacyNote="Conversion runs in your browser. Files are not uploaded."
+      />
+      <SeoHowToJsonLd
+        name="How to convert PDF to images"
+        description="Convert PDF pages to PNG or JPG online."
+        steps={[{ name: "Upload your PDF" }, { name: "Choose image format" }, { name: "Click Export and download" }]}
+      />
+      <SeoFaqJsonLd id="pdf-to-images" items={[{ question: "Are my files uploaded?", answer: "No, conversion is performed locally in your browser." }]} />
     </div>
   );
 }

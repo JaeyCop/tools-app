@@ -18,6 +18,9 @@ import {
   X
 } from "lucide-react";
 import Skeleton from "@/components/ui/Skeleton";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 type Dimensions = { width: number; height: number };
 
@@ -520,6 +523,20 @@ export default function ImageResizePage() {
           </p>
         </div>
       </div>
+
+      <ToolSeoContent
+        title="Resize Image"
+        overview="Resize images for web, social, or email while maintaining aspect ratio."
+        steps={["Upload an image", "Set width/height or choose a preset", "Keep aspect ratio to avoid distortion", "Download the resized image"]}
+        tips={["Use PNG for UI screenshots", "Use JPG/WebP for photos"]}
+        privacyNote="Processing runs locally in your browser; nothing is uploaded."
+      />
+      <SeoHowToJsonLd
+        name="How to resize an image"
+        description="Resize images online while maintaining quality."
+        steps={[{ name: "Upload an image" }, { name: "Set target dimensions" }, { name: "Click Download" }]}
+      />
+      <SeoFaqJsonLd id="resize-image" items={[{ question: "Are my files uploaded?", answer: "No, all processing stays in your browser." }]} />
 
       <style jsx>{`
         .slider::-webkit-slider-thumb {

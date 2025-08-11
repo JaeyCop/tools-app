@@ -6,6 +6,9 @@ import Dropzone, { FileRejection } from "react-dropzone";
 import Spinner from "@/components/ui/Spinner";
 import Skeleton from "@/components/ui/Skeleton";
 import { Upload, FileText, Download, Layers, ChevronUp, ChevronDown, X, Settings, Zap, Info, CheckCircle, ArrowRight } from "lucide-react";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 type MergeMode = "append" | "interleave";
 
@@ -270,6 +273,46 @@ export default function PdfMergePage() {
         <div className="mt-16 text-center text-gray-500 dark:text-gray-400">
           <p className="text-sm">🔒 Merging happens locally in your browser. Nothing is uploaded.</p>
         </div>
+
+        {/* SEO content and JSON-LD */}
+        <ToolSeoContent
+          title="Merge PDFs"
+          overview="Merge multiple PDFs into a single, organized document. Perfect for combining invoices, scanned pages, reports, and more."
+          steps={[
+            "Click or drop your PDF files",
+            "Reorder by dragging the list",
+            "Choose Append or Interleave",
+            "Optionally add page labels",
+            "Click Merge and download your file",
+          ]}
+          tips={[
+            "Use Interleave for duplex scans",
+            "Run the result through Compress PDF if size is large",
+            "Keep source PDFs in similar orientation",
+          ]}
+          privacyNote="All processing happens locally in your browser. Your files never leave your device."
+          faq={[
+            { q: "Is there a file size limit?", a: "Very large files depend on your device memory. Try merging fewer files at once if you encounter issues." },
+            { q: "Are my files uploaded?", a: "No. Everything runs in your browser; nothing is sent to a server." },
+          ]}
+        />
+        <SeoHowToJsonLd
+          name="How to merge PDF files"
+          description="Combine multiple PDF files into a single document online."
+          steps={[
+            { name: "Upload your PDF files" },
+            { name: "Reorder files as needed" },
+            { name: "Choose merge mode (Append or Interleave)" },
+            { name: "Click Merge and download the result" },
+          ]}
+        />
+        <SeoFaqJsonLd
+          id="merge-pdf"
+          items={[
+            { question: "Are my files uploaded?", answer: "No. Everything runs in your browser; nothing is sent to a server." },
+            { question: "Why is the merged file large?", answer: "Use the Compress PDF tool to reduce size while preserving readability." },
+          ]}
+        />
       </div>
     </div>
   );

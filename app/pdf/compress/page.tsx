@@ -4,6 +4,9 @@ import Dropzone from "react-dropzone";
 import { PDFDocument } from "pdf-lib";
 import { Upload, FileText, Download, Loader2, AlertCircle, CheckCircle, Zap, Minimize2, X } from "lucide-react";
 import Skeleton from "@/components/ui/Skeleton";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 export default function PdfCompressorPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -354,6 +357,21 @@ export default function PdfCompressorPage() {
           </p>
         </div>
       </div>
+
+      <ToolSeoContent
+        title="Compress PDF"
+        overview="Reduce PDF size for faster sharing while preserving readability. Ideal for email attachments and uploads."
+        steps={["Upload your PDF", "Choose compression level", "Preview quality", "Download the compressed file"]}
+        tips={["Start at Balanced quality", "If text looks fuzzy, step down one level"]}
+        privacyNote="Compression runs locally in your browser; files are not uploaded."
+        faq={[{ q: "Will compression lower quality?", a: "We aim to preserve readability. You can adjust the level to balance size and quality." }]}
+      />
+      <SeoHowToJsonLd
+        name="How to compress a PDF"
+        description="Shrink a PDF file size online without uploading."
+        steps={[{ name: "Upload your PDF" }, { name: "Select compression level" }, { name: "Click Compress and download" }]}
+      />
+      <SeoFaqJsonLd id="compress-pdf" items={[{ question: "Are my files uploaded?", answer: "No, compression is done locally in your browser." }]} />
 
       <style jsx>{`
         .slider::-webkit-slider-thumb {

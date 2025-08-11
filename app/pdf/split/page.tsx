@@ -6,6 +6,9 @@ import Dropzone from "react-dropzone";
 import Spinner from "@/components/ui/Spinner";
 import Skeleton from "@/components/ui/Skeleton";
 import { Upload, FileText, Scissors, Download, Zap, Info, CheckCircle, Filter, ArrowRight, Trash2, RefreshCcw, X } from "lucide-react";
+import ToolSeoContent from "@/components/ToolSeoContent";
+import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
+import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
 
 export default function PdfSplitPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -326,6 +329,25 @@ export default function PdfSplitPage() {
           <p className="text-sm">🔒 Splitting runs locally in your browser. Nothing is uploaded.</p>
         </div>
       </div>
+      <ToolSeoContent
+        title="Split PDF"
+        overview="Extract specific pages or split a large PDF into smaller parts. Great for sharing only what’s needed."
+        steps={[
+          "Upload your PDF",
+          "Select pages or enter ranges (e.g., 1-3,7,10-12)",
+          "Choose output options",
+          "Click Split to export",
+        ]}
+        tips={["Use ranges to save time", "Name your parts clearly for filing"]}
+        privacyNote="Processing runs in your browser. Files are not uploaded."
+        faq={[{ q: "Can I split multiple ranges at once?", a: "Yes, use comma-separated ranges like 1-3,5,8-10." }]}
+      />
+      <SeoHowToJsonLd
+        name="How to split a PDF"
+        description="Split a PDF into selected pages or parts."
+        steps={[{ name: "Upload your PDF" }, { name: "Select pages or ranges" }, { name: "Click Split and download" }]}
+      />
+      <SeoFaqJsonLd id="split-pdf" items={[{ question: "Are my files uploaded?", answer: "No, splitting runs locally in your browser." }]} />
     </div>
   );
 }
