@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "JaeyGuides",
   },
+  alternates: { canonical: "https://jaeyguides.com" },
   twitter: {
     card: "summary_large_image",
     title: "JaeyGuides — PDF & Image Utilities",
