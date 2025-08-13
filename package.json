@@ -9,7 +9,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "check": "npm run type-check && npm run lint",
-    "export": "STATIC_EXPORT=true node scripts/setup-pdf-worker.js && STATIC_EXPORT=true next build && next export",
+    "export": "STATIC_EXPORT=true node scripts/setup-pdf-worker.js && STATIC_EXPORT=true next build",
     "deploy": "npm run export",
     "favicons": "node scripts/generate-favicons.js",
     "preview": "npx -y serve@14 -s out -l 3000"
