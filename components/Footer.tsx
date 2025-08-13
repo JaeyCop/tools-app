@@ -13,11 +13,7 @@ export default function Footer() {
           {/* Brand section */}
           <div className="flex flex-col items-center sm:items-start gap-2">
             <div className="flex items-center gap-3">
-              <div className="p-[1px] rounded-md bg-gradient-to-br from-primary via-secondary to-accent">
-                <div className="rounded-sm bg-surface p-0.5">
-                  <Image src={logoPng} alt="JaeyGuides" width={100} height={20} className="object-contain w-[120px] h-[24px]" />
-                </div>
-              </div>
+              <Image src={logoPng} alt="JaeyGuides" width={120} height={24} className="object-contain w-[120px] h-[24px]" />
               <span className="sr-only">JaeyGuides</span>
             </div>
             <div className="text-muted font-medium">

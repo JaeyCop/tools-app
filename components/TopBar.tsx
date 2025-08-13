@@ -124,11 +124,7 @@ export default function TopBar() {
 
               <Link href="/" className="flex items-center gap-3 group ml-2 sm:ml-3">
                 <span className="sr-only">JaeyGuides</span>
-                <div className="p-[2px] rounded-lg bg-gradient-to-br from-primary via-secondary to-accent">
-                  <div className="rounded-md bg-surface p-1">
-                    <Image src={logoPng} alt="JaeyGuides" width={210} height={50} className="brand-logo object-contain w-[220px] h-[56px]" />
-                  </div>
-                </div>
+                <Image src={logoPng} alt="JaeyGuides" width={300} height={50} className="brand-logo object-contain w-[180px] h-[46px] sm:w-[220px] sm:h-[56px] lg:w-[300px] lg:h-[50px]" />
               </Link>
 
               <div className="flex-1" />
@@ -212,11 +208,7 @@ export default function TopBar() {
             <div className="h-16 px-4 flex items-center justify-between border-b border-border/50 bg-surface/80 backdrop-blur-sm">
               <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 group">
                 <span className="sr-only">JaeyGuides</span>
-                <div className="p-[2px] rounded-lg bg-gradient-to-br from-primary via-secondary to-accent">
-                  <div className="rounded-md bg-surface p-1">
-                    <Image src={logoPng} alt="JaeyGuides" width={220} height={56} className="brand-logo object-contain w-[220px] h-[56px]" />
-                  </div>
-                </div>
+                <Image src={logoPng} alt="JaeyGuides" width={220} height={56} className="brand-logo object-contain w-[180px] h-[46px] sm:w-[220px] sm:h-[56px]" />
               </Link>
               <button
                 type="button"

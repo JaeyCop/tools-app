@@ -113,11 +113,7 @@ export default function ResponsiveSidebar() {
       <div className="flex items-center h-20 px-6 border-b border-border/50 bg-surface/80 backdrop-blur-sm">
         <Link href="/" className="flex items-center gap-3 group ml-1" onClick={() => setIsMobileMenuOpen(false)}>
           <span className="sr-only">JaeyGuides</span>
-          <div className="p-[2px] rounded-lg bg-gradient-to-br from-primary via-secondary to-accent">
-            <div className="rounded-md bg-surface p-1">
-              <Image src={logoPng} alt="JaeyGuides" width={210} height={50} className="brand-logo object-contain w-[220px] h-[56px]" />
-            </div>
-          </div>
+          <Image src={logoPng} alt="JaeyGuides" width={300} height={50} className="brand-logo object-contain w-[220px] h-[56px]" />
         </Link>
       </div>
 
