@@ -36,52 +36,86 @@ const toolCategories = [
 
 export default function HomePage() {
   return (
-    <main className="space-y-12 py-6 md:py-8">
+    <main className="relative space-y-16 py-8 md:py-12">
+      {/* Background gradient mesh */}
+      <div className="fixed inset-0 gradient-mesh pointer-events-none" />
+      
       {/* Hero Section */}
-      <section className="text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+      <section className="relative text-center animate-slide-up">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-6">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium animate-bounce-subtle">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+              100% Privacy-First Processing
+            </span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-8 gradient-text animate-slide-down">
             Your All-in-One File Processing Suite
           </h1>
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
-            Quickly merge PDFs, resize images, and more. All processing is done in your browser for maximum privacy and speed.
+          
+          <p className="max-w-3xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+            Transform, compress, and convert your files instantly. All processing happens in your browser—no uploads, no data collection, just pure performance.
           </p>
-          <div className="mt-8 flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span>100% Private</span>
+          
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm animate-slide-up" style={{ animationDelay: '0.4s' }}>
+            <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-surface/80 border border-border backdrop-blur-sm">
+              <div className="w-3 h-3 bg-success rounded-full animate-pulse" />
+              <span className="text-muted-foreground font-medium">100% Private</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span>No Upload Required</span>
+            <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-surface/80 border border-border backdrop-blur-sm">
+              <div className="w-3 h-3 bg-primary rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+              <span className="text-muted-foreground font-medium">No Upload Required</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span>Lightning Fast</span>
+            <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-surface/80 border border-border backdrop-blur-sm">
+              <div className="w-3 h-3 bg-secondary rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+              <span className="text-muted-foreground font-medium">Lightning Fast</span>
             </div>
           </div>
         </div>
       </section>
 
       {/* Tools Grid Section */}
-      {toolCategories.map((category) => (
-        <section key={category.name} className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{category.name}</h2>
-            <p className="text-gray-600 dark:text-gray-300 mt-2">{category.description}</p>
+      {toolCategories.map((category, categoryIndex) => (
+        <section key={category.name} className="relative max-w-7xl mx-auto animate-slide-up" style={{ animationDelay: `${0.6 + categoryIndex * 0.2}s` }}>
+          <div className="mb-10 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-3">
+              {category.name}
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {category.description}
+            </p>
           </div>
+          
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {category.tools.map((tool) => (
+            {category.tools.map((tool, toolIndex) => (
               <Link
                 href={tool.href}
                 key={tool.href}
-                className="group block p-6 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="group relative block p-6 rounded-2xl bg-surface/80 backdrop-blur-sm border border-border hover:border-primary/30 transition-all duration-500 hover-lift animate-scale-in"
+                style={{ animationDelay: `${0.8 + categoryIndex * 0.2 + toolIndex * 0.1}s` }}
               >
-                <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 mb-4 group-hover:scale-110 transition-transform duration-300">
-                  <tool.icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                {/* Gradient background on hover */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Icon container */}
+                <div className="relative flex items-center justify-center h-14 w-14 rounded-xl bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse-glow" />
+                  <tool.icon className="relative h-7 w-7 text-primary group-hover:text-secondary transition-colors duration-300" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{tool.label}</h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{tool.description}</p>
+                
+                {/* Content */}
+                <div className="relative">
+                  <h3 className="text-lg font-semibold mb-3 text-foreground group-hover:text-primary transition-colors duration-300">
+                    {tool.label}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed group-hover:text-muted transition-colors duration-300">
+                    {tool.description}
+                  </p>
+                </div>
+                
+                {/* Hover indicator */}
+                <div className="absolute top-4 right-4 w-2 h-2 rounded-full bg-primary opacity-0 group-hover:opacity-100 transition-all duration-300 animate-pulse" />
               </Link>
             ))}
           </div>

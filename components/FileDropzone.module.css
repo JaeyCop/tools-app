@@ -11,7 +11,6 @@
   background-color: hsl(var(--surface));
   color: hsl(var(--muted));
   outline: none;
-  transition: border .24s ease-in-out, background-color .24s ease-in-out;
   cursor: pointer;
   text-align: center;
 }
@@ -45,11 +44,6 @@
 .icon {
   width: 3rem;
   height: 3rem;
-  transition: transform 0.2s ease-in-out;
-}
-
-.dropzone:hover .icon {
-  transform: scale(1.1);
 }
 
 .defaultIcon {

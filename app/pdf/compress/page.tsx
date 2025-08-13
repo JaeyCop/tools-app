@@ -7,6 +7,7 @@ import Skeleton from "@/components/ui/Skeleton";
 import ToolSeoContent from "@/components/ToolSeoContent";
 import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
 import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
+import { ToolLayout } from '@/components/ToolLayout';
 
 export default function PdfCompressorPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -84,39 +85,75 @@ export default function PdfCompressorPage() {
     ? Math.round((1 - compressionStats.compressedSize / compressionStats.originalSize) * 100)
     : 0;
 
-  return (
-    <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-4xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-12">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg">
-                <Minimize2 className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                PDF Compressor
-              </h1>
-            </div>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Reduce your PDF file sizes instantly with our smart compression algorithm.
-              Fast, secure, and works entirely in your browser.
-            </p>
-          </div>
-          {file && (
-            <button
-              onClick={() => {
-                setFile(null);
-                setOutputUrl(null);
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-sm hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors"
-            >
-              <X className="w-4 h-4" />
-              Clear All
-            </button>
-          )}
-        </div>
+  const sidebarContent = (
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+          <Minimize2 className="h-5 w-5 text-primary" />
+          Compression Settings
+        </h3>
 
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Quality: {Math.round(quality * 100)}%
+            </label>
+            <input
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.1"
+              value={quality}
+              onChange={(e) => setQuality(parseFloat(e.target.value))}
+              className="w-full accent-primary"
+            />
+          </div>
+        </div>
+      </div>
+
+      {file && (
+        <button
+          onClick={compress}
+          disabled={isProcessing}
+          className="w-full btn-premium bg-gradient-to-r from-primary to-secondary text-white font-medium py-3 px-4 rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 disabled:opacity-50"
+        >
+          {isProcessing ? (
+            <div className="flex items-center justify-center gap-2">
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>Compressing...</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-2">
+              <Minimize2 className="h-5 w-5" />
+              <span>Compress PDF</span>
+            </div>
+          )}
+        </button>
+      )}
+
+      {file && (
+        <button
+          onClick={() => {
+            setFile(null);
+            setOutputUrl(null);
+          }}
+          className="w-full px-4 py-2 bg-error/10 text-error rounded-xl text-sm hover:bg-error/20 transition-colors flex items-center justify-center gap-2"
+        >
+          <X className="w-4 h-4" />
+          Clear PDF
+        </button>
+      )}
+    </div>
+  );
+
+  return (
+    <ToolLayout
+      title="PDF Compressor"
+      description="Reduce your PDF file sizes instantly with our smart compression algorithm."
+      icon={<Minimize2 className="h-8 w-8 text-primary" />}
+      sidebar={sidebarContent}
+    >
+      <div>
         <div className="space-y-8">
           {/* Upload Area */}
           <div className="card-premium shadow-premium overflow-hidden">
@@ -267,29 +304,29 @@ export default function PdfCompressorPage() {
           {/* Results */}
           {isProcessing && (
             <div className="card-premium p-6 sm:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
-                        <Skeleton className="w-6 h-6" />
-                    </div>
-                    <h3 className="text-2xl font-bold text-green-800 dark:text-green-200">
-                        <Skeleton className="w-48 h-8" />
-                    </h3>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl">
+                  <Skeleton className="w-6 h-6" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
-                        <Skeleton className="w-24 h-4 mx-auto" />
-                        <Skeleton className="w-16 h-8 mx-auto mt-2" />
-                    </div>
-                    <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
-                        <Skeleton className="w-24 h-4 mx-auto" />
-                        <Skeleton className="w-16 h-8 mx-auto mt-2" />
-                    </div>
-                    <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
-                        <Skeleton className="w-24 h-4 mx-auto" />
-                        <Skeleton className="w-16 h-8 mx-auto mt-2" />
-                    </div>
+                <h3 className="text-2xl font-bold text-green-800 dark:text-green-200">
+                  <Skeleton className="w-48 h-8" />
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
+                  <Skeleton className="w-24 h-4 mx-auto" />
+                  <Skeleton className="w-16 h-8 mx-auto mt-2" />
                 </div>
-                <Skeleton className="w-full h-12" />
+                <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
+                  <Skeleton className="w-24 h-4 mx-auto" />
+                  <Skeleton className="w-16 h-8 mx-auto mt-2" />
+                </div>
+                <div className="text-center p-4 bg-white dark:bg-gray-800 rounded-xl border border-green-200 dark:border-gray-700">
+                  <Skeleton className="w-24 h-4 mx-auto" />
+                  <Skeleton className="w-16 h-8 mx-auto mt-2" />
+                </div>
+              </div>
+              <Skeleton className="w-full h-12" />
             </div>
           )}
           {compressionStats && outputUrl && !isProcessing && (
@@ -394,6 +431,6 @@ export default function PdfCompressorPage() {
           box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
       `}</style>
-    </div>
+    </ToolLayout>
   );
 }

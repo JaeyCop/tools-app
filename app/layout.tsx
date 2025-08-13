@@ -7,6 +7,7 @@ import { metadata } from "./metadata";
 import AppThemeProvider from "@/components/AppThemeProvider";
 import Script from "next/script";
 import SeoOrganizationJsonLd from "@/components/SeoOrganizationJsonLd";
+import { CommandPalette } from "@/components/CommandPalette";
 
 export { metadata };
 
@@ -19,10 +20,14 @@ export default function RootLayout({
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://googleads.g.doubleclick.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://tpc.googlesyndication.com" crossOrigin="anonymous" />
@@ -33,7 +38,7 @@ export default function RootLayout({
       <body className="antialiased font-sans h-full bg-background text-foreground">
         <AppThemeProvider>
           {/* AdSense Auto Ads */}
-          {process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
+          {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
             <Script
               id="adsbygoogle-init"
               strategy="afterInteractive"
@@ -43,13 +48,15 @@ export default function RootLayout({
             />
           )}
 
-          {/* Ahrefs Analytics */}
-          <Script
-            id="ahrefs-analytics"
-            src="https://analytics.ahrefs.com/analytics.js"
-            data-key="GOToh+/dvpq5cKtZ4424aw"
-            strategy="afterInteractive"
-          />
+          {/* Ahrefs Analytics (prod only, opt-in via env) */}
+          {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_AHREFS_KEY && (
+            <Script
+              id="ahrefs-analytics"
+              src="https://analytics.ahrefs.com/analytics.js"
+              data-key={process.env.NEXT_PUBLIC_AHREFS_KEY}
+              strategy="afterInteractive"
+            />
+          )}
           <div className="flex h-screen bg-background">
             {/* Organization & WebSite JSON-LD */}
             <SeoOrganizationJsonLd />
@@ -59,17 +66,19 @@ export default function RootLayout({
             {/* Main Content */}
             <main className="flex-1 flex flex-col overflow-hidden lg:ml-80">
               <TopBar />
-              <div className="flex-1 overflow-y-auto bg-background pb-20 lg:pb-0">
-                <div className="min-h-full p-4 sm:p-6 lg:p-8">
-                  {children}
+              <div className="flex-1 overflow-y-auto bg-background">
+                <div className="min-h-[calc(100vh-4rem)] flex flex-col">
+                  <div className="flex-1 p-4 sm:p-6 lg:p-8">
+                    {children}
+                  </div>
+                  <Footer />
                 </div>
-
-                <Footer />
               </div>
             </main>
           </div>
 
           <Analytics />
+          <CommandPalette />
         </AppThemeProvider>
       </body>
     </html>

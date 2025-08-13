@@ -10,10 +10,11 @@ import FileValidation from "@/components/ui/FileValidation";
 import FilePreview from "@/components/ui/FilePreview";
 import { useKeyboardShortcuts } from "@/hooks/useKeyboardShortcuts";
 import Skeleton from "@/components/ui/Skeleton";
-import { Upload, FileText, Download, Layers, ChevronUp, ChevronDown, X, Settings, Zap, Info, CheckCircle, ArrowRight } from "lucide-react";
+import { Upload, FileText, Download, Layers, ChevronUp, ChevronDown, X, Settings, Zap, Info, CheckCircle, ArrowRight, GripVertical } from "lucide-react";
 import ToolSeoContent from "@/components/ToolSeoContent";
 import SeoHowToJsonLd from "@/components/SeoHowToJsonLd";
 import SeoFaqJsonLd from "@/components/SeoFaqJsonLd";
+import { ToolLayout } from "@/components/ToolLayout";
 
 type MergeMode = "append" | "interleave";
 
@@ -114,183 +115,328 @@ export default function PdfMergePage() {
     }
   };
 
-  return (
-    <div className="max-w-full min-h-[100dvh]">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl">
-        <div className="flex items-center justify-between mb-12">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="p-3 bg-gradient-to-br from-fuchsia-500 to-pink-600 rounded-2xl shadow-lg">
-                <Layers className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-fuchsia-600 to-pink-600 bg-clip-text text-transparent">Merge PDFs</h1>
+  const sidebarContent = (
+    <div className="space-y-6">
+      {/* Settings */}
+      <div>
+        <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+          <Settings className="h-5 w-5 text-primary" />
+          Merge Settings
+        </h3>
+        
+        <div className="space-y-4">
+          {/* Merge Mode */}
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">Merge Mode</label>
+            <div className="grid grid-cols-1 gap-2">
+              <button
+                onClick={() => setMode("append")}
+                className={`p-3 rounded-xl border text-left transition-all duration-300 ${
+                  mode === "append"
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border hover:border-primary/30 hover:bg-surface-elevated/50"
+                }`}
+              >
+                <div className="font-medium">Append</div>
+                <div className="text-xs text-muted-foreground">Combine files in order</div>
+              </button>
+              <button
+                onClick={() => setMode("interleave")}
+                className={`p-3 rounded-xl border text-left transition-all duration-300 ${
+                  mode === "interleave"
+                    ? "border-primary bg-primary/10 text-primary"
+                    : "border-border hover:border-primary/30 hover:bg-surface-elevated/50"
+                }`}
+              >
+                <div className="font-medium">Interleave</div>
+                <div className="text-xs text-muted-foreground">Alternate pages</div>
+              </button>
             </div>
-            <p className="text-lg text-muted max-w-2xl mx-auto">
-              Combine multiple PDF files in the order you want, or interleave pages across documents.
-            </p>
           </div>
+
+          {/* Output Name */}
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-2">Output Name</label>
+            <input
+              type="text"
+              value={outputName}
+              onChange={(e) => setOutputName(e.target.value)}
+              className="w-full px-3 py-2 rounded-xl bg-background border border-border text-foreground focus-premium"
+              placeholder="merged.pdf"
+            />
+          </div>
+
+          {/* Options */}
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={optimize}
+                onChange={(e) => setOptimize(e.target.checked)}
+                className="rounded border-border text-primary focus:ring-primary/20"
+              />
+              <div>
+                <div className="text-sm font-medium text-foreground">Optimize</div>
+                <div className="text-xs text-muted-foreground">Reduce file size</div>
+              </div>
+            </label>
+            
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={pageLabels}
+                onChange={(e) => setPageLabels(e.target.checked)}
+                className="rounded border-border text-primary focus:ring-primary/20"
+              />
+              <div>
+                <div className="text-sm font-medium text-foreground">Page Labels</div>
+                <div className="text-xs text-muted-foreground">Add page numbering</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* Process Button */}
+      {files.length > 1 && (
+        <button
+          onClick={handleMerge}
+          disabled={isMerging}
+          className="w-full btn-premium bg-gradient-to-r from-primary to-secondary text-white font-medium py-3 px-4 rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isMerging ? (
+            <div className="flex items-center justify-center gap-2">
+              <LoadingSpinner />
+              <span>Merging...</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-2">
+              <Zap className="h-5 w-5" />
+              <span>Merge PDFs</span>
+            </div>
+          )}
+        </button>
+      )}
+
+      {/* Clear All */}
+      {files.length > 0 && (
+        <button
+          onClick={() => {
+            setFiles([]);
+            setMergedBlobUrl(null);
+            setErrorMessage(null);
+          }}
+          className="w-full px-4 py-2 bg-error/10 text-error rounded-xl text-sm hover:bg-error/20 transition-colors flex items-center justify-center gap-2"
+        >
+          <X className="w-4 h-4" />
+          Clear All Files
+        </button>
+      )}
+    </div>
+  );
+
+  return (
+    <ToolLayout
+      title="Merge PDFs"
+      description="Combine multiple PDF files in the order you want, or interleave pages across documents."
+      icon={<Layers className="h-8 w-8 text-primary" />}
+      sidebar={sidebarContent}
+    >
+
+        {/* Upload Area */}
+        <div className="space-y-6">
+          <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }}>
+            {({ getRootProps, getInputProps, isDragActive }) => (
+              <div
+                {...getRootProps()}
+                className={`relative border-2 border-dashed rounded-2xl p-8 lg:p-12 text-center cursor-pointer transition-all duration-300 group ${
+                  isDragActive 
+                    ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg shadow-primary/20' 
+                    : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                }`}
+              >
+                <input {...getInputProps()} />
+                
+                {/* Background decorations */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full opacity-50 animate-float" />
+                <div className="absolute bottom-4 left-4 w-10 h-10 bg-gradient-to-br from-secondary/10 to-accent/10 rounded-full opacity-30 animate-float" style={{ animationDelay: '1s' }} />
+                
+                <div className={`relative transition-all duration-300 ${isDragActive ? 'scale-110' : ''}`}>
+                  <div className="mb-6">
+                    {isDragActive ? (
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center mx-auto animate-bounce shadow-lg">
+                        <Upload className="w-10 h-10 text-primary" />
+                      </div>
+                    ) : (
+                      <div className="w-20 h-20 bg-gradient-to-br from-muted/50 to-muted/30 rounded-full flex items-center justify-center mx-auto group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
+                        <FileText className="w-10 h-10 text-muted group-hover:text-primary transition-colors duration-300" />
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <h3 className="text-xl font-semibold text-foreground">
+                      {isDragActive ? "Drop your PDFs here!" : "Upload PDF Files"}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Drag & drop multiple PDF files or click to browse
+                    </p>
+                    <div className="flex items-center justify-center gap-4 text-sm text-muted">
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="h-4 w-4 text-success" />
+                        <span>Multiple files</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <CheckCircle className="h-4 w-4 text-success" />
+                        <span>Max 200MB total</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </Dropzone>
+
+          {/* File List */}
           {files.length > 0 && (
-            <button
-              onClick={() => {
-                setFiles([]);
-                setMergedBlobUrl(null);
-                setErrorMessage(null);
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-error/10 text-error rounded-full text-sm hover:bg-error/20 transition-colors"
-            >
-              <X className="w-4 h-4" />
-              Clear All
-            </button>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-foreground">
+                  Files to Merge ({files.length})
+                </h3>
+                <div className="text-sm text-muted-foreground">
+                  Drag to reorder
+                </div>
+              </div>
+              
+              <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">
+                {files.map((file, index) => (
+                  <div 
+                    key={`${file.name}-${index}`} 
+                    className="group bg-surface/80 backdrop-blur-sm border border-border rounded-xl p-4 hover:border-primary/30 transition-all duration-300 animate-scale-in"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <div className="flex items-center gap-4">
+                      {/* Drag Handle */}
+                      <div className="cursor-grab active:cursor-grabbing text-muted hover:text-primary transition-colors">
+                        <GripVertical className="h-5 w-5" />
+                      </div>
+                      
+                      {/* File Info */}
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <FilePreview file={file} size="sm" />
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                            {file.name}
+                          </p>
+                          <FileValidation file={file} maxSize={200} allowedTypes={['pdf']} className="mt-1" />
+                        </div>
+                      </div>
+                      
+                      {/* Order Badge */}
+                      <div className="flex items-center gap-2">
+                        <span className="px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded-lg">
+                          #{index + 1}
+                        </span>
+                      </div>
+                      
+                      {/* Actions */}
+                      <div className="flex items-center gap-1">
+                        <button 
+                          type="button" 
+                          className="p-2 rounded-lg hover:bg-surface-elevated/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                          onClick={() => moveFile(index, Math.max(0, index - 1))} 
+                          disabled={index === 0}
+                          title="Move up"
+                        >
+                          <ChevronUp className="w-4 h-4 text-muted hover:text-primary transition-colors" />
+                        </button>
+                        <button 
+                          type="button" 
+                          className="p-2 rounded-lg hover:bg-surface-elevated/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+                          onClick={() => moveFile(index, Math.min(files.length - 1, index + 1))} 
+                          disabled={index === files.length - 1}
+                          title="Move down"
+                        >
+                          <ChevronDown className="w-4 h-4 text-muted hover:text-primary transition-colors" />
+                        </button>
+                        <button 
+                          type="button" 
+                          className="p-2 rounded-lg hover:bg-error/10 transition-colors group" 
+                          onClick={() => removeAtIndex(index)}
+                          title="Remove file"
+                        >
+                          <X className="w-4 h-4 text-muted group-hover:text-error transition-colors" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
 
-        <div className="card-premium shadow-premium overflow-hidden mb-8">
-          <div className="p-8">
-            <Dropzone onDrop={onDrop} accept={{ "application/pdf": [".pdf"] }}>
-              {({ getRootProps, getInputProps, isDragActive }) => (
-                <div
-                  {...getRootProps()}
-                  className={`relative border-3 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${isDragActive ? 'border-primary bg-primary/10 scale-[1.02]' : 'border-border hover:border-primary hover:bg-primary/5'}`}
-                >
-                  <input {...getInputProps()} />
-                  <div className={`transition-all duration-300 ${isDragActive ? 'scale-110' : ''}`}>
-                    <div className="mb-6">
-                      {isDragActive ? (
-                        <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto animate-bounce">
-                          <Upload className="w-8 h-8 text-primary" />
-                        </div>
-                      ) : (
-                        <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center mx-auto group-hover:bg-primary/20 transition-colors">
-                          <FileText className="w-8 h-8 text-muted group-hover:text-primary transition-colors" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <p className="text-xl font-semibold text-foreground">{isDragActive ? "Drop your PDFs here!" : "Upload your PDFs"}</p>
-                      <p className="text-muted">Multiple files supported • Max total 200MB</p>
-                    </div>
-                  </div>
-                  <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-pink-100 to-fuchsia-100 dark:from-pink-900/20 dark:to-fuchsia-900/20 rounded-full opacity-50" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-gradient-to-br from-fuchsia-100 to-purple-100 dark:from-fuchsia-900/20 dark:to-purple-900/20 rounded-full opacity-30" />
-                </div>
-              )}
-            </Dropzone>
-
-            {files.length > 0 && (
-                             <ul className="mt-6 divide-y rounded-2xl border bg-surface/70 max-h-80 overflow-auto">
-                {files.map((file, index) => (
-                  <li key={`${file.name}-${index}`} className="p-4 flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                      <FilePreview file={file} size="sm" />
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-foreground">{file.name}</p>
-                        <FileValidation file={file} maxSize={200} allowedTypes={['pdf']} className="mt-1" />
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <button type="button" className="px-2 py-1 text-xs rounded border" onClick={() => moveFile(index, Math.max(0, index - 1))} disabled={index === 0}><ChevronUp className="w-4 h-4" /></button>
-                      <button type="button" className="px-2 py-1 text-xs rounded border" onClick={() => moveFile(index, Math.min(files.length - 1, index + 1))} disabled={index === files.length - 1}><ChevronDown className="w-4 h-4" /></button>
-                      <button type="button" className="px-2 py-1 text-xs rounded border text-red-600 border-red-600" onClick={() => removeAtIndex(index)}><X className="w-4 h-4" /></button>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+        {/* Results Section */}
+        {errorMessage && (
+          <div className="mt-6 animate-slide-up">
+            <ErrorMessage 
+              error={errorMessage}
+              onRetry={() => setErrorMessage(null)}
+              suggestions={[
+                "Check that all files are valid PDFs",
+                "Try with fewer files if memory is limited",
+                "Ensure files aren't password protected"
+              ]}
+            />
           </div>
-        </div>
+        )}
 
-        {files.length > 0 && (
-          <div className="grid gap-6 lg:gap-8 lg:grid-cols-3 items-start">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="card-premium p-6 sm:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-primary/20 rounded-lg"><Settings className="w-5 h-5 text-primary" /></div>
-                  <h3 className="text-xl font-semibold text-foreground">Merge Settings</h3>
+        {mergedBlobUrl && (
+          <div className="mt-6 animate-slide-up">
+            <div className="bg-gradient-to-br from-success/10 via-success/5 to-accent/10 border border-success/20 rounded-2xl p-6 lg:p-8">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-success/20 to-success/10 border border-success/20">
+                  <CheckCircle className="h-8 w-8 text-success" />
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Mode</label>
-                    <select value={mode} onChange={(e) => setMode(e.target.value as MergeMode)} className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground">
-                      <option value="append">Append (keep file order)</option>
-                      <option value="interleave">Interleave pages</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-foreground mb-2">Output filename</label>
-                    <input value={outputName} onChange={(e) => setOutputName(e.target.value)} className="w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground" />
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input id="opt" type="checkbox" className="w-5 h-5" checked={optimize} onChange={(e) => setOptimize(e.target.checked)} />
-                    <label htmlFor="opt" className="text-sm text-foreground">Optimize output (smaller file)</label>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <input id="labels" type="checkbox" className="w-5 h-5" checked={pageLabels} onChange={(e) => setPageLabels(e.target.checked)} />
-                    <label htmlFor="labels" className="text-sm text-foreground">Add page labels (file names)</label>
-                  </div>
-                </div>
-                <div className="mt-6 bg-fuchsia-50 dark:bg-fuchsia-900/20 rounded-xl p-4 border border-fuchsia-200 dark:border-fuchsia-800">
-                  <div className="flex items-start gap-2">
-                    <Info className="w-4 h-4 text-fuchsia-600 mt-0.5" />
-                    <p className="text-sm text-fuchsia-800 dark:text-fuchsia-200">Use Interleave to alternate pages (useful for duplex scans). Optimize reduces size; labels help trace origins.</p>
-                  </div>
+                <div>
+                  <h3 className="text-xl font-bold text-foreground">Merge Complete!</h3>
+                  <p className="text-muted-foreground">Your PDF files have been successfully merged.</p>
                 </div>
               </div>
-              <div className="card-premium p-6 sm:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-success/20 rounded-lg"><Zap className="w-5 h-5 text-success" /></div>
-                  <h3 className="text-xl font-semibold text-foreground">Merge</h3>
-                </div>
-                <button type="button" onClick={handleMerge} disabled={!canMerge} className={`w-full group relative px-6 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform ${canMerge ? 'bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl hover:scale-105' : 'bg-muted text-muted cursor-not-allowed'}`}>
-                  {isMerging ? (<span className="inline-flex items-center gap-2"><LoadingSpinner size="sm" /> Merging…</span>) : (<span className="inline-flex items-center gap-2">Start merge <ArrowRight className="w-5 h-5" /></span>)}
-                  {!isMerging && canMerge && (<div className="absolute inset-0 bg-white/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />)}
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href={mergedBlobUrl} 
+                  download={outputName || "merged.pdf"}
+                  className="flex-1 btn-premium bg-gradient-to-r from-success to-success/80 text-white font-medium py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-success/25 transition-all duration-300 flex items-center justify-center gap-2"
+                >
+                  <Download className="h-5 w-5" />
+                  Download {outputName || 'merged.pdf'}
+                </a>
+                
+                <button
+                  onClick={() => {
+                    setFiles([]);
+                    setMergedBlobUrl(null);
+                    setErrorMessage(null);
+                  }}
+                  className="px-6 py-3 bg-surface border border-border rounded-xl text-foreground hover:bg-surface-elevated transition-colors flex items-center justify-center gap-2"
+                >
+                  <ArrowRight className="h-4 w-4" />
+                  Merge More Files
                 </button>
               </div>
             </div>
-            <div className="space-y-6">
-              {isMerging && (
-                <div className="card-premium p-6 sm:p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                      <Skeleton className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                      <Skeleton className="w-48 h-6" />
-                    </h3>
-                  </div>
-                  <Skeleton className="w-full h-12" />
-                </div>
-              )}
-              {mergedBlobUrl && !isMerging ? (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-3xl shadow-xl border border-green-200 dark:border-green-800 p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-xl"><CheckCircle className="w-6 h-6 text-green-600" /></div>
-                    <h3 className="text-2xl font-bold text-green-800 dark:text-green-200">Merge Complete</h3>
-                  </div>
-                  <a className="w-full inline-flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" href={mergedBlobUrl} download={outputName || "merged.pdf"}>
-                    <Download className="w-5 h-5" /> Download {outputName || 'merged.pdf'}
-                  </a>
-                </div>
-                              ) : (
-                  <div className="card-premium p-6 sm:p-8">
-                    <div className="text-sm text-muted">No output yet. Configure settings and click Merge.</div>
-                  </div>
-                )}
-              {errorMessage && (
-                <ErrorMessage 
-                  error={errorMessage}
-                  onRetry={() => setErrorMessage(null)}
-                  suggestions={[
-                    "Check that all files are valid PDFs",
-                    "Try with fewer files if memory is limited",
-                    "Ensure files aren't password protected"
-                  ]}
-                />
-              )}
-            </div>
           </div>
         )}
-        <div className="mt-16 text-center text-muted">
-          <p className="text-sm">🔒 Merging happens locally in your browser. Nothing is uploaded.</p>
+        {/* Privacy Notice */}
+        <div className="mt-12 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium">
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+            🔒 All processing happens locally in your browser. Your files never leave your device.
+          </div>
         </div>
 
         {/* SEO content and JSON-LD */}
@@ -332,7 +478,6 @@ export default function PdfMergePage() {
             { question: "Why is the merged file large?", answer: "Use the Compress PDF tool to reduce size while preserving readability." },
           ]}
         />
-      </div>
-    </div>
+    </ToolLayout>
   );
 }
