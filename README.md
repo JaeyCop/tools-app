@@ -1,4 +1,4 @@
-# Simple Tools - Premium File Processing App
+# JaeyGuides - Premium File Processing App
 
 A beautiful, fast, and private file processing toolkit built with Next.js 15. All processing happens in your browser - no files are uploaded to servers.
 
@@ -14,7 +14,6 @@ A beautiful, fast, and private file processing toolkit built with Next.js 15. Al
 - **Resize Image** - Resize while keeping aspect ratio
 - **Convert Format** - JPG ↔ PNG ↔ WebP conversion
 - **Compress Image** - Reduce file size with quality control
-- **Remove Background** - Make backgrounds transparent
 - **Images to PDF** - Combine multiple images into PDF
 
 ## 🎨 Premium Design
@@ -38,6 +37,7 @@ A beautiful, fast, and private file processing toolkit built with Next.js 15. Al
 - **Tailwind CSS** for styling
 - **PDF-lib** for PDF manipulation
 - **Canvas API** for image processing
+- Mobile navigation uses a hamburger drawer
 
 ## 🚀 Cloudflare Pages Deployment
 

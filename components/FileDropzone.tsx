@@ -2,6 +2,8 @@
 
 import { useCallback } from 'react';
 import { useDropzone, FileRejection, Accept } from 'react-dropzone';
+import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { UploadCloud, XCircle, CheckCircle } from 'lucide-react';
 import styles from './FileDropzone.module.css';
 
@@ -11,11 +13,33 @@ interface FileDropzoneProps {
   maxSize?: number;
 }
 
+const dropzoneVariants: Variants = {
+  initial: {
+    scale: 1,
+    backgroundColor: 'hsl(var(--surface))',
+  },
+  hover: {
+    scale: 1.02,
+    backgroundColor: 'hsl(var(--surface-hover))',
+    transition: { type: 'spring', stiffness: 400, damping: 10 },
+  },
+  active: {
+    scale: 1.05,
+    backgroundColor: 'hsl(var(--primary) / 0.05)',
+  },
+};
+
+const iconVariants: Variants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.2, rotate: -5 },
+    active: { scale: 1.3, rotate: 10 },
+};
+
 export const FileDropzone: React.FC<FileDropzoneProps> = ({ onDrop, accept, maxSize }) => {
   const onDropCallback = useCallback((acceptedFiles: File[], fileRejections: FileRejection[]) => {
-    // You can handle rejections here, e.g., show a toast notification
     if (fileRejections.length > 0) {
       console.warn('Some files were rejected:', fileRejections);
+      // Here you could trigger a toast notification for rejected files
     }
     if (acceptedFiles.length > 0) {
       onDrop(acceptedFiles);
@@ -37,14 +61,21 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({ onDrop, accept, maxS
   const getBorderClassName = () => {
     if (isDragAccept) return styles.accept;
     if (isDragReject) return styles.reject;
-    if (isDragActive) return styles.active;
-    return '';
+    return ''; // No special class for default or active hover, handled by motion
   };
 
+  const animationState = isDragActive ? "active" : "initial";
+
   return (
-    <div {...getRootProps({ className: `${styles.dropzone} ${getBorderClassName()}` })}>
+    <motion.div
+      {...getRootProps({ className: `${styles.dropzone} ${getBorderClassName()}` })}
+      variants={dropzoneVariants}
+      initial="initial"
+      whileHover="hover"
+      animate={animationState}
+    >
       <input {...getInputProps()} />
-      <div className={styles.content}>
+      <motion.div className={styles.content} variants={iconVariants}>
         {isDragReject ? (
           <XCircle className={`${styles.icon} ${styles.rejectIcon}`} />
         ) : isDragAccept ? (
@@ -60,7 +91,7 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({ onDrop, accept, maxS
         <p className={styles.subtext}>
           Your files are processed locally and never leave your browser.
         </p>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
