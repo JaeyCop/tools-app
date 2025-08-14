@@ -108,7 +108,7 @@ export default function ResponsiveSidebar() {
   );
 
   const SidebarContent = () => (
-    <div className="flex flex-col flex-1 min-h-0 bg-gradient-to-b from-surface/95 to-surface/90 backdrop-blur-xl border-r border-border/30 shadow-2xl">
+    <div className="flex flex-col flex-1 min-h-0 h-full bg-gradient-to-b from-surface/95 to-surface/90 backdrop-blur-xl border-r border-border/30 shadow-2xl">
       {/* Logo */}
       <div className="flex items-center h-20 px-6 border-b border-gradient-to-r from-border/20 via-border/50 to-border/20 bg-gradient-to-r from-surface/60 via-surface/80 to-surface/60 backdrop-blur-sm relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-50"></div>
@@ -325,14 +325,14 @@ export default function ResponsiveSidebar() {
       )}
 
       {/* Mobile Sidebar */}
-      <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-in-out ${
+      <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
         isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <SidebarContent />
       </aside>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:inset-y-0 lg:z-50">
+      <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:inset-y-0 lg:z-50 overflow-y-auto">
         <SidebarContent />
       </aside>
     </>
