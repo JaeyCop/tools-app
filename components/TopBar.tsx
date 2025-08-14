@@ -108,29 +108,39 @@ export default function TopBar() {
           <div className="h-16 flex items-center justify-between gap-4 relative">
             {/* Default View (Mobile & Tablet) */}
             <div
-              className={`flex items-center gap-4 flex-1 transition-opacity ${
+              className={`flex items-center justify-between w-full h-full transition-opacity ${
                 isSearchOpen ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto" : "opacity-100"
               }`}
             >
               {/* Hamburger */}
-              <button
-                type="button"
-                onClick={() => setIsMenuOpen(true)}
-                className="lg:hidden p-2 -ml-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300 interactive"
-                aria-label="Open menu"
-              >
-                <Menu className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
-              </button>
+              <div className="lg:hidden flex items-center justify-center w-12 h-12">
+                <button
+                  type="button"
+                  onClick={() => setIsMenuOpen(true)}
+                  className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300 interactive"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
+                </button>
+              </div>
 
-              <Link href="/" className="flex items-center gap-3 group ml-2 sm:ml-3">
-                <span className="sr-only">JaeyGuides</span>
-                <Image src={logoPng} alt="JaeyGuides" width={300} height={50} className="brand-logo object-contain w-[180px] h-[46px] sm:w-[220px] sm:h-[56px] lg:w-[300px] lg:h-[50px]" />
-              </Link>
-
-              <div className="flex-1" />
+              {/* Logo - Centered on mobile */}
+              <div className="flex-1 flex items-center justify-center lg:justify-start">
+                <Link href="/" className="flex items-center justify-center group">
+                  <span className="sr-only">JaeyGuides</span>
+                  <Image 
+                    src={logoPng} 
+                    alt="JaeyGuides" 
+                    width={300} 
+                    height={50} 
+                    className="brand-logo object-contain w-[160px] h-[40px] sm:w-[200px] sm:h-[50px] lg:w-[240px] lg:h-[48px]" 
+                    priority
+                  />
+                </Link>
+              </div>
 
               {/* Desktop Search */}
-              <form onSubmit={go} className="hidden lg:flex flex-1 items-center max-w-xl">
+              <form onSubmit={go} className="hidden lg:flex flex-1 items-center max-w-xl ml-4">
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-muted" />
@@ -144,27 +154,30 @@ export default function TopBar() {
                 </div>
               </form>
 
-              {/* Mobile & Tablet Search Trigger */}
-              <button
-                type="button"
-                onClick={openSearch}
-                className="lg:hidden p-2 -mr-2 rounded-full hover:bg-border/50"
-                aria-label="Open search"
-              >
-                <Search className="h-5 w-5 text-muted" />
-              </button>
+              {/* Right side controls */}
+              <div className="flex items-center justify-center gap-1 w-auto">
+                {/* Mobile & Tablet Search Trigger */}
+                <button
+                  type="button"
+                  onClick={openSearch}
+                  className="lg:hidden p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300"
+                  aria-label="Open search"
+                >
+                  <Search className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
+                </button>
 
-              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => setIsShortcutsOpen(true)}
-                  className="p-2 rounded-full hover:bg-border/50"
+                  className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300"
                   aria-label="Keyboard shortcuts"
                   title="Keyboard shortcuts (Ctrl+/)"
                 >
-                  <Keyboard className="h-5 w-5 text-muted" />
+                  <Keyboard className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
                 </button>
-                <ThemeSwitcher />
+                <div className="ml-1">
+                  <ThemeSwitcher />
+                </div>
               </div>
             </div>
 
@@ -206,17 +219,28 @@ export default function TopBar() {
           />
           <div className="absolute inset-y-0 left-0 w-80 max-w-[85%] bg-surface/95 backdrop-blur-xl border-r border-border/50 shadow-2xl flex flex-col animate-slide-up">
             <div className="h-16 px-4 flex items-center justify-between border-b border-border/50 bg-surface/80 backdrop-blur-sm">
-              <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 group">
-                <span className="sr-only">JaeyGuides</span>
-                <Image src={logoPng} alt="JaeyGuides" width={220} height={56} className="brand-logo object-contain w-[180px] h-[46px] sm:w-[220px] sm:h-[56px]" />
-              </Link>
-              <button
-                type="button"
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300 interactive"
-              >
-                <X className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
-              </button>
+              <div className="flex-1 flex items-center justify-center">
+                <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center justify-center group">
+                  <span className="sr-only">JaeyGuides</span>
+                  <Image 
+                    src={logoPng} 
+                    alt="JaeyGuides" 
+                    width={220} 
+                    height={56} 
+                    className="brand-logo object-contain w-[180px] h-[45px] sm:w-[200px] sm:h-[50px]" 
+                    priority
+                  />
+                </Link>
+              </div>
+              <div className="flex items-center justify-center w-12 h-12">
+                <button
+                  type="button"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300 interactive"
+                >
+                  <X className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
+                </button>
+              </div>
             </div>
 
             <nav className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent">

@@ -215,15 +215,19 @@ export default function EnhancedImageCompressor() {
   /* File handling                                                              */
   /* --------------------------------------------------------------------------- */
   const cleanupUrls = useCallback(() => {
-    if (previewUrl) {
-      URL.revokeObjectURL(previewUrl);
-      setPreviewUrl(null);
-    }
-    if (result?.url) {
-      URL.revokeObjectURL(result.url);
-      setResult(null);
-    }
-  }, [previewUrl, result]);
+    setPreviewUrl(prev => {
+      if (prev) {
+        URL.revokeObjectURL(prev);
+      }
+      return null;
+    });
+    setResult(prev => {
+      if (prev?.url) {
+        URL.revokeObjectURL(prev.url);
+      }
+      return null;
+    });
+  }, []);
 
   const handleFileSelect = useCallback((selectedFile: File) => {
     setError(null);
@@ -279,49 +283,133 @@ export default function EnhancedImageCompressor() {
   /* --------------------------------------------------------------------------- */
   /* Compression logic                                                         */
   /* --------------------------------------------------------------------------- */
-  const compress = useCallback(() => {
+  // Fallback compression function (no worker)
+  const compressImageDirect = useCallback(async () => {
+    if (!file || !previewUrl) {
+      return;
+    }
+
+    const parseNumber = (val: string | number) => {
+      if (val === '' || val === null || val === undefined) return null;
+      const num = typeof val === 'number' ? val : Number(val);
+      return isNaN(num) || num <= 0 ? null : Math.floor(num);
+    };
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    
+    await new Promise<void>((resolve, reject) => {
+      img.onload = () => resolve();
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = previewUrl;
+    });
+
+    // Calculate target dimensions
+    let targetWidth = img.naturalWidth;
+    let targetHeight = img.naturalHeight;
+
+    const maxW = parseNumber(maxWidth);
+    const maxH = parseNumber(maxHeight);
+
+    if (maxW && targetWidth > maxW) {
+      const scale = maxW / targetWidth;
+      targetWidth = Math.floor(targetWidth * scale);
+      targetHeight = Math.floor(targetHeight * scale);
+    }
+
+    if (maxH && targetHeight > maxH) {
+      const scale = maxH / targetHeight;
+      targetWidth = Math.floor(targetWidth * scale);
+      targetHeight = Math.floor(targetHeight * scale);
+    }
+    
+    targetWidth = Math.max(1, targetWidth);
+    targetHeight = Math.max(1, targetHeight);
+
+    // Create canvas and draw image
+    const canvas = document.createElement('canvas');
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    const ctx = canvas.getContext('2d');
+    
+    if (!ctx) {
+      throw new Error('Canvas 2D context not available');
+    }
+    ctx.imageSmoothingEnabled = true;
+    if ('imageSmoothingQuality' in ctx) {
+      ctx.imageSmoothingQuality = 'high';
+    }
+    ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+    // Determine output format
+    let outputMime = file.type;
+    let outputFormat = file.type.split('/')[1];
+
+    switch (format) {
+      case 'webp': 
+        outputMime = 'image/webp'; 
+        outputFormat = 'webp'; 
+        break;
+      case 'jpeg': 
+        outputMime = 'image/jpeg'; 
+        outputFormat = 'jpeg'; 
+        break;
+      case 'png': 
+        outputMime = 'image/png'; 
+        outputFormat = 'png'; 
+        break;
+      case 'auto':
+        if (file.type.includes('png') && quality < 0.9) {
+          outputMime = 'image/webp';
+          outputFormat = 'webp';
+        } else if (file.type.includes('png')) {
+          outputMime = 'image/png';
+          outputFormat = 'png';
+        } else {
+          outputMime = 'image/jpeg';
+          outputFormat = 'jpeg';
+        }
+        break;
+    }
+
+    // Convert to blob
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      const qualityValue = outputMime === 'image/png' ? undefined : quality;
+      
+      canvas.toBlob((blob) => {
+        if (blob) {
+          resolve(blob);
+        } else {
+          reject(new Error('Failed to create blob'));
+        }
+      }, outputMime, qualityValue);
+    });
+
+    const sizeKB = Math.round(blob.size / 1024);
+    const outputUrl = URL.createObjectURL(blob);
+
+    setResult({
+      url: outputUrl,
+      sizeKB,
+      format: outputFormat,
+      dimensions: { width: targetWidth, height: targetHeight },
+    });
+  }, [file, previewUrl, quality, maxWidth, maxHeight, format]);
+
+  const compress = useCallback(async () => {
     if (!file || !previewUrl) return;
 
     setIsProcessing(true);
     setError(null);
 
-    const worker = new Worker('/image-compressor.worker.js');
-
-    worker.onmessage = (event) => {
-      const { status, payload } = event.data;
-
-      if (status === 'success') {
-        const { blob, sizeKB, format, dimensions } = payload;
-        const outputUrl = URL.createObjectURL(blob);
-        setResult({
-          url: outputUrl,
-          sizeKB,
-          format,
-          dimensions,
-        });
-      } else {
-        setError(`Compression failed: ${payload}`);
-      }
-
+    try {
+      await compressImageDirect();
+    } catch (err) {
+      setError(`Failed to process image: ${err instanceof Error ? err.message : 'Unknown error'}`);
+    } finally {
       setIsProcessing(false);
-      worker.terminate();
-    };
-
-    worker.onerror = (err) => {
-      setError(`Worker error: ${err.message}`);
-      setIsProcessing(false);
-      worker.terminate();
-    };
-
-    worker.postMessage({
-      file,
-      previewUrl,
-      quality,
-      maxWidth,
-      maxHeight,
-      format,
-    });
-  }, [file, previewUrl, quality, maxWidth, maxHeight, format]);
+    }
+  }, [file, previewUrl, quality, maxWidth, maxHeight, format, compressImageDirect]);
 
   /* --------------------------------------------------------------------------- */
   /* Effects                                                                    */
