@@ -150,17 +150,15 @@ export default function PrivacyPage() {
             </div>
           </div>
 
-          {/* Analytics */}
+          {/* Analytics & Advertising */}
           <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <div className="flex items-start gap-4 mb-6">
               <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
                 <Globe className="h-6 w-6 text-orange-600" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Privacy-Preserving Analytics</h2>
-                <p className="text-muted-foreground">
-                  We use minimal, anonymous analytics to improve our service.
-                </p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Privacy-Preserving Analytics & Ads</h2>
+                <p className="text-muted-foreground">We use minimal analytics and display ads to keep the service free.</p>
               </div>
             </div>
             
@@ -172,6 +170,14 @@ export default function PrivacyPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                 <p>Error reporting to help us fix bugs and improve performance</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                <p>Advertising provided by Google AdSense. See <a className="underline" href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how Google uses information</a>.</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="h-5 w-5 text-orange-600 mt-0.5 flex-shrink-0" />
+                <p>Ads may use cookies or local storage for frequency capping, fraud prevention, and ad measurement.</p>
               </div>
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />

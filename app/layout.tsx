@@ -20,6 +20,10 @@ export default function RootLayout({
     <html lang="en" className="h-full" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="google-adsense-account"
+          content={process.env.NEXT_PUBLIC_ADSENSE_CLIENT || 'ca-pub-4856673905187091'}
+        />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -34,20 +38,19 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://googleads.g.doubleclick.net" />
         <link rel="dns-prefetch" href="https://tpc.googlesyndication.com" />
+        {/* AdSense Auto Ads (recommended snippet, head, prod only) */}
+        {process.env.NODE_ENV === 'production' && (
+          <Script
+            id="adsbygoogle-init"
+            strategy="beforeInteractive"
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT || 'ca-pub-4856673905187091'}`}
+            crossOrigin="anonymous"
+          />
+        )}
       </head>
       <body className="antialiased font-sans h-full bg-background text-foreground">
         <AppThemeProvider>
-          {/* AdSense Auto Ads */}
-          {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_ADSENSE_CLIENT && (
-            <Script
-              id="adsbygoogle-init"
-              strategy="afterInteractive"
-              async
-              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT}`}
-              crossOrigin="anonymous"
-            />
-          )}
-
           {/* Ahrefs Analytics (prod only, opt-in via env) */}
           {process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_AHREFS_KEY && (
             <Script
