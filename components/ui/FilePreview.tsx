@@ -1,4 +1,5 @@
-import { FileText, Image, File, FileImage } from "lucide-react";
+import { FileText, Image as LucideImage, File, FileImage } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface FilePreviewProps {
@@ -10,10 +11,10 @@ interface FilePreviewProps {
 export default function FilePreview({ file, className, size = "md" }: FilePreviewProps) {
   const isImage = file.type.startsWith('image/');
   const isPdf = file.type === 'application/pdf';
-  
+
   const sizeClasses = {
     sm: "w-8 h-8",
-    md: "w-12 h-12", 
+    md: "w-12 h-12",
     lg: "w-16 h-16"
   };
 
@@ -26,10 +27,11 @@ export default function FilePreview({ file, className, size = "md" }: FilePrevie
   if (isImage) {
     return (
       <div className={cn("relative rounded-lg overflow-hidden bg-muted", sizeClasses[size], className)}>
-        <img
+        <Image
           src={URL.createObjectURL(file)}
           alt={file.name}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
           onLoad={(e) => {
             // Clean up the object URL after loading
             setTimeout(() => URL.revokeObjectURL(e.currentTarget.src), 1000);

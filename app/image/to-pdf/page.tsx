@@ -54,13 +54,13 @@ export default function ImagesToPdfPage() {
         if (typeof saved.autoOrientation === "boolean") setAutoOrientation(saved.autoOrientation);
         if (typeof saved.outputName === "string") setOutputName(saved.outputName);
       }
-    } catch {}
+    } catch { }
   }, []);
 
   // Persist options when they change
   useEffect(() => {
     const data = { pagePreset, fitMode, marginPoints, labelFilenames, outputName, autoOrientation };
-    try { localStorage.setItem("imagesToPdf.options", JSON.stringify(data)); } catch {}
+    try { localStorage.setItem("imagesToPdf.options", JSON.stringify(data)); } catch { }
   }, [pagePreset, fitMode, marginPoints, labelFilenames, outputName, autoOrientation]);
 
   // Build previews for the first 8 images
@@ -351,6 +351,7 @@ export default function ImagesToPdfPage() {
                   style={{ animationDelay: `${index * 0.1}s` }}
                   tabIndex={0}
                   role="option"
+                  aria-selected={false}
                   aria-label={`File ${file.name} at position ${index + 1}`}
                   draggable
                   onDragStart={onDragStart(index)}
@@ -361,7 +362,7 @@ export default function ImagesToPdfPage() {
                   <div className="flex items-center gap-4">
                     {/* Drag Handle */}
                     <div className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-primary transition-colors">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grip-vertical"><circle cx="12" cy="5" r="1"/><path d="M12 17v-6"/><circle cx="12" cy="19" r="1"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-grip-vertical"><circle cx="12" cy="5" r="1" /><path d="M12 17v-6" /><circle cx="12" cy="19" r="1" /></svg>
                     </div>
 
                     {/* File Info */}
@@ -460,7 +461,7 @@ export default function ImagesToPdfPage() {
                   onClick={() => { setFiles([]); setPdfUrl(null); setErrorMessage(null); }}
                   className="px-6 py-3 bg-surface border border-border rounded-xl text-foreground hover:bg-surface-elevated transition-colors flex items-center justify-center gap-2"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-right"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
                   Convert More Images
                 </button>
               </div>
@@ -495,40 +496,25 @@ export default function ImagesToPdfPage() {
         <ToolSeoContent
           title="Convert Images to PDF"
           overview="Easily combine multiple images into a single, professional-looking PDF document. Our tool allows you to arrange your images in any order, customize the page layout, and export a high-quality PDF, all without uploading your files."
-          
-          howToTitle="How to Convert Images to PDF"
           steps={[
             "Upload Your Images: Drag and drop your image files (JPG, PNG, etc.) into the upload area, or click to select them from your device.",
             "Arrange Your Images: Drag and drop the image previews to set the exact order for your PDF pages.",
             "Customize Your PDF: Choose your desired page size, orientation, and margins. You can also add filenames as labels on each page.",
             "Convert & Download: Click the 'Build PDF' button. Our tool will instantly process your images and provide a download link for your new PDF file.",
           ]}
-
-          featuresTitle="Features of Our Image to PDF Converter"
-          features={[
-            { name: "Complete Privacy", description: "Your images are processed entirely in your browser. They are never sent to a server, so your data remains 100% private." },
-            { name: "Customizable Layout", description: "Choose from standard page sizes like A4 and Letter, or let the page size automatically adjust to your images. You can also set custom margins." },
-            { name: "Intuitive Reordering", description: "Easily drag and drop your images to get the perfect order before creating your PDF." },
-            { name: "High-Quality Output", description: "Our tool preserves the quality of your original images, so your PDF will look great." },
-            { name: "Free and Unlimited", description: "Convert as many images as you want, as often as you want, without any cost or registration." },
-            { name: "Works on All Devices", description: "Our tool is a web-based application that works on any modern browser, on any device.", },
+          tips={[
+            "Supported formats: JPG, PNG, WebP.",
+            "You can reorder images before converting.",
+            "All processing is local for privacy.",
+            "Try with fewer images if you encounter memory issues.",
           ]}
-
-        useCasesTitle="Why Convert Images to PDF?"
-        useCases={[
-          "To create a single, easy-to-share document from multiple images.",
-          "To create a professional-looking portfolio or presentation from your images.",
-          "To archive your photos in a universally accessible format.",
-          "To prepare your images for printing.",
-        ]}
-
-        faqTitle="Frequently Asked Questions"
-        faq={[
-          { q: "Is it safe to convert my photos to PDF here?", a: "Yes, it is completely secure. The entire conversion process happens in your browser, meaning your images never leave your computer. Your privacy is fully protected." },
-          { q: "What image formats can I use?", a: "Our tool supports all major image formats, including JPG, PNG, and WebP." },
-          { q: "Will the quality of my images be affected?", a: "No, our tool is designed to preserve the original quality of your images when converting them to PDF." },
-          { q: "Can I convert multiple images at once?", a: "Yes, you can upload and convert multiple images at once. They will be combined into a single PDF document." },
-        ]}
+          privacyNote="All processing happens locally in your browser. Your files never leave your device."
+          faq={[
+            { q: "Is it safe to convert my photos to PDF here?", a: "Yes, it is completely secure. The entire conversion process happens in your browser, meaning your images never leave your computer. Your privacy is fully protected." },
+            { q: "What image formats can I use?", a: "Our tool supports all major image formats, including JPG, PNG, and WebP." },
+            { q: "Will the quality of my images be affected?", a: "No, our tool is designed to preserve the original quality of your images when converting them to PDF." },
+            { q: "Can I convert multiple images at once?", a: "Yes, you can upload and convert multiple images at once. They will be combined into a single PDF document." },
+          ]}
         />
       </div>
     </ToolLayout>

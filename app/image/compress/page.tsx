@@ -175,43 +175,6 @@ export default function EnhancedImageCompressor() {
   );
 
   /* --------------------------------------------------------------------------- */
-  /* Drag and drop handlers                                                     */
-  /* --------------------------------------------------------------------------- */
-  const handleDragEnter = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current += 1;
-    setIsDragActive(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current -= 1;
-    if (dragCounterRef.current === 0) {
-      setIsDragActive(false);
-    }
-  }, []);
-
-  const handleDragOver = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  }, []);
-
-  const handleDrop = useCallback((e: DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dragCounterRef.current = 0;
-    setIsDragActive(false);
-
-    const files = Array.from(e.dataTransfer?.files ?? []);
-    const imgFile = files.find((f) => f.type.startsWith('image/'));
-    if (imgFile) {
-      handleFileSelect(imgFile);
-    }
-  }, []);
-
-  /* --------------------------------------------------------------------------- */
   /* File handling                                                              */
   /* --------------------------------------------------------------------------- */
   const cleanupUrls = useCallback(() => {
@@ -257,6 +220,43 @@ export default function EnhancedImageCompressor() {
     img.src = url;
   }, [validateFile, cleanupUrls]);
 
+  /* --------------------------------------------------------------------------- */
+  /* Drag and drop handlers                                                     */
+  /* --------------------------------------------------------------------------- */
+  const handleDragEnter = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current += 1;
+    setIsDragActive(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current -= 1;
+    if (dragCounterRef.current === 0) {
+      setIsDragActive(false);
+    }
+  }, []);
+
+  const handleDragOver = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }, []);
+
+  const handleDrop = useCallback((e: DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounterRef.current = 0;
+    setIsDragActive(false);
+
+    const files = Array.from(e.dataTransfer?.files ?? []);
+    const imgFile = files.find((f) => f.type.startsWith('image/'));
+    if (imgFile) {
+      handleFileSelect(imgFile);
+    }
+  }, [handleFileSelect]);
+
   const handleFileInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFile = e.target.files?.[0];
@@ -297,7 +297,7 @@ export default function EnhancedImageCompressor() {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    
+
     await new Promise<void>((resolve, reject) => {
       img.onload = () => resolve();
       img.onerror = () => reject(new Error('Failed to load image'));
@@ -322,7 +322,7 @@ export default function EnhancedImageCompressor() {
       targetWidth = Math.floor(targetWidth * scale);
       targetHeight = Math.floor(targetHeight * scale);
     }
-    
+
     targetWidth = Math.max(1, targetWidth);
     targetHeight = Math.max(1, targetHeight);
 
@@ -331,7 +331,7 @@ export default function EnhancedImageCompressor() {
     canvas.width = targetWidth;
     canvas.height = targetHeight;
     const ctx = canvas.getContext('2d');
-    
+
     if (!ctx) {
       throw new Error('Canvas 2D context not available');
     }
@@ -346,17 +346,17 @@ export default function EnhancedImageCompressor() {
     let outputFormat = file.type.split('/')[1];
 
     switch (format) {
-      case 'webp': 
-        outputMime = 'image/webp'; 
-        outputFormat = 'webp'; 
+      case 'webp':
+        outputMime = 'image/webp';
+        outputFormat = 'webp';
         break;
-      case 'jpeg': 
-        outputMime = 'image/jpeg'; 
-        outputFormat = 'jpeg'; 
+      case 'jpeg':
+        outputMime = 'image/jpeg';
+        outputFormat = 'jpeg';
         break;
-      case 'png': 
-        outputMime = 'image/png'; 
-        outputFormat = 'png'; 
+      case 'png':
+        outputMime = 'image/png';
+        outputFormat = 'png';
         break;
       case 'auto':
         if (file.type.includes('png') && quality < 0.9) {
@@ -375,7 +375,7 @@ export default function EnhancedImageCompressor() {
     // Convert to blob
     const blob = await new Promise<Blob>((resolve, reject) => {
       const qualityValue = outputMime === 'image/png' ? undefined : quality;
-      
+
       canvas.toBlob((blob) => {
         if (blob) {
           resolve(blob);
@@ -960,7 +960,7 @@ export default function EnhancedImageCompressor() {
             </div>
             Understanding Image Compression Science
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Compression Algorithms</h3>
@@ -986,7 +986,7 @@ export default function EnhancedImageCompressor() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Quality vs Size Balance</h3>
               <div className="space-y-4">
@@ -997,7 +997,7 @@ export default function EnhancedImageCompressor() {
                   </div>
                   <p className="text-sm text-muted-foreground">Minimal compression artifacts, ideal for professional photography and print materials.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -1005,7 +1005,7 @@ export default function EnhancedImageCompressor() {
                   </div>
                   <p className="text-sm text-muted-foreground">Optimal for web use, social media, and general sharing with excellent quality retention.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-orange-200 dark:border-orange-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
@@ -1016,7 +1016,7 @@ export default function EnhancedImageCompressor() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-emerald-100 dark:bg-emerald-900/30 rounded-xl p-6 border border-emerald-200 dark:border-emerald-700">
             <h4 className="font-semibold text-emerald-800 dark:text-emerald-200 mb-3">🧠 Smart Compression Technology</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -1040,7 +1040,7 @@ export default function EnhancedImageCompressor() {
             </div>
             Format-Specific Optimization
           </h2>
-          
+
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-xl border border-orange-200 dark:border-orange-800 p-6">
               <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
@@ -1058,7 +1058,7 @@ export default function EnhancedImageCompressor() {
                 <div className="text-xs text-orange-600 dark:text-orange-400">Photographs, complex images, natural scenes</div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800 p-6">
               <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                 <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">P</div>
@@ -1075,7 +1075,7 @@ export default function EnhancedImageCompressor() {
                 <div className="text-xs text-blue-600 dark:text-blue-400">Graphics, logos, images with transparency</div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800 p-6">
               <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                 <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xs">W</div>
@@ -1093,7 +1093,7 @@ export default function EnhancedImageCompressor() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
             <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">📊 Compression Performance Comparison</h4>
             <div className="overflow-x-auto">
@@ -1143,7 +1143,7 @@ export default function EnhancedImageCompressor() {
             </div>
             Advanced Compression Techniques
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Optimization Strategies</h3>
@@ -1178,7 +1178,7 @@ export default function EnhancedImageCompressor() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Use Case Optimization</h3>
               <div className="space-y-4">
@@ -1189,7 +1189,7 @@ export default function EnhancedImageCompressor() {
                   </div>
                   <p className="text-sm text-muted-foreground">Target 70-85% quality with WebP format for fastest loading times and best user experience.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-pink-200 dark:border-pink-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-pink-500 rounded-full"></div>
@@ -1197,7 +1197,7 @@ export default function EnhancedImageCompressor() {
                   </div>
                   <p className="text-sm text-muted-foreground">Use 60-75% quality with size limits to ensure deliverability while maintaining readability.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-rose-200 dark:border-rose-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-rose-500 rounded-full"></div>
@@ -1208,7 +1208,7 @@ export default function EnhancedImageCompressor() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-purple-100 dark:bg-purple-900/30 rounded-xl p-6 border border-purple-200 dark:border-purple-700">
             <h4 className="font-semibold text-purple-800 dark:text-purple-200 mb-3">🎯 Compression Best Practices</h4>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
@@ -1230,43 +1230,27 @@ export default function EnhancedImageCompressor() {
       </div>
 
       {/* SEO Components */}
-        <ToolSeoContent
-          title="Online Image Compressor"
-          overview="Drastically reduce the file size of your images while maintaining excellent quality. Our smart compression tool helps you optimize your images for the web, email, and storage, all without sacrificing clarity. The entire process is secure and happens right in your browser."
-          
-          howToTitle="How to Compress Your Image"
-          steps={[
-            "Upload Your Image: Drag and drop your image (JPG, PNG, or WebP) into the upload area, or click to select it from your device.",
-            "Adjust Compression Settings: Use the quality slider to find the perfect balance between file size and visual quality. For more control, you can also set a max width or height and choose a specific output format in the advanced options.",
-            "Compress & Download: Click the 'Compress Image' button. Our tool will instantly process your image and show you a before-and-after comparison. You can then download your new, smaller image.",
-          ]}
-
-          featuresTitle="Features of Our Image Compressor"
-          features={[
-            { name: "Complete Privacy", description: "Your images are processed locally in your browser. They are never uploaded to a server, so your data remains 100% private." },
-            { name: "Advanced Quality Control", description: "Use our intuitive slider to adjust the compression level and see a real-time preview of the output quality." },
-            { name: "Smart Format Selection", description: "Our 'Auto' mode intelligently chooses the best format (WEBP, JPEG, PNG) to give you the smallest file size with the best quality." },
-            { name: "Resizing Options", description: "Optionally, you can resize your image by setting a maximum width or height, which further reduces the file size." },
-            { name: "Before & After Comparison", description: "Our interactive slider lets you compare the compressed image with the original, so you can be sure you're happy with the result." },
-            { name: "Free and Unlimited", description: "Compress as many images as you want, as often as you want, without any cost or registration." },
-          ]}
-
-        useCasesTitle="Why Should You Compress Images?"
-        useCases={[
-          "To make your website load faster, which improves user experience and SEO.",
-          "To send images as email attachments without exceeding size limits.",
-          "To save storage space on your phone, computer, or cloud drive.",
-          "To upload images to social media or online forums more quickly.",
+      <ToolSeoContent
+        title="Online Image Compressor"
+        overview="Drastically reduce the file size of your images while maintaining excellent quality. Our smart compression tool helps you optimize your images for the web, email, and storage, all without sacrificing clarity. The entire process is secure and happens right in your browser."
+        steps={[
+          "Upload Your Image: Drag and drop your image (JPG, PNG, or WebP) into the upload area, or click to select it from your device.",
+          "Adjust Compression Settings: Use the quality slider to find the perfect balance between file size and visual quality. For more control, you can also set a max width or height and choose a specific output format in the advanced options.",
+          "Compress & Download: Click the 'Compress Image' button. Our tool will instantly process your image and show you a before-and-after comparison. You can then download your new, smaller image.",
         ]}
-
-        faqTitle="Frequently Asked Questions"
+        tips={[
+          "Use 70-85% quality for photos to balance size and clarity.",
+          "Choose WebP format for best compression, JPEG for photos, PNG for graphics with transparency.",
+          "Resize images to target display size before compressing for further savings.",
+          "All processing happens locally in your browser for complete privacy.",
+        ]}
         faq={[
           { q: "Is it safe to compress my photos here?", a: "Yes, it is completely secure. The entire compression process happens in your browser, meaning your images never leave your computer. Your privacy is fully protected." },
           { q: "Will compressing an image reduce its quality?", a: "Compression always involves a trade-off between file size and quality. Our tool is designed to minimize this trade-off, and our quality slider gives you full control to find a result you are happy with. For most web uses, a quality of 75-85% provides excellent results with a significantly smaller file size." },
           { q: "What is the best format to use?", a: "For most cases, our 'Auto' setting is the best choice. It will often convert images to WebP, which offers the best compression. If you need to maintain transparency, choose PNG. For photos, JPEG is a good option." },
           { q: "Can I compress multiple images at once?", a: "Currently, our tool processes one image at a time to give you the most control over the compression settings and to provide a clear before-and-after comparison." },
         ]}
-        />
+      />
     </ToolLayout>
   );
 }

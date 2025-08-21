@@ -1,4 +1,5 @@
 import { Shield, Zap, Users, Globe, Lock, Cpu, Heart, Star } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "About JaeyGuides",
@@ -10,7 +11,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-background">
       {/* Background gradient mesh */}
       <div className="fixed inset-0 gradient-mesh pointer-events-none opacity-30" />
-      
+
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         {/* Hero Section */}
         <div className="text-center mb-20 animate-slide-up">
@@ -23,7 +24,7 @@ export default function AboutPage() {
             About <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">JaeyGuides</span>
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            We build privacy-first PDF and image tools that run entirely in your browser. 
+            We build privacy-first PDF and image tools that run entirely in your browser.
             No uploads, no tracking, just powerful, secure, and intuitive tools that respect your data.
           </p>
         </div>
@@ -45,13 +46,19 @@ export default function AboutPage() {
           </div>
           <div className="flex flex-col md:flex-row items-center gap-10">
             <div className="md:w-1/3 text-center">
-              <img src="/jaey-avatar.png" alt="Jaey, Creator of JaeyGuides" className="w-48 h-48 rounded-full mx-auto mb-4 border-4 border-primary/50 shadow-lg"/>
+              <Image
+                src="/jaey-avatar.png"
+                alt="Jaey, Creator of JaeyGuides"
+                width={192}
+                height={192}
+                className="w-48 h-48 rounded-full mx-auto mb-4 border-4 border-primary/50 shadow-lg"
+              />
               <h3 className="text-2xl font-bold text-foreground">Jaey</h3>
-              <p className="text-muted-foreground">Founder & Developer</p>
+              <p className="text-muted-foreground">Founder &amp; Developer</p>
             </div>
             <div className="md:w-2/3 text-lg text-muted-foreground leading-relaxed space-y-4">
-              <p>"I'm a passionate developer who believes in the power of the open web and the importance of digital privacy. I created JaeyGuides to give people tools they can trust. When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee."</p>
-              <p>"Your feedback is what drives this project forward. If you have any ideas or suggestions, please don't hesitate to reach out!"</p>
+              <p>&ldquo;I&apos;m a passionate developer who believes in the power of the open web and the importance of digital privacy. I created JaeyGuides to give people tools they can trust. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee.&rdquo;</p>
+              <p>&ldquo;Your feedback is what drives this project forward. If you have any ideas or suggestions, please don&apos;t hesitate to reach out!&rdquo;</p>
             </div>
           </div>
         </div>
@@ -97,8 +104,8 @@ export default function AboutPage() {
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
             Have questions, suggestions, or feedback? Your input helps us make JaeyGuides better for everyone. We'd love to hear from you!
           </p>
-          <a 
-            href="/contact" 
+          <a
+            href="/contact"
             className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-primary/30 transition-all duration-300 transform hover:scale-105"
           >
             Contact Us

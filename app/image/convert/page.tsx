@@ -159,8 +159,8 @@ export default function ImageConverterPage() {
             key={preset.format}
             onClick={() => setFormat(preset.format)}
             className={`w-full text-left p-3 rounded-xl border transition-all duration-300 ${format === preset.format
-                ? 'border-primary bg-primary/10 text-primary'
-                : 'border-border hover:border-primary/30 hover:bg-surface-elevated/50'
+              ? 'border-primary bg-primary/10 text-primary'
+              : 'border-border hover:border-primary/30 hover:bg-surface-elevated/50'
               }`}
           >
             <div className="flex items-center justify-between mb-2">
@@ -179,7 +179,7 @@ export default function ImageConverterPage() {
         ))}
 
         {/* Current Selection Display */}
-        {originalFormat && format !== originalFormat && ( file &&
+        {originalFormat && format !== originalFormat && (file &&
           <div className="mt-4 p-3 bg-primary/5 rounded-xl border border-primary/20">
             <div className="flex items-center justify-center gap-3 text-sm">
               <span className={`px-2 py-1 rounded-full font-medium ${originalFormatInfo?.color}`}>
@@ -283,8 +283,8 @@ export default function ImageConverterPage() {
             <div
               {...getRootProps()}
               className={`relative border-2 border-dashed rounded-2xl p-8 lg:p-12 text-center cursor-pointer transition-all duration-300 group ${isDragActive
-                  ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg shadow-primary/20'
-                  : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg shadow-primary/20'
+                : 'border-border hover:border-primary/50 hover:bg-primary/5'
                 }`}
             >
               <input {...getInputProps()} />
@@ -330,7 +330,7 @@ export default function ImageConverterPage() {
         </Dropzone>
 
         {/* File Info */}
-        {file && ( !isProcessing &&
+        {file && (!isProcessing &&
           <div className="p-4 bg-muted/50 rounded-xl border">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
@@ -452,9 +452,9 @@ export default function ImageConverterPage() {
       {/* Footer */}
       <div className="mt-12 text-center text-muted-foreground">
         <p className="text-sm">
-            🔒 All conversions happen locally in your browser - your images never leave your device
-          </p>
-        </div>
+          🔒 All conversions happen locally in your browser - your images never leave your device
+        </p>
+      </div>
 
       {/* Educational Content Section */}
       <div className="mt-16 space-y-12">
@@ -466,7 +466,7 @@ export default function ImageConverterPage() {
             </div>
             Understanding Image Formats
           </h2>
-          
+
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div className="bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800 p-6">
               <div className="flex items-center gap-3 mb-4">
@@ -495,7 +495,7 @@ export default function ImageConverterPage() {
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-white dark:bg-gray-800/50 rounded-xl border border-orange-200 dark:border-orange-800 p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">JPG</div>
@@ -523,7 +523,7 @@ export default function ImageConverterPage() {
                 </li>
               </ul>
             </div>
-            
+
             <div className="bg-white dark:bg-gray-800/50 rounded-xl border border-green-200 dark:border-green-800 p-6">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold text-xs">WebP</div>
@@ -552,7 +552,7 @@ export default function ImageConverterPage() {
               </ul>
             </div>
           </div>
-          
+
           <div className="bg-orange-100 dark:bg-orange-900/30 rounded-xl p-6 border border-orange-200 dark:border-orange-700">
             <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-3">🎯 Format Selection Guide</h4>
             <div className="grid md:grid-cols-3 gap-4 text-sm">
@@ -580,11 +580,11 @@ export default function ImageConverterPage() {
             </div>
             Common Conversion Scenarios
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-foreground">Popular Conversions</h3>
-              
+
               <div className="space-y-4">
                 <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center gap-3 mb-2">
@@ -595,7 +595,7 @@ export default function ImageConverterPage() {
                   <h4 className="font-semibold text-foreground mb-1">Reduce File Size</h4>
                   <p className="text-sm text-muted-foreground">Convert PNG to JPEG to dramatically reduce file size for web use or email sharing.</p>
                 </div>
-                
+
                 <div className="p-4 bg-gradient-to-r from-orange-50 to-blue-50 dark:from-orange-900/20 dark:to-blue-900/20 rounded-xl border border-orange-200 dark:border-orange-800">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="px-2 py-1 bg-orange-500 text-white text-xs font-bold rounded">JPG</span>
@@ -605,7 +605,7 @@ export default function ImageConverterPage() {
                   <h4 className="font-semibold text-foreground mb-1">Add Transparency</h4>
                   <p className="text-sm text-muted-foreground">Convert JPEG to PNG when you need to add transparent backgrounds or preserve quality.</p>
                 </div>
-                
+
                 <div className="p-4 bg-gradient-to-r from-blue-50 to-green-50 dark:from-blue-900/20 dark:to-green-900/20 rounded-xl border border-green-200 dark:border-green-800">
                   <div className="flex items-center gap-3 mb-2">
                     <span className="px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded">PNG</span>
@@ -617,10 +617,10 @@ export default function ImageConverterPage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-6">
               <h3 className="text-xl font-semibold text-foreground">Use Case Examples</h3>
-              
+
               <div className="space-y-4">
                 <div className="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl border border-purple-200 dark:border-purple-800">
                   <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
@@ -629,7 +629,7 @@ export default function ImageConverterPage() {
                   </h4>
                   <p className="text-sm text-muted-foreground">Convert high-resolution PNGs to JPEG for faster uploads and better platform compatibility.</p>
                 </div>
-                
+
                 <div className="p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl border border-indigo-200 dark:border-indigo-800">
                   <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <Zap className="h-4 w-4 text-indigo-500" />
@@ -637,7 +637,7 @@ export default function ImageConverterPage() {
                   </h4>
                   <p className="text-sm text-muted-foreground">Convert images to WebP for 25-50% smaller file sizes and faster page loading times.</p>
                 </div>
-                
+
                 <div className="p-4 bg-teal-50 dark:bg-teal-900/20 rounded-xl border border-teal-200 dark:border-teal-800">
                   <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                     <FileImage className="h-4 w-4 text-teal-500" />
@@ -648,7 +648,7 @@ export default function ImageConverterPage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
             <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">📊 Compression Comparison</h4>
             <div className="overflow-x-auto">
@@ -698,7 +698,7 @@ export default function ImageConverterPage() {
             </div>
             Quality Optimization Tips
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Conversion Best Practices</h3>
@@ -733,7 +733,7 @@ export default function ImageConverterPage() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Quality Settings Guide</h3>
               <div className="space-y-4">
@@ -744,7 +744,7 @@ export default function ImageConverterPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">For professional work, print materials, or when quality is paramount.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -752,7 +752,7 @@ export default function ImageConverterPage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Optimal for web use, social media, and general sharing purposes.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-orange-200 dark:border-orange-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
@@ -769,34 +769,18 @@ export default function ImageConverterPage() {
       <ToolSeoContent
         title="Online Image Converter"
         overview="Easily convert your images to different formats like PNG, JPG, and WebP. Our tool gives you full control over the conversion process, allowing you to adjust the quality and optimize your images for any use case. The entire process is secure and happens right in your browser."
-        
-        howToTitle="How to Convert Your Image"
         steps={[
           "Upload Your Image: Drag and drop your image file into the upload area, or click to select it from your device.",
           "Choose Your Output Format: Select your desired format from the options provided (PNG, JPG, or WebP).",
           "Adjust Quality (for JPG/WebP): If you've selected JPG or WebP, you can use the quality slider to find the perfect balance between file size and visual quality.",
           "Convert & Download: Click the 'Convert' button. Our tool will instantly process your image and provide a download link for your new file.",
         ]}
-
-        featuresTitle="Features of Our Image Converter"
-        features={[
-          { name: "Total Privacy", description: "Your images are processed entirely within your browser. They are never sent to a server, so your data remains 100% private." },
-          { name: "Multiple Formats", description: "Convert to and from popular formats like PNG, JPG, and the modern, highly-efficient WebP." },
-          { name: "Quality Control", description: "For formats that support it (like JPG and WebP), you can adjust the quality to reduce file size." },
-          { name: "Instant Previews", description: "See a live preview of your image before you convert it." },
-          { name: "Fast & Efficient", description: "Our tool uses the power of your own device to perform conversions quickly and efficiently." },
-          { name: "Free and Unlimited", description: "Convert as many images as you want, as often as you want, without any cost or registration." },
+        tips={[
+          "For best results, start with the highest quality image you have.",
+          "Use PNG for graphics and images needing transparency.",
+          "Use JPEG for photographs and maximum compatibility.",
+          "Use WebP for web optimization and smallest file sizes.",
         ]}
-
-        useCasesTitle="Why Convert an Image?"
-        useCases={[
-          "To convert a PNG to a JPG to reduce its file size.",
-          "To convert a JPG to a PNG to add a transparent background.",
-          "To convert an image to WebP for faster loading times on your website.",
-          "To ensure your image is in a format that is supported by a specific application or platform.",
-        ]}
-
-        faqTitle="Frequently Asked Questions"
         faq={[
           { q: "Is it safe to convert my images here?", a: "Yes, it is completely secure. The entire conversion process happens in your browser, meaning your images never leave your computer. Your privacy is fully protected." },
           { q: "What is the best format to convert to?", a: "It depends on your needs. For photos, JPG is a good choice. For images with transparency, PNG is the best option. For the web, WebP offers the best balance of quality and file size." },
