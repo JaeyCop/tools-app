@@ -2,81 +2,97 @@
 
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-
-// Simple SVG icons for Sun and Moon. You can replace these with a library like react-icons.
-const SunIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <circle cx="12" cy="12" r="4" />
-    <path d="M12 2v2" />
-    <path d="M12 20v2" />
-    <path d="m4.93 4.93 1.41 1.41" />
-    <path d="m17.66 17.66 1.41 1.41" />
-    <path d="M2 12h2" />
-    <path d="M20 12h2" />
-    <path d="m6.34 17.66-1.41 1.41" />
-    <path d="m19.07 4.93-1.41 1.41" />
-  </svg>
-);
-
-const MoonIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-  </svg>
-);
+import { Sun, Moon, Monitor, ChevronDown } from 'lucide-react';
 
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme, resolvedTheme, themes } = useTheme();
 
-  // useEffect only runs on the client, so now we can safely show the UI
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('[data-theme-switcher]')) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   if (!mounted) {
-    // Render a placeholder or nothing to avoid hydration mismatch
-    return <div style={{ width: '24px', height: '24px' }} />;
+    return (
+      <div className="w-10 h-10 rounded-xl bg-muted/50 animate-pulse" />
+    );
   }
 
-  const isDark = theme === 'dark' || resolvedTheme === 'dark';
+  const themeOptions = [
+    { value: 'light', label: 'Light', icon: Sun },
+    { value: 'dark', label: 'Dark', icon: Moon },
+    { value: 'system', label: 'System', icon: Monitor },
+  ];
+
+  const currentTheme = themeOptions.find(option => option.value === theme) || themeOptions[0];
+  const isDark = resolvedTheme === 'dark';
 
   return (
-    <button
-      aria-label={isDark ? 'Activate light mode' : 'Activate dark mode'}
-      title={isDark ? 'Activate light mode' : 'Activate dark mode'}
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      style={{
-        background: 'none',
-        border: 'none',
-        cursor: 'pointer',
-        color: 'inherit',
-        padding: '8px',
-        borderRadius: '50%',
-      }}
-    >
-      {isDark ? <SunIcon /> : <MoonIcon />}
-    </button>
+    <div className="relative" data-theme-switcher>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="relative group flex items-center gap-2 p-2.5 rounded-xl bg-surface border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 interactive min-w-[100px]"
+        aria-label="Theme selector"
+      >
+        <div className="relative w-4 h-4 flex items-center justify-center">
+          <currentTheme.icon className={`w-4 h-4 transition-all duration-300 ${
+            isDark ? 'text-blue-400' : 'text-amber-500'
+          }`} />
+        </div>
+        <span className="text-sm font-medium text-foreground flex-1 text-left">
+          {currentTheme.label}
+        </span>
+        <ChevronDown className={`w-3 h-3 text-muted transition-transform duration-200 ${
+          isOpen ? 'rotate-180' : ''
+        }`} />
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
+      </button>
+
+      {/* Dropdown */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-2 py-2 bg-surface/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-xl z-50 animate-slide-down">
+          {themeOptions.map((option) => {
+            const isSelected = theme === option.value;
+            return (
+              <button
+                key={option.value}
+                onClick={() => {
+                  setTheme(option.value);
+                  setIsOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-all duration-200 hover:bg-surface-elevated/50 ${
+                  isSelected 
+                    ? 'text-primary bg-primary/5 border-r-2 border-primary' 
+                    : 'text-foreground hover:text-primary'
+                }`}
+              >
+                <option.icon className={`w-4 h-4 ${
+                  isSelected ? 'text-primary' : 'text-muted'
+                }`} />
+                <span className="font-medium">{option.label}</span>
+                {isSelected && (
+                  <div className="ml-auto w-2 h-2 rounded-full bg-primary" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 };
