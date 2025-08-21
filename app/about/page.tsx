@@ -11,201 +11,95 @@ export default function AboutPage() {
       {/* Background gradient mesh */}
       <div className="fixed inset-0 gradient-mesh pointer-events-none opacity-30" />
       
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         {/* Hero Section */}
-        <div className="text-center mb-16 animate-slide-up">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border border-primary/20">
-              <Heart className="h-12 w-12 text-primary" />
+        <div className="text-center mb-20 animate-slide-up">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border border-primary/20 shadow-lg">
+              <Heart className="h-14 w-14 text-primary" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-foreground mb-6">
             About <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">JaeyGuides</span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Privacy-first PDF and image tools that run entirely in your browser. 
-            No uploads, no tracking, just powerful tools that respect your data.
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-4xl mx-auto leading-relaxed">
+            We build privacy-first PDF and image tools that run entirely in your browser. 
+            No uploads, no tracking, just powerful, secure, and intuitive tools that respect your data.
           </p>
         </div>
 
-        {/* Mission Section */}
-        <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 lg:p-12 mb-12 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Our Mission</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              To provide fast, secure, and accessible tools for everyday document and image processing tasks, 
-              while maintaining the highest standards of privacy and user experience.
-            </p>
+        {/* Our Story Section */}
+        <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-3xl p-8 lg:p-12 mb-20 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <h2 className="text-4xl font-bold text-center text-foreground mb-10">Our Story</h2>
+          <div className="text-lg text-muted-foreground max-w-3xl mx-auto space-y-6 leading-relaxed">
+            <p>JaeyGuides began with a simple realization: everyday file tasks were becoming unnecessarily complicated and invasive. Why should you have to upload your private documents to a random server just to merge two PDFs? Why should you have to worry about what happens to your images after you resize them online?</p>
+            <p>Frustrated by the lack of trustworthy, free tools, our founder, Jaey, decided to build a better alternative. The goal was to create a suite of utilities that were powerful, easy to use, and, most importantly, completely private. This led to the core principle of JaeyGuides: all processing must happen on the user's device.</p>
+            <p>After months of development, leveraging modern web technologies like WebAssembly, we launched the first version of our tools. The response was overwhelmingly positive, and we have been committed to improving and expanding our offerings ever since, always guided by our community's feedback and our unwavering commitment to privacy.</p>
           </div>
         </div>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 w-fit mb-4">
-              <Shield className="h-6 w-6 text-green-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Privacy First</h3>
-            <p className="text-muted-foreground">
-              All processing happens locally in your browser. Your files never leave your device, 
-              ensuring complete privacy and security.
-            </p>
+        {/* Meet the Creator Section */}
+        <div className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-3xl border border-primary/20 p-8 lg:p-12 mb-20 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <div className="text-center mb-10">
+            <h2 className="text-4xl font-bold text-foreground mb-4">Meet the Creator</h2>
           </div>
-
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 w-fit mb-4">
-              <Zap className="h-6 w-6 text-blue-600" />
+          <div className="flex flex-col md:flex-row items-center gap-10">
+            <div className="md:w-1/3 text-center">
+              <img src="/jaey-avatar.png" alt="Jaey, Creator of JaeyGuides" className="w-48 h-48 rounded-full mx-auto mb-4 border-4 border-primary/50 shadow-lg"/>
+              <h3 className="text-2xl font-bold text-foreground">Jaey</h3>
+              <p className="text-muted-foreground">Founder & Developer</p>
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Lightning Fast</h3>
-            <p className="text-muted-foreground">
-              Optimized for speed with modern web technologies. No waiting for uploads or downloads 
-              from remote servers.
-            </p>
-          </div>
-
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 w-fit mb-4">
-              <Globe className="h-6 w-6 text-purple-600" />
+            <div className="md:w-2/3 text-lg text-muted-foreground leading-relaxed space-y-4">
+              <p>"I'm a passionate developer who believes in the power of the open web and the importance of digital privacy. I created JaeyGuides to give people tools they can trust. When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee."</p>
+              <p>"Your feedback is what drives this project forward. If you have any ideas or suggestions, please don't hesitate to reach out!"</p>
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Always Available</h3>
-            <p className="text-muted-foreground">
-              Works offline once loaded. No account required, no subscriptions, 
-              just tools that work when you need them.
-            </p>
-          </div>
-
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.5s' }}>
-            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20 w-fit mb-4">
-              <Users className="h-6 w-6 text-orange-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">User Focused</h3>
-            <p className="text-muted-foreground">
-              Clean, intuitive interface designed for both beginners and power users. 
-              Accessible on any device, anywhere.
-            </p>
-          </div>
-
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.6s' }}>
-            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 w-fit mb-4">
-              <Cpu className="h-6 w-6 text-red-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Modern Technology</h3>
-            <p className="text-muted-foreground">
-              Built with cutting-edge web technologies including WebAssembly, 
-              Canvas APIs, and modern JavaScript frameworks.
-            </p>
-          </div>
-
-          <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-6 animate-slide-up" style={{ animationDelay: '0.7s' }}>
-            <div className="p-3 rounded-xl bg-teal-500/10 border border-teal-500/20 w-fit mb-4">
-              <Lock className="h-6 w-6 text-teal-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3">Zero Data Collection</h3>
-            <p className="text-muted-foreground">
-              We don&apos;t collect, store, or analyze your files or personal data. 
-              What you process stays with you.
-            </p>
           </div>
         </div>
 
-        {/* Why Choose Us Section */}
-        <div className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-2xl border border-primary/20 p-8 lg:p-12 mb-12 animate-slide-up" style={{ animationDelay: '0.8s' }}>
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-foreground mb-4">Why Choose JaeyGuides?</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              In a world where data privacy is increasingly important, we&apos;ve built tools that put you in control.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 mt-1">
-                  <Star className="h-5 w-5 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">No Hidden Costs</h3>
-                  <p className="text-muted-foreground">
-                    All tools are completely free to use. No premium features, no subscriptions, no limits.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-blue-500/10 border border-blue-500/20 mt-1">
-                  <Star className="h-5 w-5 text-blue-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Cross-Platform</h3>
-                  <p className="text-muted-foreground">
-                    Works seamlessly on desktop, tablet, and mobile devices across all modern browsers.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-purple-500/10 border border-purple-500/20 mt-1">
-                  <Star className="h-5 w-5 text-purple-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Regular Updates</h3>
-                  <p className="text-muted-foreground">
-                    Continuously improved with new features, performance enhancements, and bug fixes.
-                  </p>
-                </div>
+        {/* Our Commitment to Privacy Section */}
+        <div className="bg-surface/80 backdrop-blur-sm border border-border/50 rounded-3xl p-8 lg:p-12 mb-20 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <h2 className="text-4xl font-bold text-center text-foreground mb-10">Our Commitment to Privacy</h2>
+          <div className="grid md:grid-cols-2 gap-8 text-lg">
+            <div className="flex items-start gap-4 p-6 rounded-xl bg-background/50">
+              <Lock className="h-8 w-8 text-primary mt-1" />
+              <div>
+                <h3 className="font-bold text-foreground mb-2">Zero Uploads</h3>
+                <p className="text-muted-foreground">Your files are never sent to our servers. All operations happen locally in your browser, ensuring your data stays in your hands.</p>
               </div>
             </div>
-
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-orange-500/10 border border-orange-500/20 mt-1">
-                  <Star className="h-5 w-5 text-orange-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Open Source Spirit</h3>
-                  <p className="text-muted-foreground">
-                    Built with transparency in mind, using open web standards and best practices.
-                  </p>
-                </div>
+            <div className="flex items-start gap-4 p-6 rounded-xl bg-background/50">
+              <Shield className="h-8 w-8 text-primary mt-1" />
+              <div>
+                <h3 className="font-bold text-foreground mb-2">No Data Collection</h3>
+                <p className="text-muted-foreground">We do not track, log, or analyze any of your activity or the files you process. Your privacy is not a product.</p>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 mt-1">
-                  <Star className="h-5 w-5 text-red-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Community Driven</h3>
-                  <p className="text-muted-foreground">
-                    Features and improvements based on real user feedback and needs.
-                  </p>
-                </div>
+            </div>
+            <div className="flex items-start gap-4 p-6 rounded-xl bg-background/50">
+              <Cpu className="h-8 w-8 text-primary mt-1" />
+              <div>
+                <h3 className="font-bold text-foreground mb-2">In-Browser Processing</h3>
+                <p className="text-muted-foreground">We use the power of your own device to perform all the complex processing, thanks to modern web technologies.</p>
               </div>
-
-              <div className="flex items-start gap-4">
-                <div className="p-2 rounded-lg bg-teal-500/10 border border-teal-500/20 mt-1">
-                  <Star className="h-5 w-5 text-teal-600" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-foreground mb-2">Reliable Performance</h3>
-                  <p className="text-muted-foreground">
-                    Optimized algorithms ensure fast processing even for large files and complex operations.
-                  </p>
-                </div>
+            </div>
+            <div className="flex items-start gap-4 p-6 rounded-xl bg-background/50">
+              <Globe className="h-8 w-8 text-primary mt-1" />
+              <div>
+                <h3 className="font-bold text-foreground mb-2">Transparent & Open</h3>
+                <p className="text-muted-foreground">Our tools are built on open standards. We believe in transparency and being upfront about how our technology works.</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Contact Section */}
-        <div className="text-center bg-surface/80 backdrop-blur-sm border border-border/50 rounded-2xl p-8 animate-slide-up" style={{ animationDelay: '0.9s' }}>
-          <h2 className="text-2xl font-bold text-foreground mb-4">Get in Touch</h2>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Have questions, suggestions, or feedback? We&apos;d love to hear from you. 
-            Your input helps us make JaeyGuides better for everyone.
+        <div className="text-center bg-surface/80 backdrop-blur-sm border border-border/50 rounded-3xl p-10 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <h2 className="text-3xl font-bold text-foreground mb-4">We Value Your Feedback</h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Have questions, suggestions, or feedback? Your input helps us make JaeyGuides better for everyone. We'd love to hear from you!
           </p>
           <a 
             href="/contact" 
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-secondary text-white font-medium py-3 px-6 rounded-xl hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 transform hover:scale-105"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-primary/30 transition-all duration-300 transform hover:scale-105"
           >
             Contact Us
           </a>

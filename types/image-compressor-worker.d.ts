@@ -37,7 +37,7 @@ declare module '/image-compressor.worker.js' {
   }
 
   const worker: {
-    new (): ImageCompressionWorker;
+    new(): ImageCompressionWorker;
   };
 
   export default worker;

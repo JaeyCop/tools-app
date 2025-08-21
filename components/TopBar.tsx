@@ -109,23 +109,20 @@ export default function TopBar() {
             {/* Default View (Mobile & Tablet) */}
             <div
               className={`flex items-center justify-between w-full h-full transition-opacity ${
-                isSearchOpen ? "opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto" : "opacity-100"
+                isSearchOpen ? "opacity-0 pointer-events-none" : "opacity-100"
               }`}
             >
-              {/* Hamburger */}
-              <div className="lg:hidden flex items-center justify-center w-12 h-12">
-                <button
-                  type="button"
-                  onClick={() => setIsMenuOpen(true)}
-                  className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300 interactive"
-                  aria-label="Open menu"
-                >
-                  <Menu className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
-                </button>
-              </div>
-
-              {/* Logo - Centered on mobile */}
-              <div className="flex-1 flex items-center justify-center lg:justify-start">
+              {/* Left side: Hamburger & Logo */}
+              <div className="flex items-center gap-2">
+                <div className="lg:hidden">
+                  <button
+                    type="button"
+                    onClick={() => setIsMenuOpen(true)}
+                    className="p-2 rounded-xl"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </button>
+                </div>
                 <Link href="/" className="flex items-center justify-center group">
                   <span className="sr-only">JaeyGuides</span>
                   <Image 
@@ -133,47 +130,47 @@ export default function TopBar() {
                     alt="JaeyGuides" 
                     width={300} 
                     height={50} 
-                    className="brand-logo object-contain w-[160px] h-[40px] sm:w-[200px] sm:h-[50px] lg:w-[240px] lg:h-[48px]" 
+                    className="brand-logo object-contain w-32 sm:w-40" 
                     priority
                   />
                 </Link>
               </div>
 
-              {/* Desktop Search */}
-              <form onSubmit={go} className="hidden lg:flex flex-1 items-center max-w-xl ml-4">
-                <div className="relative w-full">
-                  <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <Search className="h-4 w-4 text-muted" />
-                  </div>
-                  <input
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search tools: e.g. PDF merge, image resize"
-                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-background border border-border text-sm focus-premium"
-                  />
-                </div>
-              </form>
-
               {/* Right side controls */}
-              <div className="flex items-center justify-center gap-1 w-auto">
+              <div className="flex items-center justify-end gap-1">
                 {/* Mobile & Tablet Search Trigger */}
                 <button
                   type="button"
                   onClick={openSearch}
-                  className="lg:hidden p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300"
+                  className="lg:hidden p-2 rounded-xl"
                   aria-label="Open search"
                 >
-                  <Search className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
+                  <Search className="h-5 w-5 text-muted" />
                 </button>
+
+                {/* Desktop Search */}
+                <form onSubmit={go} className="hidden lg:flex flex-1 items-center max-w-xs ml-4">
+                  <div className="relative w-full">
+                    <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                      <Search className="h-4 w-4 text-muted" />
+                    </div>
+                    <input
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search..."
+                      className="w-full pl-9 pr-3 py-2 rounded-xl bg-background border border-border text-sm focus-premium"
+                    />
+                  </div>
+                </form>
 
                 <button
                   type="button"
                   onClick={() => setIsShortcutsOpen(true)}
-                  className="p-2 rounded-xl hover:bg-surface-elevated/50 border border-transparent hover:border-primary/10 transition-all duration-300"
+                  className="p-2 rounded-xl"
                   aria-label="Keyboard shortcuts"
                   title="Keyboard shortcuts (Ctrl+/)"
                 >
-                  <Keyboard className="h-5 w-5 text-muted hover:text-primary transition-colors duration-300" />
+                  <Keyboard className="h-5 w-5 text-muted" />
                 </button>
                 <div className="ml-1">
                   <ThemeSwitcher />

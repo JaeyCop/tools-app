@@ -439,43 +439,291 @@ export default function PdfMergePage() {
           </div>
         </div>
 
+        {/* Educational Content Section */}
+        <div className="mt-16 space-y-12">
+          {/* Understanding PDF Merging */}
+          <section className="bg-gradient-to-r from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20 rounded-2xl border border-indigo-200 dark:border-indigo-800 p-8">
+            <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <div className="p-2 bg-indigo-500 rounded-xl">
+                <Layers className="h-6 w-6 text-white" />
+              </div>
+              Understanding PDF Merging Technology
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">How PDF Merging Works</h3>
+                <p className="text-muted-foreground mb-4 leading-relaxed">
+                  PDF merging combines multiple PDF documents by extracting pages from source files and reconstructing them into a new document. Our tool preserves all original formatting, fonts, images, and interactive elements.
+                </p>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                    <span>Preserves original page layouts and formatting</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                    <span>Maintains embedded fonts and images</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                    <span>Retains hyperlinks and bookmarks</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-500 mt-1 flex-shrink-0" />
+                    <span>Combines metadata and document properties</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Merge Modes Explained</h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <span className="font-semibold text-foreground">Append Mode</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Combines documents sequentially - all pages from Document 1, then all pages from Document 2, etc. Perfect for combining chapters or sections.</p>
+                  </div>
+                  
+                  <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-purple-200 dark:border-purple-800">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+                      <span className="font-semibold text-foreground">Interleave Mode</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Alternates pages between documents - Page 1 from Doc A, Page 1 from Doc B, Page 2 from Doc A, etc. Ideal for combining front/back scans.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-indigo-100 dark:bg-indigo-900/30 rounded-xl p-6 border border-indigo-200 dark:border-indigo-700">
+              <h4 className="font-semibold text-indigo-800 dark:text-indigo-200 mb-3">🔧 Advanced Features</h4>
+              <div className="grid md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-indigo-700 dark:text-indigo-300">Page Labels:</span>
+                  <p className="text-indigo-600 dark:text-indigo-400">Add source filename as watermark on each page for easy identification</p>
+                </div>
+                <div>
+                  <span className="font-medium text-indigo-700 dark:text-indigo-300">Optimization:</span>
+                  <p className="text-indigo-600 dark:text-indigo-400">Compress the final document to reduce file size while maintaining quality</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Common Use Cases */}
+          <section className="bg-surface/80 border border-border rounded-2xl p-8">
+            <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <div className="p-2 bg-green-500 rounded-xl">
+                <FileText className="h-6 w-6 text-white" />
+              </div>
+              Professional Use Cases
+            </h2>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800 p-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <FileText className="h-4 w-4 text-white" />
+                  </div>
+                  Document Assembly
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Combine contract sections and appendices</li>
+                  <li>• Merge report chapters into final document</li>
+                  <li>• Assemble proposal components</li>
+                  <li>• Create comprehensive manuals</li>
+                </ul>
+              </div>
+              
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl border border-green-200 dark:border-green-800 p-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    <Settings className="h-4 w-4 text-white" />
+                  </div>
+                  Scanning Workflows
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Combine front and back page scans</li>
+                  <li>• Merge multiple scanning sessions</li>
+                  <li>• Consolidate receipt collections</li>
+                  <li>• Archive document batches</li>
+                </ul>
+              </div>
+              
+              <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800 p-6">
+                <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center">
+                    <Zap className="h-4 w-4 text-white" />
+                  </div>
+                  Business Operations
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Create monthly financial reports</li>
+                  <li>• Combine invoices for accounting</li>
+                  <li>• Merge presentation materials</li>
+                  <li>• Assemble training documents</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
+              <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">📋 Merge Strategy Guide</h4>
+              <div className="grid md:grid-cols-2 gap-6 text-sm">
+                <div>
+                  <h5 className="font-medium text-amber-700 dark:text-amber-300 mb-2">Before Merging:</h5>
+                  <ul className="text-amber-600 dark:text-amber-400 space-y-1">
+                    <li>• Organize files in logical order</li>
+                    <li>• Check for consistent page orientations</li>
+                    <li>• Verify all files open correctly</li>
+                    <li>• Consider final document size</li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-amber-700 dark:text-amber-300 mb-2">After Merging:</h5>
+                  <ul className="text-amber-600 dark:text-amber-400 space-y-1">
+                    <li>• Review page order and content</li>
+                    <li>• Test hyperlinks and bookmarks</li>
+                    <li>• Verify text searchability</li>
+                    <li>• Check file size and optimization</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Performance and Optimization */}
+          <section className="bg-gradient-to-r from-orange-50 via-red-50 to-pink-50 dark:from-orange-900/20 dark:via-red-900/20 dark:to-pink-900/20 rounded-2xl border border-orange-200 dark:border-orange-800 p-8">
+            <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center gap-3">
+              <div className="p-2 bg-orange-500 rounded-xl">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+              Performance & Best Practices
+            </h2>
+            
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Optimization Tips</h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <span className="font-medium text-foreground">File size management:</span>
+                      <span className="text-muted-foreground ml-2">Enable optimization for large documents to reduce final file size</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <span className="font-medium text-foreground">Memory efficiency:</span>
+                      <span className="text-muted-foreground ml-2">Process large files in smaller batches to avoid browser memory limits</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <span className="font-medium text-foreground">Quality preservation:</span>
+                      <span className="text-muted-foreground ml-2">Original quality is maintained unless optimization is specifically enabled</span>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <span className="font-medium text-foreground">Batch processing:</span>
+                      <span className="text-muted-foreground ml-2">Merge related documents together for better organization</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h3 className="text-xl font-semibold text-foreground mb-4">Performance Metrics</h3>
+                <div className="space-y-4">
+                  <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-green-200 dark:border-green-800">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold text-foreground">Processing Speed</span>
+                      <span className="text-green-600 font-bold">~2-5 sec/file</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Average time to process and merge typical business documents</p>
+                  </div>
+                  
+                  <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold text-foreground">Memory Usage</span>
+                      <span className="text-blue-600 font-bold">~2-3x file size</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Temporary memory required during processing (automatically freed)</p>
+                  </div>
+                  
+                  <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-purple-200 dark:border-purple-800">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="font-semibold text-foreground">Quality Retention</span>
+                      <span className="text-purple-600 font-bold">100%</span>
+                    </div>
+                    <p className="text-sm text-muted-foreground">Original document quality preserved without optimization</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bg-orange-100 dark:bg-orange-900/30 rounded-xl p-6 border border-orange-200 dark:border-orange-700">
+              <h4 className="font-semibold text-orange-800 dark:text-orange-200 mb-3">⚡ Performance Recommendations</h4>
+              <div className="grid md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="font-medium text-orange-700 dark:text-orange-300">Small Files (&lt;10MB each):</span>
+                  <p className="text-orange-600 dark:text-orange-400">Merge up to 20-30 files simultaneously</p>
+                </div>
+                <div>
+                  <span className="font-medium text-orange-700 dark:text-orange-300">Medium Files (10-50MB each):</span>
+                  <p className="text-orange-600 dark:text-orange-400">Process in batches of 5-10 files</p>
+                </div>
+                <div>
+                  <span className="font-medium text-orange-700 dark:text-orange-300">Large Files (&gt;50MB each):</span>
+                  <p className="text-orange-600 dark:text-orange-400">Merge 2-3 files at a time for best performance</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
         {/* SEO content and JSON-LD */}
         <ToolSeoContent
-          title="Merge PDFs"
-          overview="Merge multiple PDFs into a single, organized document. Perfect for combining invoices, scanned pages, reports, and more."
+          title="Effortless PDF Merging"
+          overview="Combine multiple PDF files into a single, perfectly organized document right in your browser. Our tool makes it easy to merge invoices, reports, scanned pages, and more, without compromising your privacy. Drag, drop, reorder, and merge—it's that simple."
+          
+          howToTitle="How to Merge PDF Files in 3 Simple Steps"
           steps={[
-            "Click or drop your PDF files",
-            "Reorder by dragging the list",
-            "Choose Append or Interleave",
-            "Optionally add page labels",
-            "Click Merge and download your file",
+            "Upload Your PDFs: Click the upload area or drag and drop all the PDF files you want to merge.",
+            "Arrange Your Files: Drag and drop the file previews to set the exact order for your final document. You can also choose between 'Append' mode (tacking files on one after the other) or 'Interleave' mode (alternating pages from each document).",
+            "Merge & Download: Customize your output settings, like adding page labels or optimizing the file size, then click the 'Merge PDFs' button. Your new, combined PDF will be ready for download instantly.",
           ]}
-          tips={[
-            "Use Interleave for duplex scans",
-            "Run the result through Compress PDF if size is large",
-            "Keep source PDFs in similar orientation",
+
+          featuresTitle="Key Features of Our PDF Merger"
+          features={[
+            { name: "Secure & Private", description: "Your files are never uploaded. All merging happens locally on your device, ensuring 100% confidentiality." },
+            { name: "Flexible Merge Modes", description: "Choose to append files sequentially or interleave their pages, perfect for duplex (two-sided) scanning." },
+            { name: "Intuitive Reordering", description: "Easily drag and drop your files to get the perfect order before merging." },
+            { name: "File Size Optimization", description: "Optionally reduce the final file size for easier sharing and storage, without sacrificing quality." },
+            { name: "Add Page Labels", description: "Automatically add the original filename as a label on each page for easy reference." },
+            { name: "No Limits", description: "Merge as many files as you need, as often as you want. Completely free.", },
           ]}
-          privacyNote="All processing happens locally in your browser. Your files never leave your device."
+
+          useCasesTitle="Common Use Cases for Merging PDFs"
+          useCases={[
+            "Combine multiple chapters of a book or report into a single document.",
+            "Merge scanned receipts, invoices, and other financial documents for easy archiving.",
+            "Consolidate different sections of a presentation or project into one file.",
+            "Create a single portfolio from various individual PDF works.",
+          ]}
+
+          faqTitle="Frequently Asked Questions"
           faq={[
-            { q: "Is there a file size limit?", a: "Very large files depend on your device memory. Try merging fewer files at once if you encounter issues." },
-            { q: "Are my files uploaded?", a: "No. Everything runs in your browser; nothing is sent to a server." },
-          ]}
-        />
-        <SeoHowToJsonLd
-          name="How to merge PDF files"
-          description="Combine multiple PDF files into a single document online."
-          steps={[
-            { name: "Upload your PDF files" },
-            { name: "Reorder files as needed" },
-            { name: "Choose merge mode (Append or Interleave)" },
-            { name: "Click Merge and download the result" },
-          ]}
-        />
-        <SeoFaqJsonLd
-          id="merge-pdf"
-          items={[
-            { question: "Are my files uploaded?", answer: "No. Everything runs in your browser; nothing is sent to a server." },
-            { question: "Why is the merged file large?", answer: "Use the Compress PDF tool to reduce size while preserving readability." },
+            { q: "Is it safe to merge my PDF files here?", a: "Absolutely. Our tool is designed with privacy as the top priority. All processing happens in your browser, meaning your files never leave your computer. We do not upload, store, or see your data." },
+            { q: "Is there a limit to the number of files I can merge?", a: "There are no hard limits on the number of files. However, performance may depend on your computer's memory and the size of the files. For very large jobs, consider merging in smaller batches." },
+            { q: "Will the quality of my PDFs be affected?", a: "No, the merging process itself does not alter the quality of your original pages. If you choose the 'Optimize' option, the tool will intelligently reduce the file size with minimal impact on visual quality." },
+            { q: "What is the difference between 'Append' and 'Interleave' mode?", a: "'Append' mode simply adds the files one after the other. 'Interleave' mode alternates pages from each document (page 1 from doc A, page 1 from doc B, page 2 from doc A, page 2 from doc B, etc.), which is useful for combining separate front and back side scans." },
           ]}
         />
     </ToolLayout>

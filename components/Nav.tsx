@@ -20,6 +20,9 @@ import {
   Workflow,
   Settings,
   HelpCircle,
+  BookOpen,
+  Users,
+  MessageSquare,
 } from "lucide-react";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import Image from "next/image";
@@ -240,33 +243,123 @@ export default function ResponsiveSidebar() {
         })}
 
         {/* Additional Links */}
-        <div className="relative z-10 pt-6 border-t border-gradient-to-r from-transparent via-border/40 to-transparent">
+        <div className="relative z-10 pt-6 border-t border-gradient-to-r from-transparent via-border/40 to-transparent space-y-4">
           <Link
-            href="/workflow"
+            href="/guides"
             onClick={() => setIsMobileMenuOpen(false)}
             className={`relative flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-500 group overflow-hidden ${
-              pathname === "/workflow"
-                ? "bg-gradient-to-r from-secondary/15 via-secondary/20 to-primary/15 text-secondary shadow-xl border border-secondary/20 scale-[1.02]"
-                : "text-muted hover:text-primary hover:bg-gradient-to-r hover:from-secondary/8 hover:via-secondary/10 hover:to-primary/8 hover:border-secondary/15 border border-transparent hover:scale-[1.01] hover:shadow-lg"
+              isActive("/guides")
+                ? "bg-gradient-to-r from-accent/15 via-accent/20 to-primary/15 text-accent shadow-xl border border-accent/20 scale-[1.02]"
+                : "text-muted hover:text-primary hover:bg-gradient-to-r hover:from-accent/8 hover:via-accent/10 hover:to-primary/8 hover:border-accent/15 border border-transparent hover:scale-[1.01] hover:shadow-lg"
             }`}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className={`relative p-3 rounded-xl transition-all duration-500 ${
-              pathname === "/workflow"
-                ? "bg-gradient-to-br from-secondary/25 to-primary/25 shadow-lg"
-                : "bg-gradient-to-br from-surface/80 to-surface/60 group-hover:from-secondary/15 group-hover:to-primary/15 group-hover:shadow-md"
+              isActive("/guides")
+                ? "bg-gradient-to-br from-accent/25 to-primary/25 shadow-lg"
+                : "bg-gradient-to-br from-surface/80 to-surface/60 group-hover:from-accent/15 group-hover:to-primary/15 group-hover:shadow-md"
             }`}>
-              <Workflow className={`h-5 w-5 transition-all duration-500 ${
-                pathname === "/workflow"
+              <BookOpen className={`h-5 w-5 transition-all duration-500 ${
+                isActive("/guides")
+                  ? "text-accent drop-shadow-sm"
+                  : "text-foreground/70 group-hover:text-accent group-hover:scale-110 group-hover:drop-shadow-sm"
+              }`} />
+            </div>
+            <span className="relative font-semibold tracking-wide">Guides & Tutorials</span>
+            {isActive("/guides") && (
+              <div className="ml-auto relative">
+                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-accent to-primary animate-pulse shadow-lg" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-gradient-to-r from-accent to-primary animate-ping opacity-75" />
+              </div>
+            )}
+          </Link>
+
+          <Link
+            href="/blog"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`relative flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-500 group overflow-hidden ${
+              isActive("/blog")
+                ? "bg-gradient-to-r from-primary/15 via-primary/20 to-secondary/15 text-primary shadow-xl border border-primary/20 scale-[1.02]"
+                : "text-muted hover:text-primary hover:bg-gradient-to-r hover:from-primary/8 hover:via-primary/10 hover:to-secondary/8 hover:border-primary/15 border border-transparent hover:scale-[1.01] hover:shadow-lg"
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className={`relative p-3 rounded-xl transition-all duration-500 ${
+              isActive("/blog")
+                ? "bg-gradient-to-br from-primary/25 to-secondary/25 shadow-lg"
+                : "bg-gradient-to-br from-surface/80 to-surface/60 group-hover:from-primary/15 group-hover:to-secondary/15 group-hover:shadow-md"
+            }`}>
+              <MessageSquare className={`h-5 w-5 transition-all duration-500 ${
+                isActive("/blog")
+                  ? "text-primary drop-shadow-sm"
+                  : "text-foreground/70 group-hover:text-primary group-hover:scale-110 group-hover:drop-shadow-sm"
+              }`} />
+            </div>
+            <span className="relative font-semibold tracking-wide">Blog & Resources</span>
+            {isActive("/blog") && (
+              <div className="ml-auto relative">
+                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-primary to-secondary animate-pulse shadow-lg" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-gradient-to-r from-primary to-secondary animate-ping opacity-75" />
+              </div>
+            )}
+          </Link>
+
+          <Link
+            href="/faq"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`relative flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-500 group overflow-hidden ${
+              pathname === "/faq"
+                ? "bg-gradient-to-r from-secondary/15 via-secondary/20 to-accent/15 text-secondary shadow-xl border border-secondary/20 scale-[1.02]"
+                : "text-muted hover:text-primary hover:bg-gradient-to-r hover:from-secondary/8 hover:via-secondary/10 hover:to-accent/8 hover:border-secondary/15 border border-transparent hover:scale-[1.01] hover:shadow-lg"
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-secondary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className={`relative p-3 rounded-xl transition-all duration-500 ${
+              pathname === "/faq"
+                ? "bg-gradient-to-br from-secondary/25 to-accent/25 shadow-lg"
+                : "bg-gradient-to-br from-surface/80 to-surface/60 group-hover:from-secondary/15 group-hover:to-accent/15 group-hover:shadow-md"
+            }`}>
+              <HelpCircle className={`h-5 w-5 transition-all duration-500 ${
+                pathname === "/faq"
                   ? "text-secondary drop-shadow-sm"
                   : "text-foreground/70 group-hover:text-secondary group-hover:scale-110 group-hover:drop-shadow-sm"
               }`} />
             </div>
-            <span className="relative font-semibold tracking-wide">Workflow Builder</span>
-            {pathname === "/workflow" && (
+            <span className="relative font-semibold tracking-wide">FAQ & Support</span>
+            {pathname === "/faq" && (
               <div className="ml-auto relative">
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-secondary to-primary animate-pulse shadow-lg" />
-                <div className="absolute inset-0 w-3 h-3 rounded-full bg-gradient-to-r from-secondary to-primary animate-ping opacity-75" />
+                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-secondary to-accent animate-pulse shadow-lg" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-gradient-to-r from-secondary to-accent animate-ping opacity-75" />
+              </div>
+            )}
+          </Link>
+
+          <Link
+            href="/about"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`relative flex items-center gap-4 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-500 group overflow-hidden ${
+              pathname === "/about"
+                ? "bg-gradient-to-r from-accent/15 via-accent/20 to-secondary/15 text-accent shadow-xl border border-accent/20 scale-[1.02]"
+                : "text-muted hover:text-primary hover:bg-gradient-to-r hover:from-accent/8 hover:via-accent/10 hover:to-secondary/8 hover:border-accent/15 border border-transparent hover:scale-[1.01] hover:shadow-lg"
+            }`}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className={`relative p-3 rounded-xl transition-all duration-500 ${
+              pathname === "/about"
+                ? "bg-gradient-to-br from-accent/25 to-secondary/25 shadow-lg"
+                : "bg-gradient-to-br from-surface/80 to-surface/60 group-hover:from-accent/15 group-hover:to-secondary/15 group-hover:shadow-md"
+            }`}>
+              <Users className={`h-5 w-5 transition-all duration-500 ${
+                pathname === "/about"
+                  ? "text-accent drop-shadow-sm"
+                  : "text-foreground/70 group-hover:text-accent group-hover:scale-110 group-hover:drop-shadow-sm"
+              }`} />
+            </div>
+            <span className="relative font-semibold tracking-wide">About Us</span>
+            {pathname === "/about" && (
+              <div className="ml-auto relative">
+                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-accent to-secondary animate-pulse shadow-lg" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-gradient-to-r from-accent to-secondary animate-ping opacity-75" />
               </div>
             )}
           </Link>
@@ -302,35 +395,6 @@ export default function ResponsiveSidebar() {
 
   return (
     <>
-      {/* Mobile Menu Button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-3 rounded-xl bg-surface/95 backdrop-blur-xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 group"
-        >
-          {isMobileMenuOpen ? (
-            <X className="h-5 w-5 text-foreground group-hover:text-primary transition-colors duration-300" />
-          ) : (
-            <Menu className="h-5 w-5 text-foreground group-hover:text-primary transition-colors duration-300" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="lg:hidden fixed inset-0 z-40 bg-background/80 backdrop-blur-sm"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile Sidebar */}
-      <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 w-80 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
-        isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
-        <SidebarContent />
-      </aside>
-
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:inset-y-0 lg:z-50 overflow-y-auto">
         <SidebarContent />
