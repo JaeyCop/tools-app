@@ -707,38 +707,22 @@ export default function PdfToImagesPage() {
       <ToolSeoContent
         title="Convert PDF to Images"
         overview="Easily transform each page of your PDF document into a high-quality image. Our tool lets you convert PDFs to popular formats like PNG and JPG, giving you the flexibility to use your document content in new ways. The entire process is fast, secure, and happens right in your browser."
-        
-        howToTitle="How to Convert PDF to Images"
         steps={[
           "Upload Your PDF: Drag and drop your PDF file into the upload area, or click to select it from your device.",
           "Configure Your Output: Choose your desired image format (PNG or JPG). You can also adjust the resolution (scale) for higher quality images and set the quality for JPG files.",
           "Convert & Download: Click the 'Start Conversion' button. The tool will process each page and provide a zip file containing all your new images, ready for instant download."
         ]}
-
-        featuresTitle="Features of Our PDF to Image Converter"
-        features={[
-          { name: "Client-Side Processing", description: "Your privacy is guaranteed. All conversions happen directly on your device, and your files are never uploaded to any server." },
-          { name: "Multiple Formats", description: "Choose to convert your PDF pages to either PNG for high-quality transparency or JPG for smaller file sizes." },
-          { name: "Adjustable Resolution", description: "Increase the scale to generate higher resolution images, perfect for printing or high-detail applications." },
-          { name: "Page Selection", description: "Optionally, you can specify which pages you want to convert, giving you more control over the output." },
-          { name: "Free and Unlimited", description: "Convert as many PDFs as you want, as often as you want, with no restrictions." },
-          { name: "Batch Download", description: "All your converted images are conveniently packaged into a single zip file for easy downloading.", },
+        tips={[
+          "PNG is best for documents with text and graphics, while JPG is ideal for image-heavy pages.",
+          "Increase the scale for higher resolution images, but note that file size will also increase.",
+          "You can select specific pages to convert by entering a range (e.g., 1-3,5,7-8).",
+          "All conversions are processed locally in your browser for maximum privacy.",
         ]}
-
-        useCasesTitle="Why Convert a PDF to Images?"
-        useCases={[
-          "To embed a page into a website or presentation.",
-          "To share a document on social media platforms that don't support PDFs.",
-          "To use a page of a PDF as a thumbnail or preview image.",
-          "To edit or annotate a PDF page in an image editing software."
-        ]}
-
-        faqTitle="Frequently Asked Questions"
         faq={[
           { q: "Is this tool safe for sensitive documents?", a: "Yes. Because all processing is done in your browser, your files never leave your computer. This makes our tool one of the most secure ways to convert PDFs to images online." },
           { q: "What is the difference between PNG and JPG?", a: "PNG is a lossless format, which means it preserves all the original quality, making it great for text and graphics. JPG is a lossy format that offers smaller file sizes, making it ideal for photographs." },
           { q: "What does the 'scale' option do?", a: "The scale option increases the resolution of the output images. A higher scale (e.g., 2x) will result in a larger, more detailed image, but also a larger file size." },
-          { q: "Can I convert a password-protected PDF?", a: "No, our tool cannot process password-protected PDFs. You will need to remove the password before you can convert the file."
+          { q: "Can I convert a password-protected PDF?", a: "No, our tool cannot process password-protected PDFs. You will need to remove the password before you can convert the file."},
         ]}
       />
     </ToolLayout>
