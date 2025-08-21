@@ -758,33 +758,18 @@ export default function ImageResizePage() {
       <ToolSeoContent
         title="Online Image Resizer"
         overview="Quickly resize any image to your exact specifications. Whether you need to shrink a photo for a social media profile, a blog post, or an email attachment, our tool provides a fast, easy, and private solution. Adjust dimensions, maintain aspect ratio, and optimize quality without ever uploading your file."
-        
-        howToTitle="How to Resize Your Image in Seconds"
         steps={[
           "Upload Your Image: Drag and drop your image file (PNG, JPG, WebP, etc.) into the upload area, or click to select a file from your device.",
           "Set Your Dimensions: Enter your desired width or height in pixels. To prevent distortion, keep the 'Lock aspect ratio' option checked. You can also choose from a list of popular presets for social media and more.",
           "Adjust and Download: Fine-tune the image quality and select your preferred output format (like JPG, PNG, or WebP). Click 'Resize Image' and your newly sized image will be ready for instant download.",
         ]}
-
-        featuresTitle="Features of Our Image Resizer"
-        features={[
-          { name: "Total Privacy", description: "Your images are processed entirely within your browser. They are never sent to a server, ensuring your data remains 100% private." },
-          { name: "Aspect Ratio Lock", description: "Maintain the original proportions of your image with a single click to avoid stretching or squashing." },
-          { name: "Convenient Presets", description: "Quickly resize for common uses like Instagram, Facebook, Twitter, and YouTube thumbnails." },
-          { name: "Quality Control", description: "Use the quality slider to find the perfect balance between file size and image clarity." },
-          { name: "Format Conversion", description: "Not just a resizer. You can save your resized image in a different format, like converting a PNG to a space-saving WebP." },
-          { name: "Instant Previews", description: "See a live preview of your image as you adjust the dimensions and settings.", },
+        tips={[
+          "Start with a high-resolution image for best results.",
+          "Lock aspect ratio to avoid distortion.",
+          "Choose the right format for your use case (JPEG for photos, PNG for graphics).",
+          "Use the quality slider to balance file size and clarity.",
+          "All processing is local—your images never leave your device."
         ]}
-
-        useCasesTitle="Why Do You Need to Resize Images?"
-        useCases={[
-          "To meet the specific dimension requirements for social media platforms.",
-          "To reduce file size for faster website loading times, improving SEO and user experience.",
-          "To make images small enough to send as email attachments without issues.",
-          "To create uniformly sized images for online galleries, portfolios, or product listings.",
-        ]}
-
-        faqTitle="Frequently Asked Questions"
         faq={[
           { q: "Is resizing images on this site secure?", a: "Yes, it is completely secure. Because the entire process runs in your browser, your image files are never uploaded to our or any other server. Your privacy is fully protected." },
           { q: "Will resizing the image reduce its quality?", a: "Shrinking an image generally preserves quality well. Enlarging an image can sometimes result in a loss of sharpness. Our tool uses high-quality resampling algorithms to maintain the best possible result. You can also control the quality with the slider for formats like JPG and WebP." },
