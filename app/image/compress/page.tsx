@@ -410,7 +410,7 @@ export default function EnhancedImageCompressor() {
     } finally {
       setIsProcessing(false);
     }
-  }, [file, previewUrl, quality, maxWidth, maxHeight, format, compressImageDirect]);
+  }, [file, previewUrl, compressImageDirect]);
 
   /* --------------------------------------------------------------------------- */
   /* Effects                                                                    */

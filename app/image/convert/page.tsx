@@ -368,7 +368,7 @@ export default function ImageConverterPage() {
             <div className="bg-muted/50 rounded-xl p-4 border border-border">
               <img
                 ref={imgRef}
-                src={imageUrl}
+                src={imageUrl} 
                 alt="Original image preview"
                 className="max-w-full h-auto rounded-lg shadow-sm mx-auto"
                 onLoad={onImageLoad}

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Dropzone from "react-dropzone";
 import {
   Upload,
-  Image,
+  Image as ImageIcon,
   Download,
   Loader2,
   CheckCircle,
@@ -329,8 +329,8 @@ export default function ImageResizePage() {
             <div
               {...getRootProps()}
               className={`relative border-2 border-dashed rounded-2xl p-8 lg:p-12 text-center cursor-pointer transition-all duration-300 group ${isDragActive
-                  ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg shadow-primary/20'
-                  : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                ? 'border-primary bg-primary/10 scale-[1.02] shadow-lg shadow-primary/20'
+                : 'border-border hover:border-primary/50 hover:bg-primary/5'
                 }`}
             >
               <input {...getInputProps()} />
@@ -347,7 +347,7 @@ export default function ImageResizePage() {
                     </div>
                   ) : (
                     <div className="w-20 h-20 bg-gradient-to-br from-muted/50 to-muted/30 rounded-full flex items-center justify-center mx-auto group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
-                      <Image className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                      <ImageIcon className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                     </div>
                   )}
                 </div>
@@ -380,7 +380,7 @@ export default function ImageResizePage() {
           <div className="p-4 bg-muted/50 rounded-xl border">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-primary/10 rounded-lg">
-                <Image className="w-5 h-5 text-primary" />
+                <ImageIcon className="w-5 h-5 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground truncate">{file.name}</p>
@@ -493,9 +493,9 @@ export default function ImageResizePage() {
       {/* Footer */}
       <div className="mt-12 text-center text-muted-foreground">
         <p className="text-sm">
-            🔒 All processing happens locally in your browser - your images never leave your device
-          </p>
-        </div>
+          🔒 All processing happens locally in your browser - your images never leave your device
+        </p>
+      </div>
 
       {/* Educational Content Section */}
       <div className="mt-16 space-y-12">
@@ -507,7 +507,7 @@ export default function ImageResizePage() {
             </div>
             Understanding Image Resizing
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8 mb-8">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Resampling Algorithms</h3>
@@ -533,7 +533,7 @@ export default function ImageResizePage() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Aspect Ratio Guide</h3>
               <div className="space-y-4">
@@ -544,7 +544,7 @@ export default function ImageResizePage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Maintains original proportions, preventing distortion. Recommended for most use cases.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-orange-200 dark:border-orange-800">
                   <div className="flex items-center gap-3 mb-2">
                     <Unlock className="h-4 w-4 text-orange-500" />
@@ -552,7 +552,7 @@ export default function ImageResizePage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Allows independent width/height adjustment. Use carefully to avoid stretching.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center gap-3 mb-2">
                     <Settings className="h-4 w-4 text-blue-500" />
@@ -563,7 +563,7 @@ export default function ImageResizePage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-green-100 dark:bg-green-900/30 rounded-xl p-6 border border-green-200 dark:border-green-700">
             <h4 className="font-semibold text-green-800 dark:text-green-200 mb-3">💡 Pro Tip: Resolution vs. File Size</h4>
             <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -587,7 +587,7 @@ export default function ImageResizePage() {
             </div>
             Popular Resize Dimensions
           </h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800 p-6">
               <h3 className="font-semibold text-foreground mb-4">Social Media</h3>
@@ -610,7 +610,7 @@ export default function ImageResizePage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl border border-purple-200 dark:border-purple-800 p-6">
               <h3 className="font-semibold text-foreground mb-4">Web & Email</h3>
               <div className="space-y-2 text-sm">
@@ -632,7 +632,7 @@ export default function ImageResizePage() {
                 </div>
               </div>
             </div>
-            
+
             <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-xl border border-orange-200 dark:border-orange-800 p-6">
               <h3 className="font-semibold text-foreground mb-4">Print & Professional</h3>
               <div className="space-y-2 text-sm">
@@ -655,7 +655,7 @@ export default function ImageResizePage() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
             <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-3">📐 Aspect Ratio Quick Reference</h4>
             <div className="grid md:grid-cols-4 gap-4 text-sm">
@@ -687,7 +687,7 @@ export default function ImageResizePage() {
             </div>
             Quality & Performance Optimization
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-8">
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Best Practices</h3>
@@ -722,7 +722,7 @@ export default function ImageResizePage() {
                 </li>
               </ul>
             </div>
-            
+
             <div>
               <h3 className="text-xl font-semibold text-foreground mb-4">Quality Settings Guide</h3>
               <div className="space-y-4">
@@ -733,7 +733,7 @@ export default function ImageResizePage() {
                   </div>
                   <p className="text-sm text-muted-foreground">For professional photography, print materials, and archival purposes.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-blue-200 dark:border-blue-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -741,7 +741,7 @@ export default function ImageResizePage() {
                   </div>
                   <p className="text-sm text-muted-foreground">Optimal for web use, social media, and general sharing.</p>
                 </div>
-                
+
                 <div className="p-4 bg-white dark:bg-gray-800/50 rounded-xl border border-orange-200 dark:border-orange-800">
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
