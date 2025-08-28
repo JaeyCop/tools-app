@@ -2,8 +2,8 @@
 import { useCallback, useMemo, useState, useRef } from "react";
 import Dropzone from "react-dropzone";
 import {
-  Upload,
-  Image,
+  Upload, 
+  Image as ImageIcon,
   Download,
   Loader2,
   CheckCircle,
@@ -301,7 +301,7 @@ export default function ImageConverterPage() {
                     </div>
                   ) : (
                     <div className="w-20 h-20 bg-gradient-to-br from-muted/50 to-muted/30 rounded-full flex items-center justify-center mx-auto group-hover:from-primary/20 group-hover:to-secondary/20 transition-all duration-300">
-                      <Image className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
+                    <ImageIcon className="w-10 h-10 text-muted-foreground group-hover:text-primary transition-colors duration-300" />
                     </div>
                   )}
                 </div>
@@ -333,9 +333,9 @@ export default function ImageConverterPage() {
         {file && (!isProcessing &&
           <div className="p-4 bg-muted/50 rounded-xl border">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-lg">
-                <Image className="w-5 h-5 text-primary" />
-              </div>
+              <div className="p-2 bg-primary/10 rounded-lg"> 
+                <ImageIcon className="w-5 h-5 text-primary" />
+              </div> 
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-foreground truncate">{file.name}</p>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -368,7 +368,7 @@ export default function ImageConverterPage() {
             <div className="bg-muted/50 rounded-xl p-4 border border-border">
               <img
                 ref={imgRef}
-                src={imageUrl} 
+                src={imageUrl}
                 alt="Original image preview"
                 className="max-w-full h-auto rounded-lg shadow-sm mx-auto"
                 onLoad={onImageLoad}
