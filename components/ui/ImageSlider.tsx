@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import './ImageSlider.css';
 
 interface ImageSliderProps {
@@ -43,14 +44,26 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ beforeImage, afterImage }) =>
     <div
       ref={imageContainerRef}
       className="image-slider-container"
-      style={{ cursor: 'e-resize' }}
+      style={{ cursor: 'e-resize', position: 'relative' }}
     >
-      <img src={afterImage} alt="After" className="image-slider-image" />
+      <Image
+        src={afterImage}
+        alt="After"
+        className="image-slider-image"
+        fill
+        style={{ objectFit: 'contain' }}
+      />
       <div
         className="image-slider-before"
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <img src={beforeImage} alt="Before" className="image-slider-image" />
+        <Image
+          src={beforeImage}
+          alt="Before"
+          className="image-slider-image"
+          fill
+          style={{ objectFit: 'contain' }}
+        />
       </div>
       <div
         className="image-slider-handle"
