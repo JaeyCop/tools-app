@@ -47,6 +47,18 @@ export default function Footer() {
             >
               Terms of Service
             </Link>
+            <Link 
+              href="/disclaimer" 
+              className="text-muted hover:text-primary transition-all duration-300 font-medium hover:scale-105 interactive"
+            >
+              Disclaimer
+            </Link>
+            <Link 
+              href="/sitemap" 
+              className="text-muted hover:text-primary transition-all duration-300 font-medium hover:scale-105 interactive"
+            >
+              Sitemap
+            </Link>
           </nav>
         </div>
         

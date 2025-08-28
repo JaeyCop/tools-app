@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Calendar, Clock, User, ArrowRight, BookOpen, Lightbulb, TrendingUp } from "lucide-react";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 export const metadata = {
   title: "Blog & Resources",
@@ -61,16 +62,60 @@ const blogPosts = [
     publishDate: "2024-01-03",
     featured: false,
   },
+  {
+    slug: "common-pdf-problems-solutions",
+    title: "10 Common PDF Problems and How to Fix Them",
+    excerpt: "Solve the most frustrating PDF issues with our comprehensive troubleshooting guide. From corrupted files to formatting problems, we have the solutions.",
+    category: "PDF Processing",
+    readTime: "12 min read",
+    publishDate: "2024-03-20",
+    featured: true,
+  },
+  {
+    slug: "social-media-image-optimization",
+    title: "Social Media Image Optimization: Complete Guide for 2024",
+    excerpt: "Master social media image optimization with our comprehensive guide. Learn the perfect dimensions, formats, and compression techniques for every platform.",
+    category: "Image Processing",
+    readTime: "15 min read",
+    publishDate: "2024-03-22",
+    featured: true,
+  },
+  {
+    slug: "remote-work-document-security",
+    title: "Document Security in Remote Work: Essential Best Practices for 2024",
+    excerpt: "Protect sensitive documents while working remotely. Learn essential security practices, tools, and strategies to keep your business data safe from anywhere.",
+    category: "Security",
+    readTime: "14 min read",
+    publishDate: "2024-03-25",
+    featured: false,
+  },
 ];
 
-const categories = [
-  { name: "PDF Processing", count: 15, color: "bg-blue-500" },
-  { name: "Image Processing", count: 12, color: "bg-green-500" },
-  { name: "Productivity", count: 8, color: "bg-purple-500" },
-  { name: "Security", count: 6, color: "bg-red-500" },
-  { name: "Accessibility", count: 4, color: "bg-orange-500" },
-  { name: "Technical", count: 7, color: "bg-indigo-500" },
-];
+// Generate categories based on actual posts to avoid 404s
+const categories = (() => {
+  const categoryMap = new Map();
+  const categoryColors = {
+    "PDF Processing": "bg-blue-500",
+    "Image Processing": "bg-green-500", 
+    "Productivity": "bg-purple-500",
+    "Security": "bg-red-500",
+    "Accessibility": "bg-orange-500",
+    "Technical": "bg-indigo-500"
+  };
+  
+  // Count actual posts per category
+  blogPosts.forEach(post => {
+    const count = categoryMap.get(post.category) || 0;
+    categoryMap.set(post.category, count + 1);
+  });
+  
+  // Convert to array with colors
+  return Array.from(categoryMap.entries()).map(([name, count]) => ({
+    name,
+    count,
+    color: categoryColors[name as keyof typeof categoryColors] || "bg-gray-500"
+  }));
+})();
 
 export default function BlogPage() {
   const featuredPosts = blogPosts.filter(post => post.featured);
@@ -233,22 +278,11 @@ export default function BlogPage() {
         </div>
 
         {/* Newsletter CTA */}
-        <div className="mt-20 text-center bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-3xl border border-primary/20 p-12 animate-slide-up" style={{ animationDelay: '0.6s' }}>
-          <h2 className="text-3xl font-bold text-foreground mb-4">Stay Updated</h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Get the latest tutorials, tips, and insights delivered to your inbox. Join our community of file processing enthusiasts.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-xl border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
-            />
-            <button className="px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-              Subscribe
-            </button>
-          </div>
-        </div>
+        <NewsletterSignup 
+          title="Stay Updated"
+          description="Get the latest tutorials, tips, and insights delivered to your inbox. Join our community of file processing enthusiasts."
+          className="mt-20 animate-slide-up"
+        />
       </div>
     </div>
   );

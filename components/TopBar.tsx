@@ -316,6 +316,61 @@ export default function TopBar() {
                   </div>
                 </div>
               ))}
+
+              {/* Additional Links */}
+              <div className="space-y-3 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+                <Link
+                  href="/guides"
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 interactive ${
+                    isActive("/guides")
+                      ? "bg-gradient-to-r from-accent/10 to-primary/10 text-accent shadow-lg border border-accent/20"
+                      : "text-muted hover:text-primary hover:bg-surface-elevated/50 hover:border-accent/10 border border-transparent"
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg transition-all duration-300 ${
+                    isActive("/guides") 
+                      ? "bg-gradient-to-br from-accent/20 to-primary/20 shadow-sm" 
+                      : "bg-muted/50 group-hover:bg-gradient-to-br group-hover:from-accent/10 group-hover:to-primary/10"
+                  }`}>
+                    <FileText className={`h-4 w-4 transition-all duration-300 ${
+                      isActive("/guides") 
+                        ? "text-accent" 
+                        : "text-foreground/60 group-hover:text-accent group-hover:scale-110"
+                    }`} />
+                  </div>
+                  <span className="font-medium">Guides & Tutorials</span>
+                  {isActive("/guides") && (
+                    <div className="ml-auto w-2 h-2 rounded-full bg-accent animate-pulse" />
+                  )}
+                </Link>
+
+                <Link
+                  href="/blog"
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-300 interactive ${
+                    isActive("/blog")
+                      ? "bg-gradient-to-r from-primary/10 to-secondary/10 text-primary shadow-lg border border-primary/20"
+                      : "text-muted hover:text-primary hover:bg-surface-elevated/50 hover:border-primary/10 border border-transparent"
+                  }`}
+                >
+                  <div className={`p-2 rounded-lg transition-all duration-300 ${
+                    isActive("/blog") 
+                      ? "bg-gradient-to-br from-primary/20 to-secondary/20 shadow-sm" 
+                      : "bg-muted/50 group-hover:bg-gradient-to-br group-hover:from-primary/10 group-hover:to-secondary/10"
+                  }`}>
+                    <FileText className={`h-4 w-4 transition-all duration-300 ${
+                      isActive("/blog") 
+                        ? "text-primary" 
+                        : "text-foreground/60 group-hover:text-primary group-hover:scale-110"
+                    }`} />
+                  </div>
+                  <span className="font-medium">Blog & Resources</span>
+                  {isActive("/blog") && (
+                    <div className="ml-auto w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  )}
+                </Link>
+              </div>
             </nav>
 
             <div className="mt-auto border-t border-border/50 p-4 bg-surface/80 backdrop-blur-sm">

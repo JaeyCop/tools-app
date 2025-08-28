@@ -44,19 +44,12 @@ export default function AboutPage() {
           <div className="text-center mb-10">
             <h2 className="text-4xl font-bold text-foreground mb-4">Meet the Creator</h2>
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-10">
-            <div className="md:w-1/3 text-center">
-              <Image
-                src="/jaey-avatar.png"
-                alt="Jaey, Creator of JaeyGuides"
-                width={192}
-                height={192}
-                className="w-48 h-48 rounded-full mx-auto mb-4 border-4 border-primary/50 shadow-lg"
-              />
-              <h3 className="text-2xl font-bold text-foreground">Jaey</h3>
-              <p className="text-muted-foreground">Founder &amp; Developer</p>
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-foreground mb-2">Jaey</h3>
+              <p className="text-muted-foreground mb-6">Founder &amp; Developer</p>
             </div>
-            <div className="md:w-2/3 text-lg text-muted-foreground leading-relaxed space-y-4">
+            <div className="text-lg text-muted-foreground leading-relaxed space-y-4">
               <p>&ldquo;I&apos;m a passionate developer who believes in the power of the open web and the importance of digital privacy. I created JaeyGuides to give people tools they can trust. When I&apos;m not coding, you can find me exploring new technologies, contributing to open-source projects, or enjoying a good cup of coffee.&rdquo;</p>
               <p>&ldquo;Your feedback is what drives this project forward. If you have any ideas or suggestions, please don&apos;t hesitate to reach out!&rdquo;</p>
             </div>
